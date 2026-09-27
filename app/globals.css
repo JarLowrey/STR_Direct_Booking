@@ -237,7 +237,8 @@ nav.scrolled {
 /* Stats Bar */
 .stats {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* --stat-columns is set on the element to the number of stats in the site config. */
+    grid-template-columns: repeat(var(--stat-columns, 4), 1fr);
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }

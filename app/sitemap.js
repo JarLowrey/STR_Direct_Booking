@@ -1,5 +1,6 @@
 import site from '../lib/current-site.js';
 import { loadPhotoData, loadReviewData } from '../lib/data.js';
+import { absoluteUrl } from '../lib/site-urls.js';
 
 export const dynamic = 'force-static';
 
@@ -9,7 +10,6 @@ export default function sitemap() {
     const photoData = loadPhotoData();
     const reviewData = loadReviewData();
     const fetchDates = [photoData.fetchedAt, reviewData.fetchedAt].map(Date.parse).filter(Number.isFinite);
-    const absolute = path => new URL(path, site.url).href;
 
     return [
         {
@@ -17,9 +17,9 @@ export default function sitemap() {
             lastModified: new Date(fetchDates.length ? Math.max(...fetchDates) : Date.now()),
             images: [
                 ...new Set([
-                    absolute(site.images.hero.src),
-                    absolute(site.location.image.src),
-                    ...photoData.photos.map(photo => absolute(`images/airbnb_images/${photo.file}`))
+                    absoluteUrl(site.images.hero.src),
+                    absoluteUrl(site.location.image.src),
+                    ...photoData.photos.map(photo => absoluteUrl(`images/airbnb_images/${photo.file}`))
                 ])
             ]
         }

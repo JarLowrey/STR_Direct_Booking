@@ -45,18 +45,22 @@ jobs:
           node-version: 22
 
       - name: Download and combine calendars
+        id: calendar
         env:
           # The site's feed URLs (they contain private tokens), from the secret named in its config.
           CALENDAR_FEEDS: ${{ secrets[matrix.site.calendarSecret] }}
         run: |
+          # A site without its secret yet has no calendar; its page leaves availability out.
           if [ -z "$CALENDAR_FEEDS" ]; then
-            echo "::error::Add the ${{ matrix.site.calendarSecret }} secret with this site's calendar feeds (see README)."
-            exit 1
+            echo "::warning::Skipping ${{ matrix.site.id }}: add the ${{ matrix.site.calendarSecret }} secret to show its availability (see README)."
+            echo "skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
           node scripts/update-calendar.mjs ${{ matrix.site.id }}
 
       - name: Commit combined calendar
         id: commit
+        if: steps.calendar.outputs.skipped != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

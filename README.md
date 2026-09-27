@@ -1,6 +1,7 @@
 # Rental Listing Sites
 
-Websites for vacation rental listings, starting with [Rainier Getaway](https://rainier-getaway.com/). One
+Websites for vacation rental listings: [Rainier Getaway](https://rainier-getaway.com/) and
+[Cozy Rainier Cabin](https://jarlowrey.github.io/RainierTinyHome/). One
 [Next.js](https://nextjs.org/) codebase builds a static site for each listing in `sites/`, and each site deploys
 to its own GitHub Pages repository and domain.
 
@@ -125,24 +126,35 @@ the site's `calendarSecret`) holding a JSON array:
 1. Copy `sites/rainier-getaway/` to `sites/<new-site>/` (lowercase words joined by hyphens).
 2. In `sites/<new-site>/site.config.js`, update everything: name, company, `url`, `deploy.repository`,
    `airbnb.listingId` (the number in the listing's `airbnb.com/rooms/...` URL) and booking link, `calendarSecret`,
-   address, coordinates, property details, and all the page text and booking terms. Optional parts (VRBO and
-   Instagram links, the direct-booking section, the location map) can be removed.
-3. In `sites/<new-site>/public/`: replace the hero, location, and favicon images, set `CNAME` to the new domain,
-   update `llms.txt`, and delete the copied `images/airbnb_images/` and `images/airbnb_thumbnails/` folders.
+   address, coordinates, property details, and all the page text. Optional parts (VRBO, Instagram, and email links,
+   the street address, the direct-booking section, the location map) can be removed.
+   - With a custom domain, set `url` to `https://your-domain.com/`.
+   - Without one, set `url` to the deploy repository's Pages address, `https://<owner>.github.io/<repo>/`. The site
+     is built to live in that subfolder. (Search engines only read `robots.txt` at a domain's root, so a subfolder
+     site's `robots.txt` is ignored; its sitemap still works.)
+3. In `sites/<new-site>/public/`: replace the hero, location, and favicon images; set `CNAME` to the domain (delete
+   it if there's no custom domain); update `llms.txt`; and delete the copied `images/airbnb_images/` and
+   `images/airbnb_thumbnails/` folders.
 4. In `sites/<new-site>/data/`, delete the copied files.
-5. Fill in the listing's photos, reviews, and calendar (the site's tests and build need all three):
+5. Fill in the listing's photos and reviews (a listing with no reviews yet gets an empty `reviews.json`, and the site
+   leaves reviews out until it has some):
 
    ```powershell
    npx.cmd playwright install chromium
    node scripts/fetch-airbnb-images.mjs <new-site>
    node scripts/fetch-airbnb-reviews.mjs <new-site>
-   $env:CALENDAR_FEEDS = '[{"label":"Airbnb","url":"https://..."},{"label":"VRBO","url":"https://..."}]'
+   ```
+
+6. Optionally add availability. Without a calendar file, the site leaves the availability calendar out and the
+   calendar workflow skips the site. To add it, put the listing's calendar feeds in the GitHub secret named in
+   `calendarSecret` (see Data Updates), then run **Update Combined Calendar** from the Actions tab, or locally:
+
+   ```powershell
+   $env:CALENDAR_FEEDS = '[{"label":"Airbnb","url":"https://..."}]'
    node scripts/update-calendar.mjs <new-site>
    ```
 
-   Then add the same feed JSON as the GitHub secret named in `calendarSecret`, so the calendar workflow can keep it
-   current.
-6. Check it: `npm.cmd test`, then `npm.cmd run dev -- <new-site>`.
-7. Set up the deploy repository: create it, set its Pages settings (see Deployment) and custom domain, point the
-   domain's DNS at GitHub Pages, and add the `PAGES_DEPLOY_TOKEN` secret here if it isn't this repository.
-8. Commit and push. The deploy workflow publishes the new site.
+7. Check it: `npm.cmd test`, then `npm.cmd run dev -- <new-site>`.
+8. Set up the deploy repository: set its Pages settings (see Deployment), add the custom domain and point its DNS
+   at GitHub Pages if there is one, and make sure the `PAGES_DEPLOY_TOKEN` secret here can write to the repository.
+9. Commit and push. The deploy workflow publishes the new site.

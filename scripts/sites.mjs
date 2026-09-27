@@ -94,7 +94,10 @@ export function validateSiteConfig(id, config) {
         if (value === undefined || value === null || value === '') problems.push(`missing ${path}`);
     }
 
-    if (config?.url && !/^https:\/\/[^/]+\/$/.test(config.url)) problems.push('url must look like https://example.com/');
+    // Either a domain root or a GitHub Pages project address (a subfolder); always ending in "/".
+    if (config?.url && !/^https:\/\/[^/]+\/(?:[^/]+\/)*$/.test(config.url)) {
+        problems.push('url must look like https://example.com/ or https://owner.github.io/Repo/');
+    }
     if (config?.deploy?.repository && !/^[\w.-]+\/[\w.-]+$/.test(config.deploy.repository)) {
         problems.push('deploy.repository must look like owner/repo');
     }

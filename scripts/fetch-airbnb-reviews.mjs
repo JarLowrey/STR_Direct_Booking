@@ -200,7 +200,18 @@ async function fetchAllReviews(listingId) {
     });
 
     await page.goto(reviewsUrl(listingId), { waitUntil: 'domcontentloaded', timeout: 60_000 });
-    await page.getByRole('button', { name: /show all \d+ reviews/i }).click({ timeout: 30_000 });
+    const showAllReviews = page.getByRole('button', { name: /show all \d+ reviews/i }).first();
+    const hasReviewsButton = await showAllReviews.waitFor({ timeout: 30_000 }).then(() => true, () => false);
+    if (!hasReviewsButton) {
+        // A listing with no reviews yet has no button; Airbnb labels it a new listing instead.
+        const pageText = await page.locator('body').innerText();
+        await browser.close();
+        if (/\bno reviews\b|\bnew listing\b/i.test(pageText)) {
+            return [];
+        }
+        throw new Error('Could not find the "Show all reviews" button on the Airbnb listing');
+    }
+    await showAllReviews.click();
 
     const scrollable = page.locator('[data-testid*="review"] [data-testid*="scroll"], [role="dialog"]');
     for (let attempt = 0; attempt < 12; attempt += 1) {
@@ -225,18 +236,18 @@ async function fetchAllReviews(listingId) {
 
 // The overall rating (average stars, to 2 decimals like Airbnb shows) and count cover every review,
 // so the site's "Rated X from N reviews" is accurate; only the five-star reviews are kept for display.
+// A listing with no reviews yet gets a null rating and a count of 0, and the site leaves reviews out.
 export function summarizeReviews(allReviews) {
     const rated = allReviews.filter(review => Number.isFinite(review.rating));
-    const fiveStarReviews = rated.filter(review => review.rating === 5);
-    if (!fiveStarReviews.length) {
-        throw new Error('No five-star reviews were found in Airbnb review responses');
+    if (!rated.length) {
+        return { rating: null, count: 0, reviews: [] };
     }
 
     const average = rated.reduce((sum, review) => sum + review.rating, 0) / rated.length;
     return {
         rating: Math.round(average * 100) / 100,
         count: rated.length,
-        reviews: fiveStarReviews
+        reviews: rated.filter(review => review.rating === 5)
     };
 }
 

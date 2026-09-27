@@ -17,9 +17,9 @@ for (const id of await listSiteIds()) {
         const paths = sitePaths(id);
         const publicFile = path => join(paths.publicDir, ...path.split('/').filter(Boolean));
 
+        // The calendar is optional: a site without one leaves out availability until its feeds are set up.
         const required = [
             paths.reviews,
-            paths.calendar,
             join(paths.photos, 'metadata.json'),
             publicFile(config.images.hero.src),
             publicFile(config.images.share),
@@ -41,6 +41,8 @@ test('rejects a config with missing or malformed fields', async () => {
     assert.throws(() => validateSiteConfig('Bad Name', config), /lowercase words joined by hyphens/);
     assert.throws(() => validateSiteConfig('ok', { ...config, name: '' }), /missing name/);
     assert.throws(() => validateSiteConfig('ok', { ...config, url: 'https://example.com' }), /url must look like/);
+    assert.throws(() => validateSiteConfig('ok', { ...config, url: 'https://owner.github.io/Repo' }), /url must look like/);
+    assert.doesNotThrow(() => validateSiteConfig('ok', { ...config, url: 'https://owner.github.io/Repo/' }));
     assert.throws(() => validateSiteConfig('ok', { ...config, deploy: { repository: 'not a repo' } }), /owner\/repo/);
     assert.throws(() => validateSiteConfig('ok', { ...config, calendarSecret: 'lowercase' }), /uppercase GitHub secret/);
 });

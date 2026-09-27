@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const GALLERY_DIRECTORY = '/images/airbnb_images';
-const GALLERY_THUMBNAIL_DIRECTORY = '/images/airbnb_thumbnails';
+const PHOTO_FOLDER = '/images/airbnb_images';
+const THUMBNAIL_FOLDER = '/images/airbnb_thumbnails';
 const GALLERY_PAGE_SIZE = 9;
 // Tile widths from the gallery CSS: one column (90vw) up to 768px, two columns up to 1024px,
 // otherwise three columns capped by the grid's 1600px max width.
@@ -18,16 +18,16 @@ function photoAlt(photo, siteName) {
 }
 
 // Lets the browser pick the smallest thumbnail that's sharp on the viewer's screen.
-function thumbnailSources(photo) {
+function thumbnailSources(photo, basePath) {
     const thumbnails = Array.isArray(photo.thumbnails) ? photo.thumbnails : [];
     if (!thumbnails.length) {
-        return { src: `${GALLERY_DIRECTORY}/${photo.file}` };
+        return { src: `${basePath}${PHOTO_FOLDER}/${photo.file}` };
     }
 
     return {
-        src: `${GALLERY_THUMBNAIL_DIRECTORY}/${thumbnails[0].file}`,
+        src: `${basePath}${THUMBNAIL_FOLDER}/${thumbnails[0].file}`,
         srcSet: thumbnails
-            .map(thumbnail => `${GALLERY_THUMBNAIL_DIRECTORY}/${thumbnail.file} ${thumbnail.width}w`)
+            .map(thumbnail => `${basePath}${THUMBNAIL_FOLDER}/${thumbnail.file} ${thumbnail.width}w`)
             .join(', '),
         sizes: GALLERY_TILE_SIZES
     };
@@ -35,7 +35,8 @@ function thumbnailSources(photo) {
 
 // Photos in Airbnb's order, 9 per page, with room filters and a full-size pop-up. Rendered to
 // HTML at build time, so the first page is visible without JavaScript.
-export default function Gallery({ photos, siteName }) {
+// basePath is the site's subfolder ("" for a site at the root of its domain).
+export default function Gallery({ photos, siteName, basePath = '' }) {
     const [room, setRoom] = useState(null);
     const [galleryPage, setGalleryPage] = useState(0);
     const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -114,7 +115,7 @@ export default function Gallery({ photos, siteName }) {
                             onClick={() => setSelectedPhoto(photo)}
                         >
                             {/* Thumbnails in the grid; the full-size file loads only in the pop-up. */}
-                            <img {...thumbnailSources(photo)} alt={photoAlt(photo, siteName)} loading="lazy" decoding="async" />
+                            <img {...thumbnailSources(photo, basePath)} alt={photoAlt(photo, siteName)} loading="lazy" decoding="async" />
                             {!room && <span className="gallery-item-room">{photo.room}</span>}
                         </button>
                     ))}
@@ -156,7 +157,7 @@ export default function Gallery({ photos, siteName }) {
                 </button>
                 {selectedPhoto && (
                     <figure>
-                        <img src={`${GALLERY_DIRECTORY}/${selectedPhoto.file}`} alt={photoAlt(selectedPhoto, siteName)} />
+                        <img src={`${basePath}${PHOTO_FOLDER}/${selectedPhoto.file}`} alt={photoAlt(selectedPhoto, siteName)} />
                         <figcaption>
                             <div className="photo-lightbox-room">{selectedPhoto.room}</div>
                             {selectedDescription && <p className="photo-lightbox-description">{selectedDescription}</p>}

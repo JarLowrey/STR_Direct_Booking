@@ -7,6 +7,7 @@ import Reviews from '../components/Reviews.jsx';
 import site from '../lib/current-site.js';
 import { loadPhotoData, loadReviewData, loadUnavailableDates } from '../lib/data.js';
 import { buildFaqPage, buildVacationRental, jsonLd } from '../lib/structured-data.js';
+import { BASE_PATH, sitePath, siteSrcSet } from '../lib/site-urls.js';
 
 // Booking tab content from the site config: a string is a paragraph, { strong } a bold paragraph,
 // and { list } a bulleted list.
@@ -76,6 +77,11 @@ export default function HomePage() {
     const reviewData = loadReviewData();
     const unavailableDates = loadUnavailableDates();
     const { address, coordinates, links, booking } = site;
+    // Sections a new listing may not have yet: reviews (none on Airbnb) and availability (calendar
+    // feeds not set up). They're left out, along with their links, until the data exists.
+    const hasReviews = reviewData.count > 0 || reviewData.reviews.length > 0;
+    const hasCalendar = unavailableDates !== null;
+    const hasContact = Boolean(links.email || address.street);
 
     return (
         <>
@@ -85,14 +91,21 @@ export default function HomePage() {
             />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(buildFaqPage(site.faq.items)) }} />
 
-            <Nav siteName={site.name} logo={site.images.logo} instagram={links.instagram} />
+            <Nav
+                siteName={site.name}
+                logo={sitePath(site.images.logo)}
+                instagram={links.instagram}
+                instagramIcon={sitePath('/images/instagram-icon.png')}
+                showReviews={hasReviews}
+                showAvailability={hasCalendar}
+            />
 
             <section className="hero">
                 {/* The 4:3 photo covers the full screen, so on tall screens it's drawn 4/3 of the screen
                     height wide; sizes accounts for that so phones don't get a blurry version. */}
                 <img
-                    src={site.images.hero.src}
-                    srcSet={site.images.hero.srcSet}
+                    src={sitePath(site.images.hero.src)}
+                    srcSet={siteSrcSet(site.images.hero.srcSet)}
                     sizes="max(100vw, 133vh)"
                     fetchPriority="high"
                     alt={site.images.hero.alt}
@@ -103,11 +116,11 @@ export default function HomePage() {
                     <div className="hero-subtitle">{site.hero.subtitle}</div>
                     <h1>{site.hero.heading}</h1>
                     <p className="hero-description">{site.hero.description}</p>
-                    <a href="#availability" className="hero-cta">{site.hero.cta}</a>
+                    <a href={hasCalendar ? '#availability' : '#book-now'} className="hero-cta">{site.hero.cta}</a>
                 </div>
             </section>
 
-            <div className="stats">
+            <div className="stats" style={{ '--stat-columns': site.stats.length }}>
                 {site.stats.map(stat => (
                     <div className="stat" key={stat.label}>
                         <div className="stat-number">{stat.value}</div>
@@ -139,7 +152,7 @@ export default function HomePage() {
                     <h2 className="section-title">{site.gallery.title}</h2>
                 </div>
                 <div id="photo-gallery">
-                    <Gallery photos={photos} siteName={site.name} />
+                    <Gallery photos={photos} siteName={site.name} basePath={BASE_PATH} />
                 </div>
             </section>
 
@@ -171,7 +184,7 @@ export default function HomePage() {
                 <div className="highlight-section">
                     <div className="highlight-image">
                         <img
-                            src={site.location.image.src}
+                            src={sitePath(site.location.image.src)}
                             width={site.location.image.width}
                             height={site.location.image.height}
                             loading="lazy"
@@ -189,6 +202,7 @@ export default function HomePage() {
                 </div>
             </section>
 
+            {hasReviews && (
             <section className="reviews-section" id="reviews">
                 <div className="section-header">
                     <div className="section-tag">Guest Reviews</div>
@@ -196,11 +210,15 @@ export default function HomePage() {
                     <p className="section-description">{site.reviews.description}</p>
                     <ReviewSummary reviewData={reviewData} />
                 </div>
-                <div id="reviews-carousel" aria-live="polite">
-                    <Reviews reviews={reviewData.reviews} />
-                </div>
+                {reviewData.reviews.length > 0 && (
+                    <div id="reviews-carousel" aria-live="polite">
+                        <Reviews reviews={reviewData.reviews} />
+                    </div>
+                )}
             </section>
+            )}
 
+            {hasCalendar && (
             <section className="availability-section-wrap" id="availability">
                 <div className="availability-section">
                     <div className="section-header">
@@ -212,6 +230,7 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+            )}
 
             <section className="cta-section" id="book-now">
                 <h2 className="section-title">Book Now</h2>
@@ -273,17 +292,18 @@ export default function HomePage() {
                         <ul className="footer-links">
                             <li><a href="#gallery">Gallery</a></li>
                             <li><a href="#amenities">Amenities</a></li>
-                            <li><a href="#reviews">Reviews</a></li>
-                            <li><a href="#availability">Availability</a></li>
+                            {hasReviews && <li><a href="#reviews">Reviews</a></li>}
+                            {hasCalendar && <li><a href="#availability">Availability</a></li>}
                             {links.instagram && (
                                 <li>
                                     <a href={links.instagram} aria-label={`${site.name} on Instagram`}>
-                                        <img src="/images/instagram-icon.png" alt="" className="icon" />
+                                        <img src={sitePath('/images/instagram-icon.png')} alt="" className="icon" />
                                     </a>
                                 </li>
                             )}
                         </ul>
                     </div>
+                    {hasContact && (
                     <div className="footer-section">
                         <h4>Contact</h4>
                         <ul className="footer-links">
@@ -304,6 +324,7 @@ export default function HomePage() {
                             )}
                         </ul>
                     </div>
+                    )}
                 </div>
                 <div className="footer-bottom">
                     {/* The site rebuilds whenever its data changes (at least monthly), so the build year stays current. */}

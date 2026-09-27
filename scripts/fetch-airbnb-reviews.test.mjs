@@ -77,6 +77,10 @@ test('rates the listing across all reviews but keeps only five-star reviews for 
     assert.deepEqual(summary.reviews.map(review => review.id), ['a', 'b', 'd']);
 });
 
-test('refuses to summarize reviews when none are five stars', () => {
-    assert.throws(() => summarizeReviews([{ id: 'a', rating: 4, text: 'Good' }]), /No five-star reviews/);
+test('keeps the rating but shows no reviews when none are five stars', () => {
+    assert.deepEqual(summarizeReviews([{ id: 'a', rating: 4, text: 'Good' }]), { rating: 4, count: 1, reviews: [] });
+});
+
+test('summarizes a new listing with no reviews', () => {
+    assert.deepEqual(summarizeReviews([]), { rating: null, count: 0, reviews: [] });
 });
