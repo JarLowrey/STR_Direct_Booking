@@ -2,6 +2,7 @@ node_modules/
 .next/
 out/
 next-env.d.ts
-# Generated for the site being built or served (see scripts/sites.mjs).
-public/
-lib/current-site.js
+# Generated for the site being built or served (see scripts/sites.mjs). The leading slashes limit these
+# to the repository root, so each site's own sites/<site>/public/ folder is still committed.
+/public/
+/lib/current-site.js
