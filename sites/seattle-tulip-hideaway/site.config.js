@@ -50,8 +50,8 @@ export default {
     property: {
         maxGuests: 6,
         bedrooms: 1,
-        // Airbnb counts the king and the queen fold-out bed; the double futon is counted as a couch.
-        beds: 2,
+        // King, queen fold-out bed, and double fold-out futon. (Airbnb counts the futon as a couch, so it lists 2.)
+        beds: 3,
         bathrooms: 1,
         petsAllowed: true,
         checkinTime: '15:00:00',
@@ -92,7 +92,7 @@ export default {
 
     stats: [
         { value: '6', label: 'Guests' },
-        { value: '1', label: 'Bedroom (king bed)' },
+        { value: '3', label: 'Beds (king, queen, futon)' },
         { value: '1,000', label: 'Square feet' },
         { value: '5 min', label: 'Walk to Lake Washington' }
     ],
@@ -238,7 +238,7 @@ export default {
             },
             {
                 question: 'Is there parking?',
-                answer: 'Yes. Parking is free on the property and on the street.'
+                answer: 'Yes. Parking is free and always available on the street right in front of the home.'
             },
             {
                 question: 'Is there laundry and a kitchen?',

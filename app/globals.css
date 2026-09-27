@@ -390,6 +390,23 @@ nav.scrolled {
     max-width: 1600px;
     margin: 0 auto;
     padding: 0 3rem;
+    /* Lets the arrows below size themselves from the carousel's width (cqw units). */
+    container-type: inline-size;
+}
+
+/* Center the gallery arrows on the first row of photos rather than the whole grid, so they stay put
+   when a page has fewer rows. A 4:3 tile in N columns with 1rem gaps is ((width - gaps) / N) * 3/4
+   tall, and the arrow sits at half that. (On phones the arrows sit above the grid instead.) */
+@media (min-width: 769px) {
+    .gallery-carousel .review-nav {
+        top: calc((100cqw - 2rem) / 8);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .gallery-carousel .review-nav {
+        top: calc((100cqw - 1rem) * 3 / 16);
+    }
 }
 
 .gallery-page-status {
