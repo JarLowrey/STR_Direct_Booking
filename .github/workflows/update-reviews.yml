@@ -1,0 +1,79 @@
+name: Update Airbnb Reviews
+
+on:
+  schedule:
+    # 9:00 AM PST on the first day of each month (GitHub Actions uses UTC).
+    - cron: "0 17 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  # Lets this workflow start a site's deploy after committing its new reviews.
+  actions: write
+
+jobs:
+  sites:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.list.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List sites
+        id: list
+        run: echo "matrix=$(node scripts/sites.mjs matrix)" >> "$GITHUB_OUTPUT"
+
+  update-reviews:
+    needs: sites
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # One site at a time, so their commits don't race each other.
+      max-parallel: 1
+      matrix:
+        site: ${{ fromJSON(needs.sites.outputs.matrix) }}
+    name: update-reviews (${{ matrix.site.id }})
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies (including Playwright)
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Pull Airbnb reviews
+        run: node scripts/fetch-airbnb-reviews.mjs ${{ matrix.site.id }}
+
+      - name: Commit reviews
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sites/${{ matrix.site.id }}/data/reviews.json
+
+          if git diff --cached --quiet; then
+            echo "No review changes"
+          else
+            git commit -m "Update Airbnb reviews for ${{ matrix.site.id }}"
+            # Another workflow may have pushed since checkout.
+            git pull --rebase
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Pushes made with GITHUB_TOKEN don't trigger other workflows, so start the deploy directly.
+      - name: Rebuild and deploy ${{ matrix.site.id }}
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main -f site=${{ matrix.site.id }}

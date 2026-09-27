@@ -1,0 +1,108 @@
+name: Build and Deploy Sites
+
+on:
+  # Deploy every site after each change to main.
+  push:
+    branches: [main]
+  # Test and build pull requests without deploying them.
+  pull_request:
+  # Started by the calendar, review, and photo workflows after they commit new data for a site.
+  # Their pushes use GITHUB_TOKEN, which doesn't trigger push events, so they start this directly.
+  workflow_dispatch:
+    inputs:
+      site:
+        description: Site folder under sites/ to deploy (leave empty for all)
+        required: false
+        default: ""
+
+permissions:
+  # Publishing to this repository's gh-pages branch.
+  contents: write
+
+# One deploy per site at a time; a newer one waits instead of cancelling a publish in progress.
+concurrency:
+  group: deploy-${{ github.ref }}-${{ inputs.site || 'all' }}
+  cancel-in-progress: false
+
+jobs:
+  sites:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.list.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List sites
+        id: list
+        env:
+          SITE: ${{ inputs.site }}
+        run: echo "matrix=$(node scripts/sites.mjs matrix $SITE)" >> "$GITHUB_OUTPUT"
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+  build:
+    needs: [sites, test]
+    runs-on: ubuntu-latest
+    strategy:
+      # One site failing to build shouldn't stop the others from deploying.
+      fail-fast: false
+      matrix:
+        site: ${{ fromJSON(needs.sites.outputs.matrix) }}
+    name: build (${{ matrix.site.id }})
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build ${{ matrix.site.id }}
+        run: npm run build -- ${{ matrix.site.id }}
+
+      # Replaces the target repository's gh-pages branch with this build (a single commit, so the
+      # branch doesn't grow with every deploy). The repository's Pages settings serve that branch.
+      - name: Publish to ${{ matrix.site.repository }}
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          TARGET_REPOSITORY: ${{ matrix.site.repository }}
+          # This repository can use the workflow's own token; other repositories need a token
+          # with write access to them, stored as the PAGES_DEPLOY_TOKEN secret.
+          DEPLOY_TOKEN: ${{ matrix.site.repository == github.repository && github.token || secrets.PAGES_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$DEPLOY_TOKEN" ]; then
+            echo "::error::Publishing to $TARGET_REPOSITORY needs the PAGES_DEPLOY_TOKEN secret (see README)."
+            exit 1
+          fi
+
+          cd out
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy ${{ matrix.site.id }} from ${GITHUB_SHA::7}"
+          git push --force -q "https://x-access-token:${DEPLOY_TOKEN}@github.com/${TARGET_REPOSITORY}.git" gh-pages
+          echo "Published ${{ matrix.site.id }} to https://github.com/${TARGET_REPOSITORY}/tree/gh-pages"

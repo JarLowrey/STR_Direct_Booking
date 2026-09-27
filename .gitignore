@@ -1,0 +1,7 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+# Generated for the site being built or served (see scripts/sites.mjs).
+public/
+lib/current-site.js
