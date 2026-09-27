@@ -329,6 +329,8 @@ export default function HomePage() {
                 <div className="footer-bottom">
                     {/* The site rebuilds whenever its data changes (at least monthly), so the build year stays current. */}
                     <p>&copy; {new Date().getFullYear()} {site.company}. All rights reserved.</p>
+                    {/* Some cities (Seattle, for one) require the rental license number on every listing. */}
+                    {site.license && <p>{site.license}</p>}
                     {links.github && (
                         <p><a href={links.github} target="_blank" rel="noopener noreferrer">GitHub Repo</a></p>
                     )}

@@ -1,7 +1,8 @@
 # Rental Listing Sites
 
-Websites for vacation rental listings: [Rainier Getaway](https://rainier-getaway.com/) and
-[Cozy Rainier Cabin](https://jarlowrey.github.io/RainierTinyHome/). One
+Websites for vacation rental listings: [Rainier Getaway](https://rainier-getaway.com/),
+[Cozy Rainier Cabin](https://jarlowrey.github.io/RainierTinyHome/), and
+[Seattle Garden Haven](https://jarlowrey.github.io/SeattleGardenHaven/). One
 [Next.js](https://nextjs.org/) codebase builds a static site for each listing in `sites/`, and each site deploys
 to its own GitHub Pages repository and domain.
 
@@ -127,7 +128,8 @@ the site's `calendarSecret`) holding a JSON array:
 2. In `sites/<new-site>/site.config.js`, update everything: name, company, `url`, `deploy.repository`,
    `airbnb.listingId` (the number in the listing's `airbnb.com/rooms/...` URL) and booking link, `calendarSecret`,
    address, coordinates, property details, and all the page text. Optional parts (VRBO, Instagram, and email links,
-   the street address, the direct-booking section, the location map) can be removed.
+   the street address, the direct-booking section, the location map) can be removed. If the city requires a rental
+   license number on every listing (Seattle does), set `license` to the text to show in the footer.
    - With a custom domain, set `url` to `https://your-domain.com/`.
    - Without one, set `url` to the deploy repository's Pages address, `https://<owner>.github.io/<repo>/`. The site
      is built to live in that subfolder. (Search engines only read `robots.txt` at a domain's root, so a subfolder

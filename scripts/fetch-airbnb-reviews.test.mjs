@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { collectReviews, normalizeReviewDate, summarizeReviews } from './fetch-airbnb-reviews.mjs';
+import { cleanReviewText, collectReviews, normalizeReviewDate, summarizeReviews } from './fetch-airbnb-reviews.mjs';
 
 const referenceDate = new Date('2026-01-05T12:00:00Z');
 
@@ -83,4 +83,13 @@ test('keeps the rating but shows no reviews when none are five stars', () => {
 
 test('summarizes a new listing with no reviews', () => {
     assert.deepEqual(summarizeReviews([]), { rating: null, count: 0, reviews: [] });
+});
+
+test('turns Airbnb review HTML into plain text with line breaks', () => {
+    assert.equal(
+        cleanReviewText('Great spot &amp; host!<br/>The beach is close.<br /><br/><br/><b>10/10</b> &#39;would&#39; return&nbsp;'),
+        "Great spot & host!\nThe beach is close.\n\n10/10 'would' return"
+    );
+    assert.equal(cleanReviewText('Plain text'), 'Plain text');
+    assert.equal(cleanReviewText(undefined), '');
 });

@@ -138,9 +138,28 @@ export function normalizeReviewDate(value, now = new Date()) {
     return date ? monthYear(date) : null;
 }
 
+// Airbnb sends some review text with HTML line breaks ("<br/>") and entities ("&amp;"). Turns breaks
+// into newlines, drops any other tags, and decodes entities, so the site shows plain text.
+export function cleanReviewText(text) {
+    const entities = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+    return String(text ?? '')
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (match, code) => {
+            if (code[0] === '#') {
+                const value = code[1].toLowerCase() === 'x' ? parseInt(code.slice(2), 16) : Number(code.slice(1));
+                return Number.isFinite(value) ? String.fromCodePoint(value) : match;
+            }
+            return entities[code.toLowerCase()] ?? match;
+        })
+        .replace(/[ \t]+\n/g, '\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+}
+
 function normalizeReview(review, now = new Date()) {
     const rating = Number(review.rating ?? review.ratingValue);
-    const text = firstString(review, reviewTextKeys);
+    const text = cleanReviewText(firstString(review, reviewTextKeys));
     const date = normalizeReviewDate(firstString(review, dateKeys), now);
 
     if (!Number.isFinite(rating) || !text) {
@@ -211,20 +230,37 @@ async function fetchAllReviews(listingId) {
         }
         throw new Error('Could not find the "Show all reviews" button on the Airbnb listing');
     }
+    const expectedReviewCount = Number((await page.locator('body').innerText()).match(/from (\d+) reviews/i)?.[1] ?? 0);
     await showAllReviews.click();
 
-    const scrollable = page.locator('[data-testid*="review"] [data-testid*="scroll"], [role="dialog"]');
-    for (let attempt = 0; attempt < 12; attempt += 1) {
-        await scrollable.evaluate(element => element.scrollTo(0, element.scrollHeight)).catch(() => {});
-        await page.waitForTimeout(500);
+    // Airbnb loads reviews about 24 at a time as the pop-up scrolls, so keep scrolling until every
+    // review has arrived, or until several scrolls in a row bring no new ones.
+    const collected = async () => {
+        await Promise.allSettled(pendingResponses);
+        return uniqueReviews(reviewResponses.flatMap(payload => collectReviews(payload))).length;
+    };
+    const dialog = page.getByRole('dialog').last();
+    await dialog.waitFor({ timeout: 30_000 }).catch(() => {});
+    let lastCount = -1;
+    for (let attempt = 0, stalls = 0; attempt < 200 && stalls < 8; attempt += 1) {
+        await dialog.evaluate(root => {
+            // The scrolling element is somewhere inside the pop-up; scroll every scrollable one to the bottom.
+            const scrollables = [root, ...root.querySelectorAll('*')].filter(element =>
+                element.scrollHeight > element.clientHeight + 10 && /auto|scroll/.test(getComputedStyle(element).overflowY));
+            scrollables.forEach(element => { element.scrollTop = element.scrollHeight; });
+        }).catch(() => {});
+        await page.waitForTimeout(700);
+
+        const count = await collected();
+        if (expectedReviewCount && count >= expectedReviewCount) break;
+        stalls = count === lastCount ? stalls + 1 : 0;
+        lastCount = count;
     }
 
     await page.waitForTimeout(1_000);
     await Promise.allSettled(pendingResponses);
 
     const allReviews = uniqueReviews(reviewResponses.flatMap(payload => collectReviews(payload)));
-    const pageText = await page.locator('body').innerText();
-    const expectedReviewCount = Number(pageText.match(/from (\d+) reviews/i)?.[1] ?? 0);
     if (expectedReviewCount && allReviews.length < expectedReviewCount) {
         await browser.close();
         throw new Error(`Only collected ${allReviews.length} of Airbnb's ${expectedReviewCount} reviews`);
