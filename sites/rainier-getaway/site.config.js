@@ -64,8 +64,7 @@ export default {
     links: {
         vrbo: 'https://www.vrbo.com/5039645',
         instagram: 'https://www.instagram.com/rainiergetaway',
-        email: 'rainiergetawayllc@gmail.com',
-        github: 'https://github.com/JarLowrey/STR_Direct_Booking'
+        email: 'rainiergetawayllc@gmail.com'
     },
 
     // Image paths are relative to this site's public/ folder.
