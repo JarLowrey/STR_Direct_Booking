@@ -104,10 +104,10 @@ export default {
             'whole group, a short walk from Lake Washington.',
         items: [
             {
-                icon: '🌳',
-                title: 'A 150-Year-Old Tulip Tree',
-                text: 'A massive tulip tree, about 150 years old, towers over the property: a grand, one-of-a-kind ' +
-                    'centerpiece of the garden.'
+                icon: '🚆',
+                title: 'Easy Trips Downtown',
+                text: 'The Mount Baker and Judkins Park light rail stations are each under a mile away, with trains ' +
+                    'downtown, to Bellevue, and to the airport, and buses nearby.'
             },
             {
                 icon: '🌊',
