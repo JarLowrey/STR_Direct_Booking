@@ -4,6 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 
 const PAGE_SIZE = 3;
 
+// A review's star rating as filled and empty stars, such as "★★★★☆" for 4.
+function stars(rating) {
+    const filled = Math.min(5, Math.max(0, Math.round(Number(rating) || 0)));
+    return '★'.repeat(filled) + '☆'.repeat(5 - filled);
+}
+
 // Airbnb guest reviews, 3 per page, with "Read more" for reviews too long for their card.
 // Rendered to HTML at build time, so the first page is visible without JavaScript.
 export default function Reviews({ reviews }) {
@@ -88,7 +94,9 @@ export default function Reviews({ reviews }) {
                     return (
                         <article className="review-card" key={review.id}>
                             <div className="review-card-header">
-                                <span className="review-rating" aria-label={`${review.rating} out of 5 stars`}>★★★★★</span>
+                                <span className="review-rating" aria-label={`${review.rating} out of 5 stars`}>
+                                    {stars(review.rating)}
+                                </span>
                                 <time className="review-date">{review.date || ''}</time>
                             </div>
                             <p

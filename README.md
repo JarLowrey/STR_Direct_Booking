@@ -103,8 +103,8 @@ also be started manually from the Actions tab.
   listed on both, and writes `sites/<site>/data/combined_calendar.ics`. It fails without writing anything if a feed
   returns something other than a calendar.
 - `update-reviews.yml` runs monthly on the 1st. It collects the listing's Airbnb reviews and writes
-  `sites/<site>/data/reviews.json`: the overall rating and count across all reviews, and the text of the five-star
-  reviews shown on the site.
+  `sites/<site>/data/reviews.json`: the overall rating and count, and every review with its rating, all shown on the
+  site.
 - `update-airbnb-images.yml` runs monthly on the 1st. It reads the photo-tour data Airbnb embeds in the listing page
   (plain HTTP first, falling back to headless Chromium if that's blocked) and downloads every photo in gallery order,
   waiting 0.5-1.25 seconds between downloads. It writes full-size photos and a `metadata.json` (order, room,

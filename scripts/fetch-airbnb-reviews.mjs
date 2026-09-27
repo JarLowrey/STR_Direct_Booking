@@ -2,8 +2,8 @@
 //
 //   node scripts/fetch-airbnb-reviews.mjs [site]
 //
-// Writes sites/<site>/data/reviews.json with Airbnb's overall rating and review count (across all
-// reviews) and the text of the five-star reviews, which are the ones shown on the site.
+// Writes sites/<site>/data/reviews.json with Airbnb's overall rating, the review count, and every
+// review (its rating, date, and text), all of which the site shows.
 
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
@@ -270,9 +270,9 @@ async function fetchAllReviews(listingId) {
     return allReviews;
 }
 
-// The overall rating (average stars, to 2 decimals like Airbnb shows) and count cover every review,
-// so the site's "Rated X from N reviews" is accurate; only the five-star reviews are kept for display.
-// A listing with no reviews yet gets a null rating and a count of 0, and the site leaves reviews out.
+// The overall rating (average stars, to 2 decimals like Airbnb shows) and count, plus every review in
+// Airbnb's order, whatever its rating. A listing with no reviews yet gets a null rating and a count of
+// 0, and the site leaves reviews out.
 export function summarizeReviews(allReviews) {
     const rated = allReviews.filter(review => Number.isFinite(review.rating));
     if (!rated.length) {
@@ -283,7 +283,7 @@ export function summarizeReviews(allReviews) {
     return {
         rating: Math.round(average * 100) / 100,
         count: rated.length,
-        reviews: rated.filter(review => review.rating === 5)
+        reviews: rated
     };
 }
 
@@ -303,5 +303,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         reviews
     }, null, 2)}\n`, 'utf8');
 
-    console.log(`${siteId}: rated ${rating} from ${count} reviews; wrote ${reviews.length} five-star reviews`);
+    console.log(`${siteId}: rated ${rating} from ${count} reviews; wrote ${reviews.length} reviews`);
 }

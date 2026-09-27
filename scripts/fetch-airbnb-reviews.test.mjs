@@ -64,21 +64,24 @@ test('collects valid reviews without exposing reviewer or author data', () => {
         }
     ]);
 });
-test('rates the listing across all reviews but keeps only five-star reviews for display', () => {
+test('rates the listing and keeps every review, whatever its rating, in Airbnb order', () => {
     const summary = summarizeReviews([
         { id: 'a', rating: 5, text: 'Great' },
         { id: 'b', rating: 5, text: 'Lovely' },
-        { id: 'c', rating: 4, text: 'Good' },
+        { id: 'c', rating: 3, text: 'Okay' },
         { id: 'd', rating: 5, text: 'Perfect' }
     ]);
 
-    assert.equal(summary.rating, 4.75);
+    assert.equal(summary.rating, 4.5);
     assert.equal(summary.count, 4);
-    assert.deepEqual(summary.reviews.map(review => review.id), ['a', 'b', 'd']);
+    assert.deepEqual(summary.reviews.map(review => review.id), ['a', 'b', 'c', 'd']);
 });
 
-test('keeps the rating but shows no reviews when none are five stars', () => {
-    assert.deepEqual(summarizeReviews([{ id: 'a', rating: 4, text: 'Good' }]), { rating: 4, count: 1, reviews: [] });
+test('leaves out reviews without a rating', () => {
+    assert.deepEqual(
+        summarizeReviews([{ id: 'a', rating: 4, text: 'Good' }, { id: 'b', rating: NaN, text: 'No stars' }]),
+        { rating: 4, count: 1, reviews: [{ id: 'a', rating: 4, text: 'Good' }] }
+    );
 });
 
 test('summarizes a new listing with no reviews', () => {
