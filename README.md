@@ -2,7 +2,7 @@
 
 Websites for vacation rental listings: [Rainier Getaway](https://rainier-getaway.com/),
 [Cozy Rainier Cabin](https://jarlowrey.github.io/RainierTinyHome/), and
-[Seattle Garden Haven](https://jarlowrey.github.io/SeattleGardenHaven/). One
+[Seattle Tulip Hideaway](https://jarlowrey.github.io/SeattleTulipHideaway/). One
 [Next.js](https://nextjs.org/) codebase builds a static site for each listing in `sites/`, and each site deploys
 to its own GitHub Pages repository and domain.
 

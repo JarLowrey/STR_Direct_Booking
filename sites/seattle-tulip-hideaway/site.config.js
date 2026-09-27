@@ -4,17 +4,17 @@
 // Text is taken from the Airbnb listing (https://www.airbnb.com/rooms/594865953049740631).
 
 export default {
-    name: 'Seattle Garden Haven',
+    name: 'Seattle Tulip Hideaway',
     // Shown in the footer copyright line.
-    company: 'Seattle Garden Haven',
+    company: 'Seattle Tulip Hideaway',
     // The site lives at the repository's GitHub Pages address until a custom domain is set up. For
-    // seattlegardenhaven.com, change this to https://seattlegardenhaven.com/ and add a public/CNAME file.
-    url: 'https://jarlowrey.github.io/SeattleGardenHaven/',
+    // seattletuliphideaway.com, change this to https://seattletuliphideaway.com/ and add a public/CNAME file.
+    url: 'https://jarlowrey.github.io/SeattleTulipHideaway/',
     // Seattle requires the short-term rental license number on every advertisement; shown in the footer.
     license: 'Seattle short-term rental license STR-OPLI-22-001317',
 
     deploy: {
-        repository: 'JarLowrey/SeattleGardenHaven'
+        repository: 'JarLowrey/SeattleTulipHideaway'
     },
 
     airbnb: {
@@ -24,17 +24,17 @@ export default {
 
     // GitHub secret with this listing's calendar feeds (see README). Until it's added, the site
     // leaves out the availability calendar.
-    calendarSecret: 'CALENDAR_FEEDS_SEATTLE_GARDEN_HAVEN',
+    calendarSecret: 'CALENDAR_FEEDS_SEATTLE_TULIP_HIDEAWAY',
 
     seo: {
-        title: 'Seattle Garden Haven | Spacious Garden Suite Near Lake Washington, Sleeps 6',
-        description: 'A spacious 1,000 sq ft garden suite in Seattle, about a 5-minute walk to Lake Washington. ' +
-            'Sleeps 6 with a king bedroom, full kitchen, in-unit laundry, and a private entrance through the garden.',
-        shareImageAlt: 'Seattle Garden Haven, a garden suite near Lake Washington in Seattle',
-        structuredDescription: "Spacious 1,000 sq ft garden suite in Seattle's Mount Baker neighborhood, about a " +
-            '5-minute walk to Lake Washington. Sleeps 6 with a king bedroom, a queen fold-out bed, a double futon, a ' +
-            'full kitchen, in-unit laundry, and a private garden entrance.',
-        identifier: 'seattle-garden-haven-seattle-wa'
+        title: 'Seattle Tulip Hideaway | Spacious Garden Suite Near Lake Washington, Sleeps 6',
+        description: 'A spacious 1,000 sq ft garden suite beneath a 150-year-old tulip tree in Seattle, about a ' +
+            '5-minute walk to Lake Washington. Sleeps 6 with a king bedroom, full kitchen, and in-unit laundry.',
+        shareImageAlt: 'Seattle Tulip Hideaway, a garden suite near Lake Washington in Seattle',
+        structuredDescription: "Spacious 1,000 sq ft garden suite in Seattle's Mount Baker neighborhood, beneath a " +
+            '150-year-old tulip tree and about a 5-minute walk to Lake Washington. Sleeps 6 with a king bedroom, a ' +
+            'queen fold-out bed, a double futon, a full kitchen, in-unit laundry, and a private garden entrance.',
+        identifier: 'seattle-tulip-hideaway-seattle-wa'
     },
 
     address: {
@@ -69,7 +69,7 @@ export default {
         hero: {
             src: '/images/hero.jpg',
             srcSet: '/images/hero.jpg 1200w',
-            alt: 'The living room of Seattle Garden Haven, a spacious garden suite near Lake Washington'
+            alt: 'The living room of Seattle Tulip Hideaway, a spacious garden suite near Lake Washington'
         },
         share: '/images/hero.jpg',
         favicon: {
@@ -84,9 +84,9 @@ export default {
 
     hero: {
         subtitle: 'Seattle · 5-Minute Walk to Lake Washington',
-        heading: 'A Spacious Garden Suite Steps from Lake Washington',
-        description: 'A private 1,000 sq ft garden suite for up to 6 guests, minutes from the beach, parks, and ' +
-            'quick train rides into the city.',
+        heading: 'A Spacious Garden Suite Beneath a 150-Year-Old Tulip Tree',
+        description: 'A private 1,000 sq ft garden suite for up to 6 guests, a short walk from Lake Washington, ' +
+            'with beaches, parks, and quick train rides into the city nearby.',
         cta: 'Book Your Stay'
     },
 
@@ -99,10 +99,16 @@ export default {
 
     features: {
         tag: 'Why Stay Here',
-        title: 'Room to Relax, Steps from the Lake',
+        title: 'A Hidden Garden Beneath a Grand Old Tree',
         description: "A private, remodeled garden suite in Seattle's Mount Baker neighborhood, with space for the " +
-            'whole group and everything you need for a comfortable stay.',
+            'whole group, a short walk from Lake Washington.',
         items: [
+            {
+                icon: '🌳',
+                title: 'A 150-Year-Old Tulip Tree',
+                text: 'A massive tulip tree, about 150 years old, towers over the property: a grand, one-of-a-kind ' +
+                    'centerpiece of the garden.'
+            },
             {
                 icon: '🌊',
                 title: 'Steps from the Lake',
@@ -111,12 +117,7 @@ export default {
             {
                 icon: '🛋️',
                 title: 'Room for Everyone',
-                text: 'A 1,000 sq ft suite with two living areas, a king bedroom, and fold-out beds that sleep up to 6.'
-            },
-            {
-                icon: '🍳',
-                title: 'Made for Longer Stays',
-                text: 'A full kitchen, in-unit washer and dryer, and a dedicated workspace with a monitor.'
+                text: 'A 1,000 sq ft suite with two living areas, a king bedroom, a full kitchen, and in-unit laundry.'
             }
         ]
     },
@@ -157,6 +158,7 @@ export default {
                 icon: '🌳',
                 title: 'Outdoors & Location',
                 items: [
+                    ['🌳', 'A 150-year-old tulip tree on the property'],
                     ['🌊', 'About a 5-minute walk to Lake Washington'],
                     ['🏖️', 'Mount Baker Beach, half a mile away, with a pier and summer lifeguards'],
                     ['🛝', 'Mount Baker Park and its big playground, half a mile away'],
@@ -183,7 +185,8 @@ export default {
     location: {
         title: "Garden Suite in Seattle's Mount Baker Neighborhood",
         highlight: 'About a 5-minute walk to Lake Washington',
-        text: "The suite is in Seattle's Mount Baker neighborhood. Mount Baker Beach, with a pier, swimming, and " +
+        text: "The suite sits beneath a 150-year-old tulip tree in Seattle's Mount Baker neighborhood. Mount Baker " +
+            'Beach, with a pier, swimming, and ' +
             'summer lifeguards, and Mount Baker Park and its big playground are each half a mile away, and a small ' +
             'neighborhood center with restaurants and coffee is a short walk. The Mount Baker and Judkins Park light ' +
             'rail stations are both under a mile away, for trips downtown, to Bellevue, or from the airport.',
@@ -191,7 +194,7 @@ export default {
             src: '/images/location.jpg',
             width: 1024,
             height: 683,
-            alt: 'Mount Baker Beach on Lake Washington, half a mile from Seattle Garden Haven'
+            alt: 'Mount Baker Beach on Lake Washington, half a mile from Seattle Tulip Hideaway'
         },
         mapDestination: {
             name: 'Mount Baker Beach',
@@ -213,9 +216,15 @@ export default {
         heading: 'Garden Suite Questions',
         items: [
             {
-                question: 'How many guests can stay at Seattle Garden Haven?',
+                question: 'How many guests can stay at Seattle Tulip Hideaway?',
                 answer: 'Up to 6 guests. The bedroom has a king bed, the dining area has a queen fold-out bed, and ' +
                     'the living area has a double fold-out futon. Extra bedding is available.'
+            },
+            {
+                question: 'What is the tulip tree?',
+                answer: "A massive tulip tree, about 150 years old, stands on the property. Tulip trees are among the " +
+                    "tallest hardwoods in North America, and they're named for their tulip-shaped flowers, which " +
+                    'bloom in late spring.'
             },
             {
                 question: 'How far is Lake Washington?',
@@ -261,13 +270,14 @@ export default {
     },
 
     footer: {
-        description: "A spacious garden suite in Seattle's Mount Baker neighborhood, a short walk from Lake Washington."
+        description: "A spacious garden suite beneath a 150-year-old tulip tree in Seattle's Mount Baker " +
+            'neighborhood, a short walk from Lake Washington.'
     },
 
     notFound: {
         heading: "This path doesn't lead anywhere",
-        text: "The page you're looking for doesn't exist. Head back to Seattle Garden Haven, a spacious garden suite " +
-            'a short walk from Lake Washington.',
-        cta: 'Back to Seattle Garden Haven'
+        text: "The page you're looking for doesn't exist. Head back to Seattle Tulip Hideaway, a spacious garden " +
+            'suite a short walk from Lake Washington.',
+        cta: 'Back to Seattle Tulip Hideaway'
     }
 };
