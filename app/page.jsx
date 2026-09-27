@@ -50,25 +50,34 @@ function LocationMap({ location, address }) {
 
     const origin = `${address.street}, ${address.city} ${address.region}`;
     const originWithPostalCode = [origin, address.postalCode].filter(Boolean).join(' ');
+    // Optional travelMode ('walking', 'transit', or 'bicycling'); Google defaults to driving.
+    const travelMode = destination.travelMode;
+    const embedModes = { walking: 'w', transit: 'r', bicycling: 'b', driving: 'd' };
+    const embedMode = embedModes[travelMode] ? `&dirflg=${embedModes[travelMode]}` : '';
+    const linkMode = embedModes[travelMode] ? `&travelmode=${travelMode}` : '';
 
     return (
+        <>
+        {/* Optional one-line summary of the trip, such as the walking distance and time. */}
+        {destination.summary && <p className="location-map-summary">{destination.summary}</p>}
         <details className="location-map">
             <summary>View map</summary>
             <iframe
-                src={`https://www.google.com/maps?output=embed&saddr=${encodeURIComponent(origin)}&daddr=${encodeURIComponent(destination.query)}`}
+                src={`https://www.google.com/maps?output=embed&saddr=${encodeURIComponent(origin)}&daddr=${encodeURIComponent(destination.query)}${embedMode}`}
                 title={`Map from ${originWithPostalCode} to ${destination.name}`}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
             <a
                 className="location-map-directions"
-                href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(originWithPostalCode)}&destination=${encodeURIComponent(destination.query)}`}
+                href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(originWithPostalCode)}&destination=${encodeURIComponent(destination.query)}${linkMode}`}
                 target="_blank"
                 rel="noopener noreferrer"
             >
                 Open directions in Google Maps
             </a>
         </details>
+        </>
     );
 }
 

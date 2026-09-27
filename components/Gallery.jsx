@@ -4,10 +4,29 @@ import { useEffect, useRef, useState } from 'react';
 
 const PHOTO_FOLDER = '/images/airbnb_images';
 const THUMBNAIL_FOLDER = '/images/airbnb_thumbnails';
-const GALLERY_PAGE_SIZE = 9;
+// Photos per page for each gallery layout in the CSS: 9 on desktop (3 columns), 6 up to 1024px wide
+// (2 columns), and 2 up to 768px (1 column, kept short so phones don't scroll far). The build renders
+// the desktop size; phones and tablets switch after load.
+const DESKTOP_PAGE_SIZE = 9;
+const PAGE_SIZES_BY_SCREEN = [['(max-width: 768px)', 2], ['(max-width: 1024px)', 6]];
 // Tile widths from the gallery CSS: one column (90vw) up to 768px, two columns up to 1024px,
 // otherwise three columns capped by the grid's 1600px max width.
 const GALLERY_TILE_SIZES = '(max-width: 768px) 90vw, (max-width: 1024px) 45vw, min(30vw, 490px)';
+
+// The page size for the current screen width, updated when the window is resized or rotated.
+function usePageSize() {
+    const [pageSize, setPageSize] = useState(DESKTOP_PAGE_SIZE);
+
+    useEffect(() => {
+        const queries = PAGE_SIZES_BY_SCREEN.map(([query, size]) => [window.matchMedia(query), size]);
+        const update = () => setPageSize(queries.find(([query]) => query.matches)?.[1] ?? DESKTOP_PAGE_SIZE);
+        update();
+        queries.forEach(([query]) => query.addEventListener('change', update));
+        return () => queries.forEach(([query]) => query.removeEventListener('change', update));
+    }, []);
+
+    return pageSize;
+}
 
 function photoDescription(photo) {
     return String(photo.description || '').trim();
@@ -33,13 +52,16 @@ function thumbnailSources(photo, basePath) {
     };
 }
 
-// Photos in Airbnb's order, 9 per page, with room filters and a full-size pop-up. Rendered to
-// HTML at build time, so the first page is visible without JavaScript.
+// Photos in Airbnb's order, 9 per page on desktop (6 on tablets, 2 on phones), with room filters and
+// a full-size pop-up. Rendered to HTML at build time, so the first page is visible without JavaScript.
 // basePath is the site's subfolder ("" for a site at the root of its domain).
 export default function Gallery({ photos, siteName, basePath = '' }) {
     const [room, setRoom] = useState(null);
-    const [galleryPage, setGalleryPage] = useState(0);
+    // The first photo shown, rather than a page number, so a change in page size (rotating a tablet,
+    // resizing the window) keeps the photos being looked at on screen.
+    const [firstIndex, setFirstIndex] = useState(0);
     const [selectedPhoto, setSelectedPhoto] = useState(null);
+    const pageSize = usePageSize();
     const lightboxRef = useRef(null);
 
     useEffect(() => {
@@ -62,16 +84,17 @@ export default function Gallery({ photos, siteName, basePath = '' }) {
     // Rooms in the order they first appear in the gallery.
     const rooms = [...new Set(photos.map(photo => photo.room).filter(Boolean))];
     const filteredPhotos = room ? photos.filter(photo => photo.room === room) : photos;
-    const pageCount = Math.ceil(filteredPhotos.length / GALLERY_PAGE_SIZE);
-    const pagePhotos = filteredPhotos.slice(galleryPage * GALLERY_PAGE_SIZE, (galleryPage + 1) * GALLERY_PAGE_SIZE);
+    const pageCount = Math.ceil(filteredPhotos.length / pageSize);
+    const galleryPage = Math.min(Math.floor(firstIndex / pageSize), pageCount - 1);
+    const pagePhotos = filteredPhotos.slice(galleryPage * pageSize, (galleryPage + 1) * pageSize);
 
     const selectRoom = nextRoom => {
         setRoom(nextRoom);
-        setGalleryPage(0);
+        setFirstIndex(0);
     };
 
     const moveGalleryPage = direction => {
-        setGalleryPage(currentPage => (currentPage + direction + pageCount) % pageCount);
+        setFirstIndex(((galleryPage + direction + pageCount) % pageCount) * pageSize);
     };
 
     const filterButton = (label, value) => (

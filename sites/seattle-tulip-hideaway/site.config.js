@@ -27,13 +27,15 @@ export default {
     calendarSecret: 'CALENDAR_FEEDS_SEATTLE_TULIP_HIDEAWAY',
 
     seo: {
-        title: 'Seattle Tulip Hideaway | Spacious Garden Suite Near Lake Washington, Sleeps 6',
-        description: 'A spacious 1,000 sq ft garden suite beneath a 150-year-old tulip tree in Seattle, about a ' +
-            '5-minute walk to Lake Washington. Sleeps 6 with a king bedroom, full kitchen, and in-unit laundry.',
+        // Kept under ~60 characters so Google shows it in full.
+        title: 'Seattle Tulip Hideaway | Garden Suite Near Lake Washington',
+        // Kept under ~155 characters so Google doesn't cut it off.
+        description: 'A 1,000 sq ft garden suite beneath a 150-year-old tulip tree, a 5-minute walk to Lake ' +
+            'Washington in Seattle. Sleeps 6, full kitchen, in-unit laundry.',
         shareImageAlt: 'Seattle Tulip Hideaway, a garden suite near Lake Washington in Seattle',
-        structuredDescription: "Spacious 1,000 sq ft garden suite in Seattle's Mount Baker neighborhood, beneath a " +
-            '150-year-old tulip tree and about a 5-minute walk to Lake Washington. Sleeps 6 with a king bedroom, a ' +
-            'queen fold-out bed, a double futon, a full kitchen, in-unit laundry, and a private garden entrance.',
+        structuredDescription: 'Private garden suite for up to 6 guests beneath a 150-year-old tulip tree in ' +
+            "Seattle's Mount Baker neighborhood, a short walk from Lake Washington. It has 1,000 sq ft of space, a " +
+            'king bed, a queen fold-out, a double futon, a washer and dryer, a full kitchen, and its own garden entrance.',
         identifier: 'seattle-tulip-hideaway-seattle-wa'
     },
 
@@ -84,7 +86,7 @@ export default {
 
     hero: {
         subtitle: 'Seattle · 5-Minute Walk to Lake Washington',
-        heading: 'A Spacious Garden Suite Beneath a 150-Year-Old Tulip Tree',
+        heading: 'A Spacious Seattle Garden Suite Beneath a 150-Year-Old Tulip Tree',
         description: 'A private 1,000 sq ft garden suite for up to 6 guests, a short walk from Lake Washington, ' +
             'with beaches, parks, and quick train rides into the city nearby.',
         cta: 'Book Your Stay'
@@ -112,7 +114,8 @@ export default {
             {
                 icon: '🌊',
                 title: 'Steps from the Lake',
-                text: 'Lake Washington is about a 5-minute walk away, with Colman Park and Mount Baker Park even closer.'
+                text: 'Reach the Lake Washington shoreline in about five minutes on foot, and two parks, Colman and ' +
+                    'Mount Baker, in even less.'
             },
             {
                 icon: '🛋️',
@@ -196,9 +199,14 @@ export default {
             height: 683,
             alt: 'Mount Baker Beach on Lake Washington, half a mile from Seattle Tulip Hideaway'
         },
+        // Walking directions to the nearest light rail station.
         mapDestination: {
-            name: 'Mount Baker Beach',
-            query: 'Mount Baker Beach, Lake Washington Blvd S, Seattle, WA'
+            name: 'Mount Baker light rail station',
+            // The street address alone; with the station name, Google picks the Mount Baker neighborhood.
+            query: '2722 S Winthrop St, Seattle, WA',
+            travelMode: 'walking',
+            // Walking route length from OpenStreetMap routing (0.79 mi, about 17 minutes).
+            summary: 'About a 0.8-mile, 17-minute walk to the Mount Baker light rail station'
         }
     },
 
@@ -228,8 +236,8 @@ export default {
             },
             {
                 question: 'How far is Lake Washington?',
-                answer: 'About a 5-minute walk, with Colman Park and Mount Baker Park even closer. Mount Baker Beach, ' +
-                    'with a pier, swimming, and summer lifeguards, is half a mile away.'
+                answer: "It's roughly a five-minute walk to the shore, and two parks, Colman and Mount Baker, are " +
+                    'closer still. For swimming, Mount Baker Beach has a pier and summer lifeguards half a mile away.'
             },
             {
                 question: 'Can I get around without a car?',

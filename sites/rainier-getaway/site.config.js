@@ -199,7 +199,8 @@ export default {
             height: 900,
             alt: 'Mountain view near Mount Rainier National Park from the Ashford vacation rental'
         },
-        // Optional: the map shows directions from the property to this place.
+        // Optional: the map shows directions from the property to this place. Add
+        // travelMode: 'walking' (or 'transit' or 'bicycling') for other than driving directions.
         mapDestination: {
             name: 'Nisqually Entrance, Mount Rainier National Park',
             query: 'Nisqually Entrance, Mount Rainier National Park, WA'
