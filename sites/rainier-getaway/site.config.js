@@ -217,8 +217,8 @@ export default {
         direct: {
             title: 'Book Direct With Confidence and Save 10%',
             url: 'https://docs.google.com/forms/d/1P4zrzBh5_M9ItTD8iGvubHM_zeDbUCXZ_BLdG_O9oxI',
-            // Each tab's content is a list of blocks: a string is a paragraph, { strong: '...' } is a bold
-            // paragraph, and { list: [...] } is a bulleted list.
+            // Optional: tabs with the direct-booking terms. Each tab's content is a list of blocks: a string is
+            // a paragraph, { strong: '...' } is a bold paragraph, and { list: [...] } is a bulleted list.
             tabs: [
                 {
                     id: 'payment',

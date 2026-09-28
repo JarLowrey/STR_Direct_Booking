@@ -216,7 +216,66 @@ export default {
     },
 
     booking: {
-        platformText: 'Book your stay through Airbnb.'
+        direct: {
+            title: 'Book Direct With Confidence and Save 10%',
+            url: 'https://forms.gle/NXbwHZfeWVDsm5ny7',
+            tabs: [
+                {
+                    id: 'payment',
+                    label: 'Payments',
+                    content: [
+                        { strong: '30% due to reserve your dates' },
+                        'The remaining balance is due 90 days before check-in.',
+                        'Choose the payment method that works best for you:',
+                        { list: ['Zelle (0% fee)', 'Venmo (1.9% additional fee)', 'PayPal (3.5% additional fee)'] }
+                    ]
+                },
+                {
+                    id: 'cancellation',
+                    label: 'Cancellations',
+                    content: [
+                        'Damage deposit will always be 100% refunded if you cancel before check-in.',
+                        'Trip payment refund depends on how far in advance of your check-in day you cancel:',
+                        { list: ['100% refund :: 31+ days', '50% refund :: 15-30 days', '0% refund :: 0-14 days'] }
+                    ]
+                },
+                {
+                    id: 'non-refundable',
+                    label: 'Non-refundable Option',
+                    content: [
+                        'If you choose this option, the full amount is due at time of booking.',
+                        'No refunds for trip payments will be issued for cancellations made after the booking is confirmed.',
+                        'An additional 10% discount will be applied.',
+                        'NOTE: Damage deposit will also be due upfront, but will be refunded if you cancel before check-in.'
+                    ]
+                },
+                {
+                    id: 'misc',
+                    label: 'Terms',
+                    content: [
+                        {
+                            list: [
+                                'Two-night minimum stay',
+                                'Pets are allowed, with a maximum of two pets',
+                                'No smoking, vaping, or e-cigarettes inside; a $250 fine applies if this rule is ignored',
+                                'Quiet hours are from 10:00 PM to 8:00 AM',
+                                'Maximum occupancy is 6 guests',
+                                'Check-in is at 3:00 PM and check-out is at 11:00 AM'
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'deposit',
+                    label: 'Deposit',
+                    content: [
+                        { strong: '$800 refundable damage deposit' },
+                        'The deposit is refunded after your stay, provided there is no damage to the property.'
+                    ]
+                }
+            ]
+        },
+        platformText: 'Prefer to book through a vacation rental platform? Use Airbnb below.'
     },
 
     faq: {
@@ -264,7 +323,8 @@ export default {
             },
             {
                 question: 'Are pets allowed?',
-                answer: "Yes. The host's dogs also use the shared backyard, and assistance animals are always welcome."
+                answer: "Yes, up to two pets. The host's dogs also use the shared backyard, and assistance animals " +
+                    'are always welcome.'
             },
             {
                 question: 'What are the check-in and checkout times?',

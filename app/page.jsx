@@ -249,13 +249,15 @@ export default function HomePage() {
                         <a href={booking.direct.url} target="_blank" rel="noopener noreferrer" className="cta-button">
                             Book Direct
                         </a>
-                        <BookingTabs
-                            tabs={booking.direct.tabs.map(tab => ({
-                                id: tab.id,
-                                label: tab.label,
-                                content: <ContentBlocks blocks={tab.content} />
-                            }))}
-                        />
+                        {booking.direct.tabs && (
+                            <BookingTabs
+                                tabs={booking.direct.tabs.map(tab => ({
+                                    id: tab.id,
+                                    label: tab.label,
+                                    content: <ContentBlocks blocks={tab.content} />
+                                }))}
+                            />
+                        )}
                     </div>
                 )}
                 <div className="platform-booking">
