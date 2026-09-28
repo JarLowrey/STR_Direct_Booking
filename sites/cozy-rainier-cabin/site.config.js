@@ -80,7 +80,7 @@ export default {
         heading: 'Creekside Cabin for Two Near Mount Rainier',
         description: 'A cozy, romantic cabin in Ashford with a wood-burning fireplace, a creekside fire pit, and a ' +
             'lakeside park right next door.',
-        cta: 'Book Your Stay'
+        cta: 'Check Availability'
     },
 
     stats: [

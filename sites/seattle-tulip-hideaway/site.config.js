@@ -89,7 +89,7 @@ export default {
         heading: 'A Spacious Seattle Garden Suite Beneath a 150-Year-Old Tulip Tree',
         description: 'A private 1,000 sq ft garden suite for up to 6 guests, a short walk from Lake Washington, ' +
             'with beaches, parks, and quick train rides into the city nearby.',
-        cta: 'Book Your Stay'
+        cta: 'Check Availability'
     },
 
     stats: [
