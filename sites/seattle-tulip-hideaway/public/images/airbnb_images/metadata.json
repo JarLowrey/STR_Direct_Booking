@@ -1,7 +1,7 @@
 {
   "listingId": "594865953049740631",
   "listingUrl": "https://www.airbnb.com/rooms/594865953049740631",
-  "fetchedAt": "2026-09-27T02:04:46.148Z",
+  "fetchedAt": "2026-10-01T21:59:04.460Z",
   "photoCount": 21,
   "photos": [
     {
@@ -306,7 +306,7 @@
         }
       ],
       "photoId": "2685543206",
-      "room": "Exterior",
+      "room": "Additional photos",
       "description": "A short walk away is the Mt Baker \"downtown\" - a small town center with\n2 restaurants, a coffee shop, and a beautiful view of Seattle",
       "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/e25bd449-ff6f-46b6-a03a-fed57987aa64.jpeg"
     },
@@ -319,14 +319,14 @@
           "width": 480
         },
         {
-          "file": "18-800.webp",
-          "width": 800
+          "file": "18-497.webp",
+          "width": 497
         }
       ],
-      "photoId": "2698903332",
-      "room": "Exterior",
-      "description": "Half a mile from the house is the wonderful Mt Baker Beach. Fish off the end of the pier or take the family for a swim! Lifeguards are active in the summer to help watch the kids. Most summers the city tows in a diving platform for your backflips!",
-      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/f869ab76-7aa4-4a46-9abb-ad5c99016572.jpeg"
+      "photoId": "2423976422",
+      "room": "Additional photos",
+      "description": "Floor plan!",
+      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/70ac684f-5dc0-4402-9f93-d1a01aeffc5d.png"
     },
     {
       "order": 19,
@@ -341,10 +341,10 @@
           "width": 800
         }
       ],
-      "photoId": "2698904718",
-      "room": "Exterior",
-      "description": "Half a mile from the home is the huge Mt Baker Park Playground (even bigger than this photo). Grab some delicious Italian food at Mioposto restaurant across the street and play with the kids in the park!",
-      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/461884e4-b174-437d-b34f-01e1a5b268d2.jpeg"
+      "photoId": "2629462014",
+      "room": "Additional photos",
+      "description": "Hop on the LINK to explore the Seattle/Bellevue region! Both the Mount Baker and Judkins Park stations are less than 1 mile away. Save money and ride the train from the Airport, then go back out to explore the city or catch a game/concert.",
+      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/1ee299be-74f5-46e6-9a2d-a5acefc561d3.png"
     },
     {
       "order": 20,
@@ -359,10 +359,10 @@
           "width": 800
         }
       ],
-      "photoId": "2629462014",
-      "room": "Exterior",
-      "description": "Hop on the LINK to explore the Seattle/Bellevue region! Both the Mount Baker and Judkins Park stations are less than 1 mile away. Save money and ride the train from the Airport, then go back out to explore the city or catch a game/concert.",
-      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/1ee299be-74f5-46e6-9a2d-a5acefc561d3.png"
+      "photoId": "2698903332",
+      "room": "Additional photos",
+      "description": "Half a mile from the house is the wonderful Mt Baker Beach. Fish off the end of the pier or take the family for a swim! Lifeguards are active in the summer to help watch the kids. Most summers the city tows in a diving platform for your backflips!",
+      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/f869ab76-7aa4-4a46-9abb-ad5c99016572.jpeg"
     },
     {
       "order": 21,
@@ -373,14 +373,14 @@
           "width": 480
         },
         {
-          "file": "21-497.webp",
-          "width": 497
+          "file": "21-800.webp",
+          "width": 800
         }
       ],
-      "photoId": "2423976422",
+      "photoId": "2698904718",
       "room": "Additional photos",
-      "description": "Floor plan!",
-      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/70ac684f-5dc0-4402-9f93-d1a01aeffc5d.png"
+      "description": "Half a mile from the home is the huge Mt Baker Park Playground (even bigger than this photo). Grab some delicious Italian food at Mioposto restaurant across the street and play with the kids in the park!",
+      "sourceUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-594865953049740631/original/461884e4-b174-437d-b34f-01e1a5b268d2.jpeg"
     }
   ]
 }
