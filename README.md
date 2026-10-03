@@ -19,7 +19,7 @@ commit them, and redeploy the affected site.
 
 ## Requirements
 
-- Node.js 20.9 or newer, and npm
+- Node.js 24 or newer, and npm
 
 ## Install
 
