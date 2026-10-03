@@ -2,9 +2,10 @@
 //
 //   node scripts/fetch-airbnb-images.mjs [site]
 //
-// Photos go to sites/<site>/public/images/airbnb_images/ as 1.jpg, 2.png, ... plus a metadata.json
-// with each photo's room and caption. WebP thumbnails in two sizes (1-480.webp, 1-800.webp, ...)
-// go to sites/<site>/public/images/airbnb_thumbnails/ for the gallery grid, which picks a size per
+// Photos go to sites/<site>/public/images/airbnb_images/ (e.g. 3f9a1c2b7d4e8f60.jpg, named after
+// the photo's Airbnb URL) plus a metadata.json with each photo's order, room, and caption. WebP
+// thumbnails in two sizes (3f9a1c2b7d4e8f60-480.webp, 3f9a1c2b7d4e8f60-800.webp) go to
+// sites/<site>/public/images/airbnb_thumbnails/ for the gallery grid, which picks a size per
 // screen with srcset; the full-size originals are only loaded in the pop-up.
 //
 // Airbnb server-renders the photo tour (image URLs, captions, and the room each photo
@@ -12,6 +13,7 @@
 // rather than clicking through the UI. A plain HTTP request is tried first; a headless
 // browser is only used if Airbnb blocks or changes that response.
 
+import { createHash } from 'node:crypto';
 import { mkdir, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { extname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -32,9 +34,10 @@ export const FALLBACK_ROOM = 'Additional photos';
 // A desktop Chrome user agent; Airbnb may serve a stripped-down page to unknown clients.
 const USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const IMAGE_EXTENSION_PATTERN = /\.(?:avif|gif|jpe?g|png|webp)$/i;
-// Files this script owns in the photo and thumbnail folders (numbered images like 1.jpg or
-// 1-480.webp); anything else there is left alone.
-const OUTPUT_FILE_PATTERN = /^\d+(?:-\d+)?\.(?:avif|gif|jpe?g|png|webp)$/i;
+// Files this script owns in the photo and thumbnail folders (images like 3f9a1c2b7d4e8f60.jpg or
+// 3f9a1c2b7d4e8f60-480.webp, plus numbered ones like 1.jpg from older runs so they get cleaned up);
+// anything else there is left alone.
+const OUTPUT_FILE_PATTERN = /^(?:\d+|[0-9a-f]{16})(?:-\d+)?\.(?:avif|gif|jpe?g|png|webp)$/i;
 
 const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
@@ -163,12 +166,15 @@ export function collectListingPhotos(payloads, listingId) {
     const roomByPhotoId = roomsFromRoomTour(section);
 
     const photos = [];
+    const seenUrls = new Set();
     for (const item of section.mediaItems) {
         // The gallery can also contain videos; only still images are downloaded.
         if (item?.__typename !== 'Image') continue;
 
         const url = originalImageUrl(item.baseUrl, listingId);
-        if (!url) continue;
+        // Files are named after their URL, so the same image listed twice is only kept once.
+        if (!url || seenUrls.has(url)) continue;
+        seenUrls.add(url);
 
         const id = String(item.id ?? '') || url;
         photos.push({
@@ -327,6 +333,13 @@ export async function createThumbnail(image, width) {
     return { data, width: info.width };
 }
 
+// The file name (without extension) for a photo: a hash of its Airbnb URL. Naming files after
+// their gallery position meant reordering photos on Airbnb put different photos under the same
+// names, and browsers that had cached the old ones showed them under the new rooms and captions.
+export function photoFileBase(url) {
+    return createHash('sha256').update(url).digest('hex').slice(0, 16);
+}
+
 // Moves the freshly staged files into `targetDir`, first removing the numbered images from the
 // previous run because the listing may now have fewer photos (e.g. a stale 60.jpg).
 async function replaceNumberedFiles(stagingDir, targetDir, fileNames) {
@@ -340,7 +353,7 @@ async function replaceNumberedFiles(stagingDir, targetDir, fileNames) {
     }
 }
 
-// Downloads each photo as <order>.<ext>, writes <order>-<width>.webp thumbnails, and writes
+// Downloads each photo as <name>.<ext>, writes <name>-<width>.webp thumbnails, and writes
 // metadata.json, replacing the previous set. `wait`, `random`, `fetchImage`, and
 // `makeThumbnail` are parameters so tests can run without real delays, network access, or sharp.
 export async function downloadImages({
@@ -385,7 +398,8 @@ export async function downloadImages({
                 };
             }, { wait, label: `Downloading image ${index + 1}` });
 
-            const fileName = `${photo.order}${extension}`;
+            const name = photoFileBase(url);
+            const fileName = `${name}${extension}`;
             await writeFile(join(stagingDir, fileName), body);
 
             const thumbnails = [];
@@ -393,7 +407,7 @@ export async function downloadImages({
                 const { data, width } = await makeThumbnail(body, targetWidth);
                 // A small original can make both sizes come out the same; keep just one.
                 if (thumbnails.some(thumbnail => thumbnail.width === width)) continue;
-                const thumbnailName = `${photo.order}-${width}.webp`;
+                const thumbnailName = `${name}-${width}.webp`;
                 await writeFile(join(thumbnailStagingDir, thumbnailName), data);
                 thumbnails.push({ file: thumbnailName, width });
             }

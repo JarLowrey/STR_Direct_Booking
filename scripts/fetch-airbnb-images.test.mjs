@@ -11,7 +11,8 @@ import {
     downloadImages,
     extractPageState,
     loadListingPhotos,
-    originalImageUrl
+    originalImageUrl,
+    photoFileBase
 } from './fetch-airbnb-images.mjs';
 
 const LISTING_ID = '1501508351751467254';
@@ -165,6 +166,19 @@ test('fills unknown rooms from agreeing neighbors, otherwise uses a catch-all in
     assert.deepEqual(photos.map(photo => photo.room), ['Full kitchen', 'Full kitchen', 'Full kitchen', FALLBACK_ROOM]);
 });
 
+test('keeps an image Airbnb lists twice only once', () => {
+    const payload = photoTourPayload([
+        image('photo-1', 'one.jpg'),
+        image('photo-2', 'two.jpg'),
+        image('photo-1-again', 'one.jpg')
+    ], [{ title: 'Living room', imageIds: ['photo-1', 'photo-2', 'photo-1-again'] }]);
+
+    assert.deepEqual(
+        collectListingPhotos([payload], LISTING_ID).map(({ id, order }) => ({ id, order })),
+        [{ id: 'photo-1', order: 1 }, { id: 'photo-2', order: 2 }]
+    );
+});
+
 test('fails clearly when the page has no photo tour', () => {
     assert.throws(() => collectListingPhotos([{ unrelated: true }], LISTING_ID), /did not contain any media items/);
 });
@@ -236,7 +250,8 @@ test('downloads every photo in order and writes thumbnails and its metadata mani
             }
         }));
 
-        assert.deepEqual(files.map(file => basename(file)), ['1.jpg', '2.jpg', '3.jpg']);
+        const names = photos.map(photo => photoFileBase(photo.url));
+        assert.deepEqual(files.map(file => basename(file)), names.map(name => `${name}.jpg`));
         assert.deepEqual(requests, photos.map(photo => photo.url));
         assert.deepEqual(waits, [MIN_DELAY_MS, MIN_DELAY_MS]);
         assert.ok(waits.every(milliseconds => milliseconds >= MIN_DELAY_MS && milliseconds <= MAX_DELAY_MS));
@@ -247,22 +262,24 @@ test('downloads every photo in order and writes thumbnails and its metadata mani
             order, file, thumbnails, photoId, room, description
         })), photos.map((photo, index) => ({
             order: index + 1,
-            file: `${index + 1}.jpg`,
+            file: `${names[index]}.jpg`,
             thumbnails: [
-                { file: `${index + 1}-480.webp`, width: 480 },
-                { file: `${index + 1}-800.webp`, width: 800 }
+                { file: `${names[index]}-480.webp`, width: 480 },
+                { file: `${names[index]}-800.webp`, width: 800 }
             ],
             photoId: photo.id,
             room: photo.room,
             description: photo.description
         })));
 
+        // The numbered files from an older run are gone too.
         const outputFiles = await readdir(outputDir);
-        assert.deepEqual(outputFiles.sort(), ['1.jpg', '2.jpg', '3.jpg', METADATA_FILENAME]);
-        assert.deepEqual((await readdir(thumbnailDir)).sort(), [
-            '1-480.webp', '1-800.webp', '2-480.webp', '2-800.webp', '3-480.webp', '3-800.webp'
-        ]);
-        assert.equal(await readFile(join(thumbnailDir, '1-480.webp'), 'utf8'), '480px thumbnail of image data');
+        assert.deepEqual(outputFiles.sort(), [...names.map(name => `${name}.jpg`), METADATA_FILENAME].sort());
+        assert.deepEqual(
+            (await readdir(thumbnailDir)).sort(),
+            names.flatMap(name => [`${name}-480.webp`, `${name}-800.webp`]).sort()
+        );
+        assert.equal(await readFile(join(thumbnailDir, `${names[0]}-480.webp`), 'utf8'), '480px thumbnail of image data');
     } finally {
         await rm(outputDir, { recursive: true, force: true });
         await rm(thumbnailDir, { recursive: true, force: true });
@@ -285,9 +302,10 @@ test('keeps one thumbnail when a small original makes both sizes the same width'
             fetchImage: async () => imageResponse()
         }));
 
+        const thumbnail = `${photoFileBase(imageUrl('one.jpg'))}-400.webp`;
         const manifest = JSON.parse(await readFile(join(outputDir, METADATA_FILENAME), 'utf8'));
-        assert.deepEqual(manifest.photos[0].thumbnails, [{ file: '1-400.webp', width: 400 }]);
-        assert.deepEqual(await readdir(thumbnailDir), ['1-400.webp']);
+        assert.deepEqual(manifest.photos[0].thumbnails, [{ file: thumbnail, width: 400 }]);
+        assert.deepEqual(await readdir(thumbnailDir), [thumbnail]);
     } finally {
         await rm(outputDir, { recursive: true, force: true });
         await rm(thumbnailDir, { recursive: true, force: true });
@@ -314,7 +332,43 @@ test('retries a transient image download failure', async () => {
         }));
 
         assert.equal(calls, 3);
-        assert.deepEqual(files.map(file => basename(file)), ['1.jpg']);
+        assert.deepEqual(files.map(file => basename(file)), [`${photoFileBase(imageUrl('one.jpg'))}.jpg`]);
+    } finally {
+        await rm(outputDir, { recursive: true, force: true });
+        await rm(thumbnailDir, { recursive: true, force: true });
+    }
+});
+
+test('keeps each photo\'s file names when Airbnb reorders the gallery', async () => {
+    const outputDir = 'tmp-airbnb-images-reorder-test';
+    const thumbnailDir = 'tmp-airbnb-thumbnails-reorder-test';
+    const photos = [
+        { id: 'photo-1', url: imageUrl('one.jpg'), room: 'Living room', description: '', order: 1 },
+        { id: 'photo-2', url: imageUrl('two.jpg'), room: 'Bedroom 1', description: '', order: 2 }
+    ];
+    const filesById = async () => {
+        const manifest = JSON.parse(await readFile(join(outputDir, METADATA_FILENAME), 'utf8'));
+        return Object.fromEntries(manifest.photos.map(photo => [
+            photo.photoId,
+            [photo.file, ...photo.thumbnails.map(thumbnail => thumbnail.file)]
+        ]));
+    };
+    const download = photos => silently(() => downloadImages({
+        listingId: LISTING_ID,
+        photos,
+        outputDir,
+        thumbnailDir,
+        makeThumbnail: fakeThumbnail,
+        wait: () => {},
+        fetchImage: async () => imageResponse()
+    }));
+
+    try {
+        await download(photos);
+        const before = await filesById();
+        await download(photos.toReversed().map((photo, index) => ({ ...photo, order: index + 1 })));
+
+        assert.deepEqual(await filesById(), before);
     } finally {
         await rm(outputDir, { recursive: true, force: true });
         await rm(thumbnailDir, { recursive: true, force: true });
