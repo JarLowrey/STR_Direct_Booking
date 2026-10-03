@@ -1,9 +1,9 @@
 {
   "listingId": "594865953049740631",
   "listingUrl": "https://www.airbnb.com/rooms/594865953049740631?modal=REVIEWS",
-  "fetchedAt": "2026-09-27T03:05:39.483Z",
+  "fetchedAt": "2026-10-01T21:42:36.634Z",
   "rating": 4.94,
-  "count": 201,
+  "count": 202,
   "reviews": [
     {
       "id": "1779154785456783093",
@@ -16,6 +16,12 @@
       "rating": 5,
       "date": "9/2026",
       "text": "One of the best places to stay at! Felt like a home away from home, having a private space and full amenities to ourselves. The hosts’ were super kind and helpful! Would definitely stay here again as I felt it was easy to get where we wanted in the city! Thanks again for the best hospitality!"
+    },
+    {
+      "id": "1784218740301028853",
+      "rating": 5,
+      "date": "9/2026",
+      "text": "We had a great time and were close to the \"touristy\" attractions.  Will stay again if in the area."
     },
     {
       "id": "1760968664993431960",
@@ -42,16 +48,16 @@
       "text": "We had a great stay at James' suite. Lots of room for the three of us, everything we needed, even the Murphy bed was comfy!"
     },
     {
-      "id": "1737996036896362611",
-      "rating": 5,
-      "date": "7/2026",
-      "text": "Super cute neighborhood with such easy parking! We loved the Seattle decor and the little touches- useful items in the bathroom if needed, a guitar for playing, and plenty of kitchen items.\nEasy communication and quick responses.  Thanks!"
-    },
-    {
       "id": "1742138317528131464",
       "rating": 5,
       "date": "7/2026",
       "text": "Absolutely loved how communicative the hosts are! It was super clean and well equipped with everything. Thank you for hosting us!!"
+    },
+    {
+      "id": "1737996036896362611",
+      "rating": 5,
+      "date": "7/2026",
+      "text": "Super cute neighborhood with such easy parking! We loved the Seattle decor and the little touches- useful items in the bathroom if needed, a guitar for playing, and plenty of kitchen items.\nEasy communication and quick responses.  Thanks!"
     },
     {
       "id": "1738569956595280679",
@@ -112,12 +118,6 @@
       "rating": 5,
       "date": "6/2026",
       "text": "Cute decor well cleaned! James was very communicative and a great host."
-    },
-    {
-      "id": "1717710797047014459",
-      "rating": 5,
-      "date": "6/2026",
-      "text": "We had a great stay!  James was a great host and very responsive.  Very clean."
     },
     {
       "id": "828350875921440236",
@@ -946,6 +946,12 @@
       "rating": 5,
       "date": "8/2023",
       "text": "The house is very beautiful and near the beach! Really love how accommodating James is"
+    },
+    {
+      "id": "1717710797047014459",
+      "rating": 5,
+      "date": "6/2026",
+      "text": "We had a great stay!  James was a great host and very responsive.  Very clean."
     },
     {
       "id": "855164119602141945",
