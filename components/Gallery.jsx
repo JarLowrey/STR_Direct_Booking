@@ -28,6 +28,20 @@ function usePageSize() {
     return pageSize;
 }
 
+// Takes turns between rooms so the first pages show every room: each room's first photo (rooms in
+// the order Airbnb lists them), then each room's second photo, and so on. Rooms with fewer photos
+// drop out as they run out.
+function interleaveByRoom(photos) {
+    const photosByRoom = new Map();
+    for (const photo of photos) {
+        photosByRoom.set(photo.room, [...(photosByRoom.get(photo.room) ?? []), photo]);
+    }
+
+    const roomPhotos = [...photosByRoom.values()];
+    const rounds = Math.max(...roomPhotos.map(list => list.length));
+    return Array.from({ length: rounds }, (_, round) => roomPhotos.map(list => list[round]).filter(Boolean)).flat();
+}
+
 function photoDescription(photo) {
     return String(photo.description || '').trim();
 }
@@ -52,7 +66,7 @@ function thumbnailSources(photo, basePath) {
     };
 }
 
-// Photos in Airbnb's order, 9 per page on desktop (6 on tablets, 2 on phones), with room filters and
+// Photos taking turns between rooms (see interleaveByRoom), 9 per page on desktop (6 on tablets, 2 on phones), with room filters and
 // a full-size pop-up. Rendered to HTML at build time, so the first page is visible without JavaScript.
 // basePath is the site's subfolder ("" for a site at the root of its domain).
 export default function Gallery({ photos, siteName, basePath = '' }) {
@@ -83,7 +97,8 @@ export default function Gallery({ photos, siteName, basePath = '' }) {
 
     // Rooms in the order they first appear in the gallery.
     const rooms = [...new Set(photos.map(photo => photo.room).filter(Boolean))];
-    const filteredPhotos = room ? photos.filter(photo => photo.room === room) : photos;
+    // A single room's photos stay in Airbnb's order.
+    const filteredPhotos = room ? photos.filter(photo => photo.room === room) : interleaveByRoom(photos);
     const pageCount = Math.ceil(filteredPhotos.length / pageSize);
     const galleryPage = Math.min(Math.floor(firstIndex / pageSize), pageCount - 1);
     const pagePhotos = filteredPhotos.slice(galleryPage * pageSize, (galleryPage + 1) * pageSize);

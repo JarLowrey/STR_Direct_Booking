@@ -112,22 +112,19 @@ test('collects photo-tour images with rooms from the room tour, descriptions, an
             id: 'photo-1',
             url: imageUrl('living-room.jpg'),
             room: 'Living room',
-            description: 'Living room with a fireplace',
-            order: 1
+            description: 'Living room with a fireplace'
         },
         {
             id: 'photo-2',
             url: imageUrl('bedroom.jpg'),
             room: 'Bedroom 1',
-            description: '',
-            order: 2
+            description: ''
         },
         {
             id: 'photo-3',
             url: imageUrl('kitchen.jpg'),
             room: 'Full kitchen',
-            description: 'Kitchen with granite counters',
-            order: 3
+            description: 'Kitchen with granite counters'
         }
     ]);
 });
@@ -174,8 +171,8 @@ test('keeps an image Airbnb lists twice only once', () => {
     ], [{ title: 'Living room', imageIds: ['photo-1', 'photo-2', 'photo-1-again'] }]);
 
     assert.deepEqual(
-        collectListingPhotos([payload], LISTING_ID).map(({ id, order }) => ({ id, order })),
-        [{ id: 'photo-1', order: 1 }, { id: 'photo-2', order: 2 }]
+        collectListingPhotos([payload], LISTING_ID).map(({ id }) => id),
+        ['photo-1', 'photo-2']
     );
 });
 
@@ -223,9 +220,9 @@ test('downloads every photo in order and writes thumbnails and its metadata mani
     const waits = [];
     const requests = [];
     const photos = [
-        { id: 'photo-1', url: imageUrl('one.jpg'), room: 'Living room', description: 'A living room', order: 1 },
-        { id: 'photo-2', url: imageUrl('two.jpg'), room: 'Bedroom 1', description: 'A bedroom', order: 2 },
-        { id: 'photo-3', url: imageUrl('three.jpg'), room: 'Full kitchen', description: 'A kitchen', order: 3 }
+        { id: 'photo-1', url: imageUrl('one.jpg'), room: 'Living room', description: 'A living room' },
+        { id: 'photo-2', url: imageUrl('two.jpg'), room: 'Bedroom 1', description: 'A bedroom' },
+        { id: 'photo-3', url: imageUrl('three.jpg'), room: 'Full kitchen', description: 'A kitchen' }
     ];
 
     try {
@@ -258,10 +255,9 @@ test('downloads every photo in order and writes thumbnails and its metadata mani
 
         const manifest = JSON.parse(await readFile(join(outputDir, METADATA_FILENAME), 'utf8'));
         assert.equal(manifest.photoCount, 3);
-        assert.deepEqual(manifest.photos.map(({ order, file, thumbnails, photoId, room, description }) => ({
-            order, file, thumbnails, photoId, room, description
+        assert.deepEqual(manifest.photos.map(({ file, thumbnails, photoId, room, description }) => ({
+            file, thumbnails, photoId, room, description
         })), photos.map((photo, index) => ({
-            order: index + 1,
             file: `${names[index]}.jpg`,
             thumbnails: [
                 { file: `${names[index]}-480.webp`, width: 480 },
@@ -294,7 +290,7 @@ test('keeps one thumbnail when a small original makes both sizes the same width'
     try {
         await silently(() => downloadImages({
             listingId: LISTING_ID,
-            photos: [{ id: 'photo-1', url: imageUrl('one.jpg'), room: 'Gym', description: '', order: 1 }],
+            photos: [{ id: 'photo-1', url: imageUrl('one.jpg'), room: 'Gym', description: '' }],
             outputDir,
             thumbnailDir,
             makeThumbnail: async (image, width) => ({ data: Buffer.from(image), width: Math.min(width, 400) }),
@@ -320,7 +316,7 @@ test('retries a transient image download failure', async () => {
     try {
         const files = await silently(() => downloadImages({
             listingId: LISTING_ID,
-            photos: [{ id: 'photo-1', url: imageUrl('one.jpg'), room: 'Gym', description: null, order: 1 }],
+            photos: [{ id: 'photo-1', url: imageUrl('one.jpg'), room: 'Gym', description: null }],
             outputDir,
             thumbnailDir,
             makeThumbnail: fakeThumbnail,
@@ -343,8 +339,8 @@ test('keeps each photo\'s file names when Airbnb reorders the gallery', async ()
     const outputDir = 'tmp-airbnb-images-reorder-test';
     const thumbnailDir = 'tmp-airbnb-thumbnails-reorder-test';
     const photos = [
-        { id: 'photo-1', url: imageUrl('one.jpg'), room: 'Living room', description: '', order: 1 },
-        { id: 'photo-2', url: imageUrl('two.jpg'), room: 'Bedroom 1', description: '', order: 2 }
+        { id: 'photo-1', url: imageUrl('one.jpg'), room: 'Living room', description: '' },
+        { id: 'photo-2', url: imageUrl('two.jpg'), room: 'Bedroom 1', description: '' }
     ];
     const filesById = async () => {
         const manifest = JSON.parse(await readFile(join(outputDir, METADATA_FILENAME), 'utf8'));
@@ -366,7 +362,7 @@ test('keeps each photo\'s file names when Airbnb reorders the gallery', async ()
     try {
         await download(photos);
         const before = await filesById();
-        await download(photos.toReversed().map((photo, index) => ({ ...photo, order: index + 1 })));
+        await download(photos.toReversed());
 
         assert.deepEqual(await filesById(), before);
     } finally {
@@ -389,8 +385,8 @@ test('leaves existing images untouched when a download ultimately fails', async 
         await assert.rejects(silently(() => downloadImages({
             listingId: LISTING_ID,
             photos: [
-                { id: 'photo-1', url: imageUrl('one.jpg'), room: 'Gym', description: null, order: 1 },
-                { id: 'photo-2', url: imageUrl('two.jpg'), room: 'Gym', description: null, order: 2 }
+                { id: 'photo-1', url: imageUrl('one.jpg'), room: 'Gym', description: null },
+                { id: 'photo-2', url: imageUrl('two.jpg'), room: 'Gym', description: null }
             ],
             outputDir,
             thumbnailDir,

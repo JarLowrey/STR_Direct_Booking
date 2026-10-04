@@ -3,8 +3,8 @@
 //   node scripts/fetch-airbnb-images.mjs [site]
 //
 // Photos go to sites/<site>/public/images/airbnb_images/ (e.g. 3f9a1c2b7d4e8f60.jpg, named after
-// the photo's Airbnb URL) plus a metadata.json with each photo's order, room, and caption. WebP
-// thumbnails in two sizes (3f9a1c2b7d4e8f60-480.webp, 3f9a1c2b7d4e8f60-800.webp) go to
+// the photo's Airbnb URL) plus a metadata.json listing each photo's room and caption in gallery
+// order. WebP thumbnails in two sizes (3f9a1c2b7d4e8f60-480.webp, 3f9a1c2b7d4e8f60-800.webp) go to
 // sites/<site>/public/images/airbnb_thumbnails/ for the gallery grid, which picks a size per
 // screen with srcset; the full-size originals are only loaded in the pop-up.
 //
@@ -160,7 +160,7 @@ function photoDescription(item) {
     return description && !AUTOMATIC_LABEL_PATTERN.test(description) ? description : '';
 }
 
-// Turns the page state into an ordered list of { id, url, room, description, order }.
+// Turns the page state into a list of { id, url, room, description } in gallery order.
 export function collectListingPhotos(payloads, listingId) {
     const section = findPhotoTourSection(payloads);
     const roomByPhotoId = roomsFromRoomTour(section);
@@ -181,8 +181,7 @@ export function collectListingPhotos(payloads, listingId) {
             id,
             url,
             room: roomByPhotoId.get(id) ?? roomFromAccessibilityLabel(item.accessibilityLabel),
-            description: photoDescription(item),
-            order: photos.length + 1
+            description: photoDescription(item)
         });
     }
 
@@ -413,7 +412,6 @@ export async function downloadImages({
             }
 
             metadata.push({
-                order: photo.order,
                 file: fileName,
                 thumbnails,
                 photoId: photo.id,
