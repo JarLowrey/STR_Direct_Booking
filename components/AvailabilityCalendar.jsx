@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { addDays, canCheckIn, checkOutRange, formatPrice, optionalFees, stayPrice } from '../lib/stays.js';
+import { addDays, canCheckIn, checkOutRange, formatPrice, minNightsFor, optionalFees, stayPrice } from '../lib/stays.js';
 import Modal from './Modal.jsx';
 
 function calendarDateKey(date) {
@@ -154,8 +154,6 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
         return <p className="availability-status">Loading availability...</p>;
     }
 
-    const minimumStay = `${pluralNights(minNights)} minimum`;
-
     const isCheckOutDate = key => checkOutDates && key >= checkOutDates[0] && key <= checkOutDates[1];
 
     // A booked night runs from one day's afternoon to the next morning, so a day is only fully taken when both its own
@@ -179,8 +177,10 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
             return `${formatDate(key)} is another guest's check-in day, so it can only be your check-out. ` +
                 'Pick your check-in date first.';
         }
-        const limit = addDays(key, minNights) > rules.lastDate ? 'the end of the calendar' : 'the next booking';
-        return `A stay starting ${formatDate(key)} can't meet the ${minNights}-night minimum before ${limit}.`;
+        const nights = minNightsFor(key, minNights);
+        const limit = addDays(key, nights) > rules.lastDate ? 'the end of the calendar' : 'the next booking';
+        const start = formatDate(key, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+        return `A stay starting ${start} can't meet its ${nights}-night minimum before ${limit}.`;
     };
 
     const selectDate = date => {
@@ -258,7 +258,7 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
                     </>
                 ) : checkIn ? (
                     <p className="availability-status">
-                        {`Check-in ${formatDate(checkIn)}. Now pick a check-out date (${minimumStay}).`}
+                        {`Check-in ${formatDate(checkIn)}. Now pick a check-out date (${pluralNights(minNightsFor(checkIn, minNights))} minimum).`}
                     </p>
                 ) : (
                     <p className="availability-status">

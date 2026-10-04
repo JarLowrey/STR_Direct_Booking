@@ -56,6 +56,29 @@ test('rejects a config with missing or malformed fields', async () => {
     assert.throws(() => validateSiteConfig('ok', { ...config, deploy: { repository: 'not a repo' } }), /owner\/repo/);
     assert.throws(() => validateSiteConfig('ok', { ...config, calendarSecret: 'lowercase' }), /uppercase GitHub secret/);
     assert.throws(() => validateSiteConfig('ok', { ...config, minNights: undefined }), /missing minNights/);
-    assert.throws(() => validateSiteConfig('ok', { ...config, minNights: 0 }), /minNights must be/);
-    assert.throws(() => validateSiteConfig('ok', { ...config, minNights: '2' }), /minNights must be/);
+    // The old single-number form.
+    assert.throws(() => validateSiteConfig('ok', { ...config, minNights: 2 }), /minNights.weekdays must give/);
+    const weekdays = config.minNights.weekdays;
+    const withMinNights = minNights => ({ ...config, minNights });
+    assert.throws(() => validateSiteConfig('ok', withMinNights({ weekdays: { ...weekdays, thursday: undefined } })),
+        /minNights.weekdays.thursday must be/);
+    assert.throws(() => validateSiteConfig('ok', withMinNights({ weekdays: { ...weekdays, monday: 0 } })),
+        /minNights.weekdays.monday must be/);
+    assert.throws(() => validateSiteConfig('ok', withMinNights({ weekdays: { ...weekdays, Thursday: 3 } })),
+        /Thursday is not a weekday/);
+    assert.doesNotThrow(() => validateSiteConfig('ok', withMinNights({ weekdays })));
+    assert.doesNotThrow(() => validateSiteConfig('ok', withMinNights({
+        weekdays, specialDates: [{ date: '2026-12-24', minNights: 4 }]
+    })));
+    assert.throws(() => validateSiteConfig('ok', withMinNights({ weekdays, specialDates: { date: '2026-12-24' } })),
+        /specialDates must be a list/);
+    assert.throws(() => validateSiteConfig('ok', withMinNights({
+        weekdays, specialDates: [{ date: '2026-02-30', minNights: 4 }]
+    })), /invalid date "2026-02-30"/);
+    assert.throws(() => validateSiteConfig('ok', withMinNights({
+        weekdays, specialDates: [{ date: '2026-12-24', minNights: '4' }]
+    })), /2026-12-24 minNights must be/);
+    assert.throws(() => validateSiteConfig('ok', withMinNights({
+        weekdays, specialDates: [{ date: '2026-12-24', minNights: 4 }, { date: '2026-12-24', minNights: 5 }]
+    })), /lists 2026-12-24 more than once/);
 });

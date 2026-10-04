@@ -6,7 +6,7 @@
     "dev": "node scripts/site.mjs dev",
     "build": "node scripts/site.mjs build",
     "preview": "node scripts/site.mjs preview",
-    "test": "node --test lib/availability.test.js lib/stays.test.js lib/structured-data.test.jsscripts/sites.test.mjs scripts/update-calendar.test.mjs scripts/fetch-airbnb-reviews.test.mjs scripts/fetch-airbnb-images.test.mjs"
+    "test": "node --test lib/availability.test.js lib/stays.test.js lib/structured-data.test.js scripts/sites.test.mjs scripts/update-calendar.test.mjs scripts/fetch-airbnb-reviews.test.mjs scripts/fetch-airbnb-images.test.mjs"
   },
   "dependencies": {
     "next": "16.3.6",

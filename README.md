@@ -130,7 +130,7 @@ the site's `calendarSecret`) holding a JSON array:
 1. Copy `sites/rainier-getaway/` to `sites/<new-site>/` (lowercase words joined by hyphens).
 2. In `sites/<new-site>/site.config.js`, update everything: name, company, `url`, `deploy.repository`,
    `airbnb.listingId` (the number in the listing's `airbnb.com/rooms/...` URL) and booking link, `calendarSecret`,
-   `minNights` (the shortest stay guests can pick on the calendar),
+   `minNights` (the shortest stay guests can pick on the calendar, for each check-in weekday plus any special dates),
    address, coordinates, property details, and all the page text. Optional parts (VRBO, Instagram, and email links,
    the street address, the direct-booking section, the location map) can be removed. If the city requires a rental
    license number on every listing (Seattle does), set `license` to the text to show in the footer.

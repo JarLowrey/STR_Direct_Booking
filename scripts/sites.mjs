@@ -15,6 +15,7 @@
 import { access, cp, mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { WEEKDAYS } from '../lib/stays.js';
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const SITES_DIR = join(ROOT, 'sites');
@@ -74,6 +75,44 @@ export async function resolveSiteId(requested = process.env.SITE) {
     throw new Error(`Choose a site (${ids.join(', ')}), for example: npm run dev -- ${ids[0] ?? '<site>'}`);
 }
 
+const isNightCount = value => Number.isInteger(value) && value > 0;
+
+// What's wrong with a config's minNights: { weekdays: { sunday: 2, ..., saturday: 2 }, specialDates: [{ date, minNights }] }.
+function minNightsProblems(minNights) {
+    const problems = [];
+    const weekdays = minNights.weekdays;
+    if (!weekdays || typeof weekdays !== 'object') {
+        return ['minNights.weekdays must give the minimum stay for each weekday, like { sunday: 2, ..., saturday: 2 }'];
+    }
+    for (const day of WEEKDAYS) {
+        if (!isNightCount(weekdays[day])) problems.push(`minNights.weekdays.${day} must be a whole number of nights, 1 or more`);
+    }
+    for (const day of Object.keys(weekdays)) {
+        if (!WEEKDAYS.includes(day)) problems.push(`minNights.weekdays.${day} is not a weekday (use lowercase names like thursday)`);
+    }
+
+    const specialDates = minNights.specialDates ?? [];
+    if (!Array.isArray(specialDates)) {
+        return [...problems, 'minNights.specialDates must be a list like [{ date: "2026-12-24", minNights: 3 }]'];
+    }
+    const seen = new Set();
+    for (const entry of specialDates) {
+        const date = entry?.date;
+        const isDate = typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+            new Date(`${date}T00:00:00Z`).toISOString().startsWith(date);
+        if (!isDate) {
+            problems.push(`minNights.specialDates has an invalid date ${JSON.stringify(date)} (use YYYY-MM-DD)`);
+            continue;
+        }
+        if (seen.has(date)) problems.push(`minNights.specialDates lists ${date} more than once`);
+        seen.add(date);
+        if (!isNightCount(entry.minNights)) {
+            problems.push(`minNights.specialDates ${date} minNights must be a whole number of nights, 1 or more`);
+        }
+    }
+    return problems;
+}
+
 // Checks the fields the shared code depends on, so a mistake in a new listing's config fails
 // with a clear message instead of a broken page.
 export function validateSiteConfig(id, config) {
@@ -104,8 +143,8 @@ export function validateSiteConfig(id, config) {
     if (config?.calendarSecret && !/^[A-Z][A-Z0-9_]*$/.test(config.calendarSecret)) {
         problems.push('calendarSecret must be an uppercase GitHub secret name like CALENDAR_FEEDS_MY_SITE');
     }
-    if (config?.minNights !== undefined && !(Number.isInteger(config.minNights) && config.minNights > 0)) {
-        problems.push('minNights must be a whole number of nights, 1 or more');
+    if (config?.minNights !== undefined && config.minNights !== null) {
+        problems.push(...minNightsProblems(config.minNights));
     }
 
     if (problems.length) {

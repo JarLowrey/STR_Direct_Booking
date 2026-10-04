@@ -28,9 +28,22 @@ export default {
     // The feed URLs contain private access tokens, so they're kept out of the repository.
     calendarSecret: 'CALENDAR_FEEDS_RAINIER_GETAWAY',
 
-    // Shortest stay guests can pick on the availability calendar, in nights. Keep it in step with the minimum stay
-    // in the booking terms below.
-    minNights: 2,
+    // Shortest stay guests can pick on the availability calendar, in nights, by check-in day: each weekday's minimum,
+    // and specialDates for particular check-in dates, which win over their weekday. Keep it in step with the minimum
+    // stay in the booking terms below (and in llms.txt and on Airbnb).
+    minNights: {
+        weekdays: {
+            sunday: 2,
+            monday: 2,
+            tuesday: 2,
+            wednesday: 4,
+            thursday: 3,
+            friday: 2,
+            saturday: 2
+        },
+        // For example: { date: '2026-12-24', minNights: 4 }
+        specialDates: []
+    },
 
     seo: {
         title: 'Mount Rainier Vacation Rental in Ashford, WA | Rainier Getaway',
@@ -260,7 +273,7 @@ export default {
                     content: [
                         {
                             list: [
-                                'Two-night minimum stay',
+                                'Two-night minimum stay, or three nights for Thursday check-ins',
                                 'Pets are allowed, with a maximum of three pets',
                                 'No smoking, vaping, or e-cigarettes inside; a $250 fine applies if this rule is ignored',
                                 'Quiet hours are from 10:00 PM to 8:00 AM',

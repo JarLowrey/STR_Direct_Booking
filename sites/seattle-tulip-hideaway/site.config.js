@@ -26,9 +26,22 @@ export default {
     // leaves out the availability calendar.
     calendarSecret: 'CALENDAR_FEEDS_SEATTLE_TULIP_HIDEAWAY',
 
-    // Shortest stay guests can pick on the availability calendar, in nights. Keep it in step with the minimum stay
-    // in the booking terms below.
-    minNights: 2,
+    // Shortest stay guests can pick on the availability calendar, in nights, by check-in day: each weekday's minimum,
+    // and specialDates for particular check-in dates, which win over their weekday. Keep it in step with the minimum
+    // stay in the booking terms below (and in llms.txt and on Airbnb).
+    minNights: {
+        weekdays: {
+            sunday: 2,
+            monday: 2,
+            tuesday: 2,
+            wednesday: 4,
+            thursday: 3,
+            friday: 2,
+            saturday: 2
+        },
+        // For example: { date: '2026-12-24', minNights: 4 }
+        specialDates: []
+    },
 
     seo: {
         // Kept under ~60 characters so Google shows it in full.
