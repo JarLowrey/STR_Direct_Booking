@@ -81,7 +81,7 @@ export function validateSiteConfig(id, config) {
     if (!SITE_ID_PATTERN.test(id)) problems.push('folder name must be lowercase words joined by hyphens');
 
     const required = [
-        'name', 'company', 'url', 'deploy.repository', 'airbnb.listingId', 'airbnb.bookingUrl', 'calendarSecret',
+        'name', 'company', 'url', 'deploy.repository', 'airbnb.listingId', 'airbnb.bookingUrl', 'calendarSecret', 'minNights',
         'seo.title', 'seo.description', 'seo.structuredDescription', 'seo.identifier',
         'address.city', 'address.region', 'address.country', 'coordinates.latitude', 'coordinates.longitude',
         'property.maxGuests', 'property.bedrooms', 'property.beds', 'property.bathrooms',
@@ -103,6 +103,9 @@ export function validateSiteConfig(id, config) {
     }
     if (config?.calendarSecret && !/^[A-Z][A-Z0-9_]*$/.test(config.calendarSecret)) {
         problems.push('calendarSecret must be an uppercase GitHub secret name like CALENDAR_FEEDS_MY_SITE');
+    }
+    if (config?.minNights !== undefined && !(Number.isInteger(config.minNights) && config.minNights > 0)) {
+        problems.push('minNights must be a whole number of nights, 1 or more');
     }
 
     if (problems.length) {

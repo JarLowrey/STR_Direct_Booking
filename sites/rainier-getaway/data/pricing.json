@@ -1,0 +1,1843 @@
+{
+  "name": "rainier-getaway",
+  "listingId": "1501508351751467254",
+  "fetchedAt": "2026-10-04T02:24:28.240Z",
+  "currency": "USD",
+  "refundableDeposit": 800,
+  "fees": {
+    "cleaningFee": 545,
+    "petFee": 172,
+    "petFeeCharged": "per stay",
+    "extraGuestFee": 46,
+    "extraGuestFeeAfterGuests": 8,
+    "securityDeposit": null,
+    "otherFees": []
+  },
+  "days": [
+    {
+      "date": "2026-10-03",
+      "price": 474,
+      "available": false
+    },
+    {
+      "date": "2026-10-04",
+      "price": 537,
+      "available": true
+    },
+    {
+      "date": "2026-10-05",
+      "price": 537,
+      "available": true
+    },
+    {
+      "date": "2026-10-06",
+      "price": 554,
+      "available": true
+    },
+    {
+      "date": "2026-10-07",
+      "price": 543,
+      "available": true
+    },
+    {
+      "date": "2026-10-08",
+      "price": 535,
+      "available": true
+    },
+    {
+      "date": "2026-10-09",
+      "price": 469,
+      "available": false
+    },
+    {
+      "date": "2026-10-10",
+      "price": 494,
+      "available": false
+    },
+    {
+      "date": "2026-10-11",
+      "price": 546,
+      "available": true
+    },
+    {
+      "date": "2026-10-12",
+      "price": 536,
+      "available": true
+    },
+    {
+      "date": "2026-10-13",
+      "price": 554,
+      "available": true
+    },
+    {
+      "date": "2026-10-14",
+      "price": 548,
+      "available": true
+    },
+    {
+      "date": "2026-10-15",
+      "price": 550,
+      "available": true
+    },
+    {
+      "date": "2026-10-16",
+      "price": 571,
+      "available": true
+    },
+    {
+      "date": "2026-10-17",
+      "price": 480,
+      "available": false
+    },
+    {
+      "date": "2026-10-18",
+      "price": 496,
+      "available": false
+    },
+    {
+      "date": "2026-10-19",
+      "price": 476,
+      "available": false
+    },
+    {
+      "date": "2026-10-20",
+      "price": 470,
+      "available": false
+    },
+    {
+      "date": "2026-10-21",
+      "price": 419,
+      "available": true
+    },
+    {
+      "date": "2026-10-22",
+      "price": 456,
+      "available": true
+    },
+    {
+      "date": "2026-10-23",
+      "price": 483,
+      "available": true
+    },
+    {
+      "date": "2026-10-24",
+      "price": 490,
+      "available": true
+    },
+    {
+      "date": "2026-10-25",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2026-10-26",
+      "price": 439,
+      "available": true
+    },
+    {
+      "date": "2026-10-27",
+      "price": 409,
+      "available": true
+    },
+    {
+      "date": "2026-10-28",
+      "price": 425,
+      "available": true
+    },
+    {
+      "date": "2026-10-29",
+      "price": 405,
+      "available": true
+    },
+    {
+      "date": "2026-10-30",
+      "price": 487,
+      "available": true
+    },
+    {
+      "date": "2026-10-31",
+      "price": 419,
+      "available": true
+    },
+    {
+      "date": "2026-11-01",
+      "price": 492,
+      "available": true
+    },
+    {
+      "date": "2026-11-02",
+      "price": 486,
+      "available": true
+    },
+    {
+      "date": "2026-11-03",
+      "price": 472,
+      "available": true
+    },
+    {
+      "date": "2026-11-04",
+      "price": 503,
+      "available": true
+    },
+    {
+      "date": "2026-11-05",
+      "price": 486,
+      "available": true
+    },
+    {
+      "date": "2026-11-06",
+      "price": 503,
+      "available": true
+    },
+    {
+      "date": "2026-11-07",
+      "price": 506,
+      "available": true
+    },
+    {
+      "date": "2026-11-08",
+      "price": 503,
+      "available": true
+    },
+    {
+      "date": "2026-11-09",
+      "price": 461,
+      "available": true
+    },
+    {
+      "date": "2026-11-10",
+      "price": 492,
+      "available": true
+    },
+    {
+      "date": "2026-11-11",
+      "price": 498,
+      "available": true
+    },
+    {
+      "date": "2026-11-12",
+      "price": 494,
+      "available": true
+    },
+    {
+      "date": "2026-11-13",
+      "price": 486,
+      "available": true
+    },
+    {
+      "date": "2026-11-14",
+      "price": 498,
+      "available": true
+    },
+    {
+      "date": "2026-11-15",
+      "price": 463,
+      "available": true
+    },
+    {
+      "date": "2026-11-16",
+      "price": 492,
+      "available": true
+    },
+    {
+      "date": "2026-11-17",
+      "price": 469,
+      "available": true
+    },
+    {
+      "date": "2026-11-18",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2026-11-19",
+      "price": 460,
+      "available": true
+    },
+    {
+      "date": "2026-11-20",
+      "price": 487,
+      "available": true
+    },
+    {
+      "date": "2026-11-21",
+      "price": 471,
+      "available": true
+    },
+    {
+      "date": "2026-11-22",
+      "price": 465,
+      "available": true
+    },
+    {
+      "date": "2026-11-23",
+      "price": 469,
+      "available": true
+    },
+    {
+      "date": "2026-11-24",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2026-11-25",
+      "price": 481,
+      "available": true
+    },
+    {
+      "date": "2026-11-26",
+      "price": 483,
+      "available": false
+    },
+    {
+      "date": "2026-11-27",
+      "price": 554,
+      "available": false
+    },
+    {
+      "date": "2026-11-28",
+      "price": 480,
+      "available": false
+    },
+    {
+      "date": "2026-11-29",
+      "price": 482,
+      "available": true
+    },
+    {
+      "date": "2026-11-30",
+      "price": 506,
+      "available": true
+    },
+    {
+      "date": "2026-12-01",
+      "price": 483,
+      "available": true
+    },
+    {
+      "date": "2026-12-02",
+      "price": 481,
+      "available": true
+    },
+    {
+      "date": "2026-12-03",
+      "price": 487,
+      "available": true
+    },
+    {
+      "date": "2026-12-04",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2026-12-05",
+      "price": 503,
+      "available": true
+    },
+    {
+      "date": "2026-12-06",
+      "price": 506,
+      "available": true
+    },
+    {
+      "date": "2026-12-07",
+      "price": 488,
+      "available": true
+    },
+    {
+      "date": "2026-12-08",
+      "price": 495,
+      "available": true
+    },
+    {
+      "date": "2026-12-09",
+      "price": 490,
+      "available": true
+    },
+    {
+      "date": "2026-12-10",
+      "price": 498,
+      "available": true
+    },
+    {
+      "date": "2026-12-11",
+      "price": 503,
+      "available": true
+    },
+    {
+      "date": "2026-12-12",
+      "price": 478,
+      "available": false
+    },
+    {
+      "date": "2026-12-13",
+      "price": 488,
+      "available": false
+    },
+    {
+      "date": "2026-12-14",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2026-12-15",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2026-12-16",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2026-12-17",
+      "price": 506,
+      "available": true
+    },
+    {
+      "date": "2026-12-18",
+      "price": 497,
+      "available": true
+    },
+    {
+      "date": "2026-12-19",
+      "price": 500,
+      "available": true
+    },
+    {
+      "date": "2026-12-20",
+      "price": 493,
+      "available": true
+    },
+    {
+      "date": "2026-12-21",
+      "price": 471,
+      "available": true
+    },
+    {
+      "date": "2026-12-22",
+      "price": 488,
+      "available": true
+    },
+    {
+      "date": "2026-12-23",
+      "price": 501,
+      "available": false
+    },
+    {
+      "date": "2026-12-24",
+      "price": 681,
+      "available": false
+    },
+    {
+      "date": "2026-12-25",
+      "price": 707,
+      "available": false
+    },
+    {
+      "date": "2026-12-26",
+      "price": 718,
+      "available": false
+    },
+    {
+      "date": "2026-12-27",
+      "price": 652,
+      "available": false
+    },
+    {
+      "date": "2026-12-28",
+      "price": 601,
+      "available": false
+    },
+    {
+      "date": "2026-12-29",
+      "price": 609,
+      "available": false
+    },
+    {
+      "date": "2026-12-30",
+      "price": 707,
+      "available": true
+    },
+    {
+      "date": "2026-12-31",
+      "price": 731,
+      "available": false
+    },
+    {
+      "date": "2027-01-01",
+      "price": 735,
+      "available": false
+    },
+    {
+      "date": "2027-01-02",
+      "price": 580,
+      "available": false
+    },
+    {
+      "date": "2027-01-03",
+      "price": 460,
+      "available": false
+    },
+    {
+      "date": "2027-01-04",
+      "price": 465,
+      "available": false
+    },
+    {
+      "date": "2027-01-05",
+      "price": 485,
+      "available": false
+    },
+    {
+      "date": "2027-01-06",
+      "price": 502,
+      "available": true
+    },
+    {
+      "date": "2027-01-07",
+      "price": 468,
+      "available": true
+    },
+    {
+      "date": "2027-01-08",
+      "price": 494,
+      "available": true
+    },
+    {
+      "date": "2027-01-09",
+      "price": 464,
+      "available": true
+    },
+    {
+      "date": "2027-01-10",
+      "price": 480,
+      "available": true
+    },
+    {
+      "date": "2027-01-11",
+      "price": 490,
+      "available": true
+    },
+    {
+      "date": "2027-01-12",
+      "price": 464,
+      "available": true
+    },
+    {
+      "date": "2027-01-13",
+      "price": 487,
+      "available": true
+    },
+    {
+      "date": "2027-01-14",
+      "price": 482,
+      "available": true
+    },
+    {
+      "date": "2027-01-15",
+      "price": 550,
+      "available": true
+    },
+    {
+      "date": "2027-01-16",
+      "price": 574,
+      "available": true
+    },
+    {
+      "date": "2027-01-17",
+      "price": 494,
+      "available": true
+    },
+    {
+      "date": "2027-01-18",
+      "price": 485,
+      "available": true
+    },
+    {
+      "date": "2027-01-19",
+      "price": 476,
+      "available": true
+    },
+    {
+      "date": "2027-01-20",
+      "price": 486,
+      "available": true
+    },
+    {
+      "date": "2027-01-21",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2027-01-22",
+      "price": 468,
+      "available": true
+    },
+    {
+      "date": "2027-01-23",
+      "price": 470,
+      "available": true
+    },
+    {
+      "date": "2027-01-24",
+      "price": 485,
+      "available": true
+    },
+    {
+      "date": "2027-01-25",
+      "price": 477,
+      "available": true
+    },
+    {
+      "date": "2027-01-26",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2027-01-27",
+      "price": 458,
+      "available": true
+    },
+    {
+      "date": "2027-01-28",
+      "price": 462,
+      "available": true
+    },
+    {
+      "date": "2027-01-29",
+      "price": 501,
+      "available": true
+    },
+    {
+      "date": "2027-01-30",
+      "price": 472,
+      "available": true
+    },
+    {
+      "date": "2027-01-31",
+      "price": 485,
+      "available": true
+    },
+    {
+      "date": "2027-02-01",
+      "price": 515,
+      "available": true
+    },
+    {
+      "date": "2027-02-02",
+      "price": 482,
+      "available": true
+    },
+    {
+      "date": "2027-02-03",
+      "price": 465,
+      "available": true
+    },
+    {
+      "date": "2027-02-04",
+      "price": 464,
+      "available": true
+    },
+    {
+      "date": "2027-02-05",
+      "price": 545,
+      "available": true
+    },
+    {
+      "date": "2027-02-06",
+      "price": 554,
+      "available": true
+    },
+    {
+      "date": "2027-02-07",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2027-02-08",
+      "price": 465,
+      "available": true
+    },
+    {
+      "date": "2027-02-09",
+      "price": 478,
+      "available": true
+    },
+    {
+      "date": "2027-02-10",
+      "price": 482,
+      "available": true
+    },
+    {
+      "date": "2027-02-11",
+      "price": 480,
+      "available": true
+    },
+    {
+      "date": "2027-02-12",
+      "price": 582,
+      "available": true
+    },
+    {
+      "date": "2027-02-13",
+      "price": 595,
+      "available": true
+    },
+    {
+      "date": "2027-02-14",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2027-02-15",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2027-02-16",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2027-02-17",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2027-02-18",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2027-02-19",
+      "price": 573,
+      "available": true
+    },
+    {
+      "date": "2027-02-20",
+      "price": 562,
+      "available": true
+    },
+    {
+      "date": "2027-02-21",
+      "price": 505,
+      "available": true
+    },
+    {
+      "date": "2027-02-22",
+      "price": 474,
+      "available": true
+    },
+    {
+      "date": "2027-02-23",
+      "price": 490,
+      "available": true
+    },
+    {
+      "date": "2027-02-24",
+      "price": 472,
+      "available": true
+    },
+    {
+      "date": "2027-02-25",
+      "price": 454,
+      "available": true
+    },
+    {
+      "date": "2027-02-26",
+      "price": 529,
+      "available": true
+    },
+    {
+      "date": "2027-02-27",
+      "price": 551,
+      "available": true
+    },
+    {
+      "date": "2027-02-28",
+      "price": 468,
+      "available": true
+    },
+    {
+      "date": "2027-03-01",
+      "price": 489,
+      "available": true
+    },
+    {
+      "date": "2027-03-02",
+      "price": 474,
+      "available": true
+    },
+    {
+      "date": "2027-03-03",
+      "price": 467,
+      "available": true
+    },
+    {
+      "date": "2027-03-04",
+      "price": 505,
+      "available": true
+    },
+    {
+      "date": "2027-03-05",
+      "price": 507,
+      "available": true
+    },
+    {
+      "date": "2027-03-06",
+      "price": 537,
+      "available": true
+    },
+    {
+      "date": "2027-03-07",
+      "price": 458,
+      "available": true
+    },
+    {
+      "date": "2027-03-08",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2027-03-09",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2027-03-10",
+      "price": 501,
+      "available": true
+    },
+    {
+      "date": "2027-03-11",
+      "price": 485,
+      "available": true
+    },
+    {
+      "date": "2027-03-12",
+      "price": 548,
+      "available": true
+    },
+    {
+      "date": "2027-03-13",
+      "price": 557,
+      "available": true
+    },
+    {
+      "date": "2027-03-14",
+      "price": 480,
+      "available": true
+    },
+    {
+      "date": "2027-03-15",
+      "price": 485,
+      "available": true
+    },
+    {
+      "date": "2027-03-16",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2027-03-17",
+      "price": 483,
+      "available": true
+    },
+    {
+      "date": "2027-03-18",
+      "price": 516,
+      "available": true
+    },
+    {
+      "date": "2027-03-19",
+      "price": 546,
+      "available": true
+    },
+    {
+      "date": "2027-03-20",
+      "price": 557,
+      "available": true
+    },
+    {
+      "date": "2027-03-21",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2027-03-22",
+      "price": 477,
+      "available": true
+    },
+    {
+      "date": "2027-03-23",
+      "price": 476,
+      "available": true
+    },
+    {
+      "date": "2027-03-24",
+      "price": 478,
+      "available": true
+    },
+    {
+      "date": "2027-03-25",
+      "price": 497,
+      "available": true
+    },
+    {
+      "date": "2027-03-26",
+      "price": 544,
+      "available": true
+    },
+    {
+      "date": "2027-03-27",
+      "price": 541,
+      "available": true
+    },
+    {
+      "date": "2027-03-28",
+      "price": 494,
+      "available": true
+    },
+    {
+      "date": "2027-03-29",
+      "price": 492,
+      "available": true
+    },
+    {
+      "date": "2027-03-30",
+      "price": 457,
+      "available": true
+    },
+    {
+      "date": "2027-03-31",
+      "price": 486,
+      "available": true
+    },
+    {
+      "date": "2027-04-01",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2027-04-02",
+      "price": 523,
+      "available": true
+    },
+    {
+      "date": "2027-04-03",
+      "price": 528,
+      "available": true
+    },
+    {
+      "date": "2027-04-04",
+      "price": 481,
+      "available": true
+    },
+    {
+      "date": "2027-04-05",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2027-04-06",
+      "price": 481,
+      "available": true
+    },
+    {
+      "date": "2027-04-07",
+      "price": 481,
+      "available": true
+    },
+    {
+      "date": "2027-04-08",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2027-04-09",
+      "price": 507,
+      "available": true
+    },
+    {
+      "date": "2027-04-10",
+      "price": 523,
+      "available": true
+    },
+    {
+      "date": "2027-04-11",
+      "price": 474,
+      "available": true
+    },
+    {
+      "date": "2027-04-12",
+      "price": 468,
+      "available": true
+    },
+    {
+      "date": "2027-04-13",
+      "price": 475,
+      "available": true
+    },
+    {
+      "date": "2027-04-14",
+      "price": 513,
+      "available": true
+    },
+    {
+      "date": "2027-04-15",
+      "price": 482,
+      "available": true
+    },
+    {
+      "date": "2027-04-16",
+      "price": 518,
+      "available": true
+    },
+    {
+      "date": "2027-04-17",
+      "price": 522,
+      "available": true
+    },
+    {
+      "date": "2027-04-18",
+      "price": 492,
+      "available": true
+    },
+    {
+      "date": "2027-04-19",
+      "price": 469,
+      "available": true
+    },
+    {
+      "date": "2027-04-20",
+      "price": 481,
+      "available": true
+    },
+    {
+      "date": "2027-04-21",
+      "price": 483,
+      "available": true
+    },
+    {
+      "date": "2027-04-22",
+      "price": 488,
+      "available": true
+    },
+    {
+      "date": "2027-04-23",
+      "price": 536,
+      "available": true
+    },
+    {
+      "date": "2027-04-24",
+      "price": 518,
+      "available": true
+    },
+    {
+      "date": "2027-04-25",
+      "price": 487,
+      "available": true
+    },
+    {
+      "date": "2027-04-26",
+      "price": 465,
+      "available": true
+    },
+    {
+      "date": "2027-04-27",
+      "price": 470,
+      "available": true
+    },
+    {
+      "date": "2027-04-28",
+      "price": 501,
+      "available": true
+    },
+    {
+      "date": "2027-04-29",
+      "price": 507,
+      "available": true
+    },
+    {
+      "date": "2027-04-30",
+      "price": 524,
+      "available": true
+    },
+    {
+      "date": "2027-05-01",
+      "price": 556,
+      "available": true
+    },
+    {
+      "date": "2027-05-02",
+      "price": 480,
+      "available": true
+    },
+    {
+      "date": "2027-05-03",
+      "price": 485,
+      "available": true
+    },
+    {
+      "date": "2027-05-04",
+      "price": 497,
+      "available": true
+    },
+    {
+      "date": "2027-05-05",
+      "price": 473,
+      "available": true
+    },
+    {
+      "date": "2027-05-06",
+      "price": 470,
+      "available": true
+    },
+    {
+      "date": "2027-05-07",
+      "price": 636,
+      "available": true
+    },
+    {
+      "date": "2027-05-08",
+      "price": 653,
+      "available": true
+    },
+    {
+      "date": "2027-05-09",
+      "price": 483,
+      "available": true
+    },
+    {
+      "date": "2027-05-10",
+      "price": 458,
+      "available": true
+    },
+    {
+      "date": "2027-05-11",
+      "price": 483,
+      "available": true
+    },
+    {
+      "date": "2027-05-12",
+      "price": 497,
+      "available": true
+    },
+    {
+      "date": "2027-05-13",
+      "price": 464,
+      "available": true
+    },
+    {
+      "date": "2027-05-14",
+      "price": 618,
+      "available": true
+    },
+    {
+      "date": "2027-05-15",
+      "price": 614,
+      "available": true
+    },
+    {
+      "date": "2027-05-16",
+      "price": 511,
+      "available": true
+    },
+    {
+      "date": "2027-05-17",
+      "price": 482,
+      "available": true
+    },
+    {
+      "date": "2027-05-18",
+      "price": 445,
+      "available": true
+    },
+    {
+      "date": "2027-05-19",
+      "price": 463,
+      "available": true
+    },
+    {
+      "date": "2027-05-20",
+      "price": 492,
+      "available": true
+    },
+    {
+      "date": "2027-05-21",
+      "price": 631,
+      "available": true
+    },
+    {
+      "date": "2027-05-22",
+      "price": 649,
+      "available": true
+    },
+    {
+      "date": "2027-05-23",
+      "price": 521,
+      "available": true
+    },
+    {
+      "date": "2027-05-24",
+      "price": 488,
+      "available": true
+    },
+    {
+      "date": "2027-05-25",
+      "price": 492,
+      "available": false
+    },
+    {
+      "date": "2027-05-26",
+      "price": 513,
+      "available": false
+    },
+    {
+      "date": "2027-05-27",
+      "price": 524,
+      "available": false
+    },
+    {
+      "date": "2027-05-28",
+      "price": 688,
+      "available": false
+    },
+    {
+      "date": "2027-05-29",
+      "price": 711,
+      "available": false
+    },
+    {
+      "date": "2027-05-30",
+      "price": 548,
+      "available": true
+    },
+    {
+      "date": "2027-05-31",
+      "price": 505,
+      "available": true
+    },
+    {
+      "date": "2027-06-01",
+      "price": 468,
+      "available": true
+    },
+    {
+      "date": "2027-06-02",
+      "price": 500,
+      "available": true
+    },
+    {
+      "date": "2027-06-03",
+      "price": 527,
+      "available": true
+    },
+    {
+      "date": "2027-06-04",
+      "price": 671,
+      "available": true
+    },
+    {
+      "date": "2027-06-05",
+      "price": 700,
+      "available": true
+    },
+    {
+      "date": "2027-06-06",
+      "price": 552,
+      "available": true
+    },
+    {
+      "date": "2027-06-07",
+      "price": 497,
+      "available": true
+    },
+    {
+      "date": "2027-06-08",
+      "price": 532,
+      "available": true
+    },
+    {
+      "date": "2027-06-09",
+      "price": 519,
+      "available": true
+    },
+    {
+      "date": "2027-06-10",
+      "price": 583,
+      "available": true
+    },
+    {
+      "date": "2027-06-11",
+      "price": 779,
+      "available": true
+    },
+    {
+      "date": "2027-06-12",
+      "price": 768,
+      "available": true
+    },
+    {
+      "date": "2027-06-13",
+      "price": 654,
+      "available": true
+    },
+    {
+      "date": "2027-06-14",
+      "price": 533,
+      "available": true
+    },
+    {
+      "date": "2027-06-15",
+      "price": 541,
+      "available": true
+    },
+    {
+      "date": "2027-06-16",
+      "price": 575,
+      "available": true
+    },
+    {
+      "date": "2027-06-17",
+      "price": 630,
+      "available": true
+    },
+    {
+      "date": "2027-06-18",
+      "price": 855,
+      "available": true
+    },
+    {
+      "date": "2027-06-19",
+      "price": 832,
+      "available": true
+    },
+    {
+      "date": "2027-06-20",
+      "price": 611,
+      "available": true
+    },
+    {
+      "date": "2027-06-21",
+      "price": 588,
+      "available": true
+    },
+    {
+      "date": "2027-06-22",
+      "price": 579,
+      "available": true
+    },
+    {
+      "date": "2027-06-23",
+      "price": 615,
+      "available": true
+    },
+    {
+      "date": "2027-06-24",
+      "price": 667,
+      "available": true
+    },
+    {
+      "date": "2027-06-25",
+      "price": 845,
+      "available": true
+    },
+    {
+      "date": "2027-06-26",
+      "price": 859,
+      "available": true
+    },
+    {
+      "date": "2027-06-27",
+      "price": 688,
+      "available": true
+    },
+    {
+      "date": "2027-06-28",
+      "price": 644,
+      "available": true
+    },
+    {
+      "date": "2027-06-29",
+      "price": 602,
+      "available": true
+    },
+    {
+      "date": "2027-06-30",
+      "price": 680,
+      "available": true
+    },
+    {
+      "date": "2027-07-01",
+      "price": 775,
+      "available": true
+    },
+    {
+      "date": "2027-07-02",
+      "price": 927,
+      "available": true
+    },
+    {
+      "date": "2027-07-03",
+      "price": 949,
+      "available": true
+    },
+    {
+      "date": "2027-07-04",
+      "price": 818,
+      "available": true
+    },
+    {
+      "date": "2027-07-05",
+      "price": 714,
+      "available": true
+    },
+    {
+      "date": "2027-07-06",
+      "price": 702,
+      "available": true
+    },
+    {
+      "date": "2027-07-07",
+      "price": 730,
+      "available": true
+    },
+    {
+      "date": "2027-07-08",
+      "price": 786,
+      "available": true
+    },
+    {
+      "date": "2027-07-09",
+      "price": 906,
+      "available": true
+    },
+    {
+      "date": "2027-07-10",
+      "price": 904,
+      "available": true
+    },
+    {
+      "date": "2027-07-11",
+      "price": 743,
+      "available": true
+    },
+    {
+      "date": "2027-07-12",
+      "price": 659,
+      "available": true
+    },
+    {
+      "date": "2027-07-13",
+      "price": 669,
+      "available": true
+    },
+    {
+      "date": "2027-07-14",
+      "price": 726,
+      "available": true
+    },
+    {
+      "date": "2027-07-15",
+      "price": 818,
+      "available": true
+    },
+    {
+      "date": "2027-07-16",
+      "price": 878,
+      "available": true
+    },
+    {
+      "date": "2027-07-17",
+      "price": 895,
+      "available": true
+    },
+    {
+      "date": "2027-07-18",
+      "price": 782,
+      "available": true
+    },
+    {
+      "date": "2027-07-19",
+      "price": 676,
+      "available": true
+    },
+    {
+      "date": "2027-07-20",
+      "price": 630,
+      "available": true
+    },
+    {
+      "date": "2027-07-21",
+      "price": 707,
+      "available": true
+    },
+    {
+      "date": "2027-07-22",
+      "price": 770,
+      "available": false
+    },
+    {
+      "date": "2027-07-23",
+      "price": 883,
+      "available": false
+    },
+    {
+      "date": "2027-07-24",
+      "price": 908,
+      "available": false
+    },
+    {
+      "date": "2027-07-25",
+      "price": 741,
+      "available": false
+    },
+    {
+      "date": "2027-07-26",
+      "price": 720,
+      "available": true
+    },
+    {
+      "date": "2027-07-27",
+      "price": 686,
+      "available": true
+    },
+    {
+      "date": "2027-07-28",
+      "price": 707,
+      "available": false
+    },
+    {
+      "date": "2027-07-29",
+      "price": 756,
+      "available": false
+    },
+    {
+      "date": "2027-07-30",
+      "price": 908,
+      "available": false
+    },
+    {
+      "date": "2027-07-31",
+      "price": 876,
+      "available": true
+    },
+    {
+      "date": "2027-08-01",
+      "price": 750,
+      "available": true
+    },
+    {
+      "date": "2027-08-02",
+      "price": 667,
+      "available": true
+    },
+    {
+      "date": "2027-08-03",
+      "price": 656,
+      "available": true
+    },
+    {
+      "date": "2027-08-04",
+      "price": 624,
+      "available": true
+    },
+    {
+      "date": "2027-08-05",
+      "price": 701,
+      "available": true
+    },
+    {
+      "date": "2027-08-06",
+      "price": 898,
+      "available": true
+    },
+    {
+      "date": "2027-08-07",
+      "price": 883,
+      "available": true
+    },
+    {
+      "date": "2027-08-08",
+      "price": 691,
+      "available": true
+    },
+    {
+      "date": "2027-08-09",
+      "price": 673,
+      "available": true
+    },
+    {
+      "date": "2027-08-10",
+      "price": 648,
+      "available": true
+    },
+    {
+      "date": "2027-08-11",
+      "price": 629,
+      "available": true
+    },
+    {
+      "date": "2027-08-12",
+      "price": 699,
+      "available": false
+    },
+    {
+      "date": "2027-08-13",
+      "price": 852,
+      "available": false
+    },
+    {
+      "date": "2027-08-14",
+      "price": 854,
+      "available": false
+    },
+    {
+      "date": "2027-08-15",
+      "price": 649,
+      "available": false
+    },
+    {
+      "date": "2027-08-16",
+      "price": 598,
+      "available": true
+    },
+    {
+      "date": "2027-08-17",
+      "price": 596,
+      "available": true
+    },
+    {
+      "date": "2027-08-18",
+      "price": 596,
+      "available": true
+    },
+    {
+      "date": "2027-08-19",
+      "price": 649,
+      "available": true
+    },
+    {
+      "date": "2027-08-20",
+      "price": 793,
+      "available": true
+    },
+    {
+      "date": "2027-08-21",
+      "price": 799,
+      "available": true
+    },
+    {
+      "date": "2027-08-22",
+      "price": 616,
+      "available": true
+    },
+    {
+      "date": "2027-08-23",
+      "price": 556,
+      "available": true
+    },
+    {
+      "date": "2027-08-24",
+      "price": 546,
+      "available": true
+    },
+    {
+      "date": "2027-08-25",
+      "price": 554,
+      "available": true
+    },
+    {
+      "date": "2027-08-26",
+      "price": 614,
+      "available": true
+    },
+    {
+      "date": "2027-08-27",
+      "price": 726,
+      "available": true
+    },
+    {
+      "date": "2027-08-28",
+      "price": 733,
+      "available": true
+    },
+    {
+      "date": "2027-08-29",
+      "price": 565,
+      "available": true
+    },
+    {
+      "date": "2027-08-30",
+      "price": 513,
+      "available": true
+    },
+    {
+      "date": "2027-08-31",
+      "price": 521,
+      "available": true
+    },
+    {
+      "date": "2027-09-01",
+      "price": 482,
+      "available": true
+    },
+    {
+      "date": "2027-09-02",
+      "price": 583,
+      "available": true
+    },
+    {
+      "date": "2027-09-03",
+      "price": 733,
+      "available": true
+    },
+    {
+      "date": "2027-09-04",
+      "price": 742,
+      "available": true
+    },
+    {
+      "date": "2027-09-05",
+      "price": 580,
+      "available": true
+    },
+    {
+      "date": "2027-09-06",
+      "price": 468,
+      "available": true
+    },
+    {
+      "date": "2027-09-07",
+      "price": 470,
+      "available": true
+    },
+    {
+      "date": "2027-09-08",
+      "price": 494,
+      "available": true
+    },
+    {
+      "date": "2027-09-09",
+      "price": 527,
+      "available": true
+    },
+    {
+      "date": "2027-09-10",
+      "price": 653,
+      "available": true
+    },
+    {
+      "date": "2027-09-11",
+      "price": 640,
+      "available": true
+    },
+    {
+      "date": "2027-09-12",
+      "price": 507,
+      "available": true
+    },
+    {
+      "date": "2027-09-13",
+      "price": 489,
+      "available": true
+    },
+    {
+      "date": "2027-09-14",
+      "price": 484,
+      "available": true
+    },
+    {
+      "date": "2027-09-15",
+      "price": 497,
+      "available": true
+    },
+    {
+      "date": "2027-09-16",
+      "price": 508,
+      "available": true
+    },
+    {
+      "date": "2027-09-17",
+      "price": 636,
+      "available": true
+    },
+    {
+      "date": "2027-09-18",
+      "price": 624,
+      "available": true
+    },
+    {
+      "date": "2027-09-19",
+      "price": 503,
+      "available": true
+    },
+    {
+      "date": "2027-09-20",
+      "price": 511,
+      "available": true
+    },
+    {
+      "date": "2027-09-21",
+      "price": 492,
+      "available": true
+    },
+    {
+      "date": "2027-09-22",
+      "price": 486,
+      "available": true
+    },
+    {
+      "date": "2027-09-23",
+      "price": 487,
+      "available": true
+    },
+    {
+      "date": "2027-09-24",
+      "price": 613,
+      "available": true
+    },
+    {
+      "date": "2027-09-25",
+      "price": 618,
+      "available": true
+    },
+    {
+      "date": "2027-09-26",
+      "price": 483,
+      "available": true
+    },
+    {
+      "date": "2027-09-27",
+      "price": 456,
+      "available": true
+    },
+    {
+      "date": "2027-09-28",
+      "price": 480,
+      "available": true
+    },
+    {
+      "date": "2027-09-29",
+      "price": 493,
+      "available": true
+    },
+    {
+      "date": "2027-09-30",
+      "price": 501,
+      "available": true
+    },
+    {
+      "date": "2027-10-01",
+      "price": 564,
+      "available": true
+    },
+    {
+      "date": "2027-10-02",
+      "price": 582,
+      "available": true
+    }
+  ]
+}

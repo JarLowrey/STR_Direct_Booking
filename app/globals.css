@@ -124,14 +124,6 @@ nav.scrolled {
     padding: 0.5rem;
 }
 
-.availability-nav-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem !important;
-    line-height: 1;
-}
-
 /* Hero Section */
 .hero {
     height: 100vh;
@@ -816,8 +808,270 @@ nav.scrolled {
     background: rgba(201, 168, 114, 0.25);
 }
 
-.availability-calendar .react-calendar__tile--active {
+/* The picked stay. The extra .react-calendar keeps these above react-calendar's hover, focus, today, and
+   disabled styles; a check-out day can be another guest's (disabled) check-in day. */
+.availability-calendar .react-calendar .react-calendar__tile.stay-check-in,
+.availability-calendar .react-calendar .react-calendar__tile.stay-check-out {
     background: var(--forest);
+    color: white;
+}
+
+.availability-calendar .react-calendar .react-calendar__tile.stay-night {
+    background: rgba(45, 74, 62, 0.15);
+    color: var(--primary);
+}
+
+.availability-calendar .react-calendar .react-calendar__tile.stay-night:enabled:hover {
+    background: rgba(45, 74, 62, 0.25);
+}
+
+.stay-summary {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.stay-summary .availability-status {
+    margin-top: 0.5rem;
+}
+
+.stay-dates {
+    font-weight: 600;
+}
+
+.stay-total {
+    margin-top: 0.25rem;
+    color: var(--forest);
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.stay-total span {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.stay-deposit {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.stay-breakdown-note {
+    margin-top: 0.5rem;
+    color: var(--secondary);
+    font-size: 0.85rem;
+}
+
+.stay-breakdown {
+    max-width: 360px;
+    margin: 0.75rem auto 0;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.stay-breakdown summary {
+    cursor: pointer;
+    color: var(--forest);
+    font-weight: 600;
+}
+
+.stay-breakdown > summary {
+    text-align: center;
+}
+
+.stay-breakdown ul {
+    list-style: none;
+}
+
+.stay-breakdown-lines {
+    margin-top: 0.5rem;
+}
+
+.stay-breakdown-lines > li:not(.stay-nightly),
+.stay-nightly li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.stay-breakdown-lines > li.stay-breakdown-total {
+    border-bottom: 0;
+    font-weight: 700;
+}
+
+/* Each night's rate, tucked under the nights line. */
+.stay-nightly {
+    padding: 0 0 0.3rem 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.stay-nightly summary {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.stay-nightly ul {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.stay-nightly li {
+    padding: 0.15rem 0;
+    border-bottom: 0;
+    color: var(--secondary);
+    font-size: 0.85rem;
+}
+
+.stay-breakdown-heading {
+    margin-top: 0.9rem;
+    font-weight: 600;
+}
+
+.stay-breakdown-heading + .stay-breakdown-lines {
+    margin-top: 0.25rem;
+    color: var(--secondary);
+}
+
+.stay-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.stay-book,
+.stay-clear {
+    padding: 0.6rem 1.25rem;
+    border: 1px solid var(--forest);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.stay-book {
+    background: var(--forest);
+    color: white;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.stay-book:hover,
+.stay-book:focus-visible {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--primary);
+}
+
+.stay-clear {
+    background: transparent;
+    color: var(--forest);
+}
+
+.stay-clear:hover,
+.stay-clear:focus-visible {
+    background: var(--forest);
+    color: white;
+}
+
+/* Book Now pop-up (components/Modal.jsx), in the Book Now section's colors. */
+html:has(.modal[open]) {
+    overflow: hidden;
+}
+
+.modal {
+    width: min(860px, calc(100% - 2rem));
+    max-width: none;
+    max-height: calc(100% - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow-y: auto;
+    border: 0;
+    background: var(--forest);
+    color: white;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.modal::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-body {
+    padding: 2rem 2.5rem 2.5rem;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-title {
+    color: white;
+    font-family: var(--font-display), 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.modal-close {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: transparent;
+    color: white;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.modal-stay {
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* The Book Now section's content, without the card and spacing the pop-up already provides. */
+.modal .booking-details {
+    max-width: none;
+    padding: 0;
+    border: 0;
+    background: none;
+}
+
+.modal .booking-details > .cta-button {
+    margin: 1.5rem auto;
+}
+
+.modal .platform-booking {
+    max-width: none;
+    margin-top: 2rem;
+    padding: 2rem 0 0;
+}
+
+@media (max-width: 768px) {
+    .modal-body {
+        padding: 1.25rem 1.25rem 2rem;
+    }
+
+    .modal-title {
+        font-size: 2rem;
+    }
 }
 
 .availability-status {
@@ -1267,10 +1521,6 @@ footer {
 
     .nav-links a {
         padding: 0.8rem 0;
-    }
-
-    .nav-links .availability-nav-link {
-        justify-content: flex-start;
     }
 
     .nav-links .icon {

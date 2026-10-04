@@ -24,6 +24,10 @@ export default {
     // leaves out the availability calendar.
     calendarSecret: 'CALENDAR_FEEDS_COZY_RAINIER_CABIN',
 
+    // Shortest stay guests can pick on the availability calendar, in nights. Keep it in step with the minimum stay
+    // in the booking terms below.
+    minNights: 2,
+
     seo: {
         title: 'Cozy Rainier Cabin | Creekside Cabin for Two in Ashford, WA',
         description: 'A creekside cabin for two in Ashford, WA, near Mount Rainier National Park, with a ' +
@@ -250,7 +254,7 @@ export default {
                     id: 'deposit',
                     label: 'Deposit',
                     content: [
-                        { strong: '$800 refundable damage deposit' },
+                        { strong: '{refundableDeposit} refundable damage deposit' },
                         'The deposit is refunded after your stay, provided there is no damage to the property.'
                     ]
                 }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 // Fixed top navigation: shrinks once the page scrolls, and collapses into a menu on phones.
-export default function Nav({ siteName, logo, instagram, instagramIcon, showReviews = true, showAvailability = true }) {
+export default function Nav({ siteName, logo, instagram, instagramIcon, showReviews = true }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -39,16 +39,12 @@ export default function Nav({ siteName, logo, instagram, instagramIcon, showRevi
                 <a href="#gallery">Gallery</a>
                 <a href="#amenities">Amenities</a>
                 {showReviews && <a href="#reviews">Reviews</a>}
-                {showAvailability && (
-                    <a href="#availability" className="availability-nav-link" aria-label="Check availability"
-                        title="Check availability">&#128197;</a>
-                )}
                 {instagram && (
                     <a href={instagram} aria-label={`${siteName} on Instagram`}>
                         <img src={instagramIcon} alt="" className="icon" />
                     </a>
                 )}
-                <a href="#book-now" className="nav-cta">Book Now</a>
+                <a href="#availability" className="nav-cta">Book Now</a>
             </div>
         </nav>
     );

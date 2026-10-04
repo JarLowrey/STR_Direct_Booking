@@ -5,17 +5,30 @@ import Gallery from '../components/Gallery.jsx';
 import Nav from '../components/Nav.jsx';
 import Reviews from '../components/Reviews.jsx';
 import site from '../lib/current-site.js';
-import { loadPhotoData, loadReviewData, loadUnavailableDates } from '../lib/data.js';
+import { loadPhotoData, loadPricing, loadReviewData, loadUnavailableDates } from '../lib/data.js';
 import { buildFaqPage, buildVacationRental, jsonLd } from '../lib/structured-data.js';
 import { BASE_PATH, sitePath, siteSrcSet } from '../lib/site-urls.js';
+import { formatPrice } from '../lib/stays.js';
+
+// Fills placeholders in site config text from the site's data: {refundableDeposit} becomes the damage deposit from
+// data/pricing.json, like "$800". A placeholder without data fails the build rather than publishing the placeholder.
+function fillPlaceholders(text, values) {
+    return text.replace(/\{(refundableDeposit)\}/g, (placeholder, name) => {
+        if (values[name] == null) {
+            throw new Error(`Site config uses ${placeholder}, but data/pricing.json has no ${name}`);
+        }
+        return values[name];
+    });
+}
 
 // Booking tab content from the site config: a string is a paragraph, { strong } a bold paragraph,
-// and { list } a bulleted list.
-function ContentBlocks({ blocks }) {
+// and { list } a bulleted list. Any of their text can use the placeholders above.
+function ContentBlocks({ blocks, values }) {
+    const fill = text => fillPlaceholders(text, values);
     return blocks.map((block, index) => {
-        if (typeof block === 'string') return <p key={index}>{block}</p>;
-        if (block.strong) return <p key={index}><strong>{block.strong}</strong></p>;
-        if (block.list) return <ul key={index}>{block.list.map(item => <li key={item}>{item}</li>)}</ul>;
+        if (typeof block === 'string') return <p key={index}>{fill(block)}</p>;
+        if (block.strong) return <p key={index}><strong>{fill(block.strong)}</strong></p>;
+        if (block.list) return <ul key={index}>{block.list.map(item => <li key={item}>{fill(item)}</li>)}</ul>;
         return null;
     });
 }
@@ -81,11 +94,59 @@ function LocationMap({ location, address }) {
     );
 }
 
+// The Book Now section's content: direct booking and its terms, then the Airbnb and VRBO links. The availability
+// calendar shows it again in a pop-up once a guest picks their dates.
+function BookNowDetails({ pricing }) {
+    const { booking, links } = site;
+    const values = {
+        refundableDeposit: pricing?.refundableDeposit != null
+            ? formatPrice(pricing.refundableDeposit, pricing.currency)
+            : null
+    };
+
+    return (
+        <>
+            {booking.direct && (
+                <div className="booking-details">
+                    <h3 className="booking-details-title">{booking.direct.title}</h3>
+                    <a href={booking.direct.url} target="_blank" rel="noopener noreferrer" className="cta-button">
+                        Book Direct
+                    </a>
+                    {booking.direct.tabs && (
+                        <BookingTabs
+                            tabs={booking.direct.tabs.map(tab => ({
+                                id: tab.id,
+                                label: tab.label,
+                                content: <ContentBlocks blocks={tab.content} values={values} />
+                            }))}
+                        />
+                    )}
+                </div>
+            )}
+            <div className="platform-booking">
+                <h3>Book Through Platforms</h3>
+                <p>{booking.platformText}</p>
+                <div className="platform-booking-actions">
+                    <a href={site.airbnb.bookingUrl} target="_blank" rel="noopener noreferrer" className="cta-button">
+                        Book on Airbnb
+                    </a>
+                    {links.vrbo && (
+                        <a href={links.vrbo} target="_blank" rel="noopener noreferrer" className="cta-button">
+                            Book on VRBO
+                        </a>
+                    )}
+                </div>
+            </div>
+        </>
+    );
+}
+
 export default function HomePage() {
     const { photos } = loadPhotoData();
     const reviewData = loadReviewData();
     const unavailableDates = loadUnavailableDates();
-    const { address, coordinates, links, booking } = site;
+    const pricing = loadPricing();
+    const { address, coordinates, links } = site;
     // Sections a new listing may not have yet: reviews (none on Airbnb) and availability (calendar
     // feeds not set up). They're left out, along with their links, until the data exists.
     const hasReviews = reviewData.count > 0 || reviewData.reviews.length > 0;
@@ -106,7 +167,6 @@ export default function HomePage() {
                 instagram={links.instagram}
                 instagramIcon={sitePath('/images/instagram-icon.png')}
                 showReviews={hasReviews}
-                showAvailability={hasCalendar}
             />
 
             <section className="hero">
@@ -125,7 +185,7 @@ export default function HomePage() {
                     <div className="hero-subtitle">{site.hero.subtitle}</div>
                     <h1>{site.hero.heading}</h1>
                     <p className="hero-description">{site.hero.description}</p>
-                    <a href={hasCalendar ? '#availability' : '#book-now'} className="hero-cta">{site.hero.cta}</a>
+                    <a href="#availability" className="hero-cta">{site.hero.cta}</a>
                 </div>
             </section>
 
@@ -231,50 +291,21 @@ export default function HomePage() {
             <section className="availability-section-wrap" id="availability">
                 <div className="availability-section">
                     <div className="section-header">
-                        <div className="section-tag">Availability</div>
-                        <h2 className="section-title">Current Availability</h2>
+                        <div className="section-tag">Book Now</div>
+                        <h2 className="section-title">Booking Availability</h2>
                     </div>
                     <div id="availability-calendar" className="availability-calendar">
-                        <AvailabilityCalendar unavailableDates={unavailableDates} />
+                        <AvailabilityCalendar
+                            unavailableDates={unavailableDates}
+                            minNights={site.minNights}
+                            maxGuests={site.property.maxGuests}
+                            pricing={pricing}
+                            bookNow={<BookNowDetails pricing={pricing} />}
+                        />
                     </div>
                 </div>
             </section>
             )}
-
-            <section className="cta-section" id="book-now">
-                <h2 className="section-title">Book Now</h2>
-                {booking.direct && (
-                    <div className="booking-details">
-                        <h3 className="booking-details-title">{booking.direct.title}</h3>
-                        <a href={booking.direct.url} target="_blank" rel="noopener noreferrer" className="cta-button">
-                            Book Direct
-                        </a>
-                        {booking.direct.tabs && (
-                            <BookingTabs
-                                tabs={booking.direct.tabs.map(tab => ({
-                                    id: tab.id,
-                                    label: tab.label,
-                                    content: <ContentBlocks blocks={tab.content} />
-                                }))}
-                            />
-                        )}
-                    </div>
-                )}
-                <div className="platform-booking">
-                    <h3>Book Through Platforms</h3>
-                    <p>{booking.platformText}</p>
-                    <div className="platform-booking-actions">
-                        <a href={site.airbnb.bookingUrl} target="_blank" rel="noopener noreferrer" className="cta-button">
-                            Book on Airbnb
-                        </a>
-                        {links.vrbo && (
-                            <a href={links.vrbo} target="_blank" rel="noopener noreferrer" className="cta-button">
-                                Book on VRBO
-                            </a>
-                        )}
-                    </div>
-                </div>
-            </section>
 
             <section className="section" id="faq">
                 <div className="section-header">
@@ -304,7 +335,7 @@ export default function HomePage() {
                             <li><a href="#gallery">Gallery</a></li>
                             <li><a href="#amenities">Amenities</a></li>
                             {hasReviews && <li><a href="#reviews">Reviews</a></li>}
-                            {hasCalendar && <li><a href="#availability">Availability</a></li>}
+                            {hasCalendar && <li><a href="#availability">Book Now</a></li>}
                             {links.instagram && (
                                 <li>
                                     <a href={links.instagram} aria-label={`${site.name} on Instagram`}>

@@ -11,7 +11,9 @@ Each site includes:
 - A photo gallery with room filters and full-size pop-ups
 - Amenities, location, FAQ, and booking terms
 - Airbnb guest reviews and the overall Airbnb rating
-- An availability calendar built from the combined Airbnb and VRBO calendars
+- An availability calendar built from the combined Airbnb and VRBO calendars, where guests pick check-in and
+  check-out dates (at least the listing's minimum stay) to see the price from Airbnb's nightly rates and fees, then
+  open the booking options in a pop-up
 - Structured data, a sitemap, and `robots.txt`, all generated from the same data as the page
 
 Photos, reviews, and availability stay current automatically: scheduled workflows pull them from Airbnb and VRBO,
@@ -62,7 +64,7 @@ and merging, structured data, and both Airbnb scrapers.
 
 ```text
 sites/<site>/site.config.js   Everything specific to one listing: text, house rules, links, Airbnb ID, deploy target
-sites/<site>/data/            reviews.json and combined_calendar.ics (updated by workflows)
+sites/<site>/data/            reviews.json and combined_calendar.ics (updated by workflows), and pricing.json
 sites/<site>/public/          Files served as-is: hero and other images, favicon, listing photos, CNAME, llms.txt
 shared/public/                Files every site uses (such as the Instagram icon)
 app/, components/, lib/       The shared site code; nothing in it mentions a particular listing
@@ -75,7 +77,8 @@ and writes `lib/current-site.js`, which points the app at the site's config. Bot
 
 At build time the homepage reads the site's reviews, calendar, and photo list and renders everything into static
 HTML, so search engines and AI crawlers that don't run JavaScript still see it all. The availability calendar's
-booked dates come from the build; the calendar itself is drawn in the browser because it starts from today's date.
+booked dates and prices come from the build; the calendar itself is drawn in the browser because it starts from
+today's date. A site without `pricing.json` still lets guests pick dates, just without prices.
 
 ## Deployment
 
@@ -127,6 +130,7 @@ the site's `calendarSecret`) holding a JSON array:
 1. Copy `sites/rainier-getaway/` to `sites/<new-site>/` (lowercase words joined by hyphens).
 2. In `sites/<new-site>/site.config.js`, update everything: name, company, `url`, `deploy.repository`,
    `airbnb.listingId` (the number in the listing's `airbnb.com/rooms/...` URL) and booking link, `calendarSecret`,
+   `minNights` (the shortest stay guests can pick on the calendar),
    address, coordinates, property details, and all the page text. Optional parts (VRBO, Instagram, and email links,
    the street address, the direct-booking section, the location map) can be removed. If the city requires a rental
    license number on every listing (Seattle does), set `license` to the text to show in the footer.

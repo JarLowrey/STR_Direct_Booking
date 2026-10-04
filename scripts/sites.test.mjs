@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { access } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { listSiteIds, loadSiteConfig, sitePaths, validateSiteConfig } from './sites.mjs';
 
@@ -32,6 +32,16 @@ for (const id of await listSiteIds()) {
             if (!(await exists(path))) missing.push(path);
         }
         assert.deepEqual(missing, [], `sites/${id} is missing files`);
+
+        // Booking terms that show the deposit with {refundableDeposit} need it in data/pricing.json.
+        if (JSON.stringify(config.booking).includes('{refundableDeposit}')) {
+            const pricingPath = join(paths.dataDir, 'pricing.json');
+            const pricing = (await exists(pricingPath)) ? JSON.parse(await readFile(pricingPath, 'utf8')) : {};
+            assert.ok(
+                Number.isFinite(pricing.refundableDeposit),
+                `sites/${id} uses {refundableDeposit} but data/pricing.json has no refundableDeposit`
+            );
+        }
     });
 }
 
@@ -45,4 +55,7 @@ test('rejects a config with missing or malformed fields', async () => {
     assert.doesNotThrow(() => validateSiteConfig('ok', { ...config, url: 'https://owner.github.io/Repo/' }));
     assert.throws(() => validateSiteConfig('ok', { ...config, deploy: { repository: 'not a repo' } }), /owner\/repo/);
     assert.throws(() => validateSiteConfig('ok', { ...config, calendarSecret: 'lowercase' }), /uppercase GitHub secret/);
+    assert.throws(() => validateSiteConfig('ok', { ...config, minNights: undefined }), /missing minNights/);
+    assert.throws(() => validateSiteConfig('ok', { ...config, minNights: 0 }), /minNights must be/);
+    assert.throws(() => validateSiteConfig('ok', { ...config, minNights: '2' }), /minNights must be/);
 });

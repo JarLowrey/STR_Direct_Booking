@@ -28,6 +28,10 @@ export default {
     // The feed URLs contain private access tokens, so they're kept out of the repository.
     calendarSecret: 'CALENDAR_FEEDS_RAINIER_GETAWAY',
 
+    // Shortest stay guests can pick on the availability calendar, in nights. Keep it in step with the minimum stay
+    // in the booking terms below.
+    minNights: 2,
+
     seo: {
         title: 'Mount Rainier Vacation Rental in Ashford, WA | Rainier Getaway',
         description: "Stay in Ashford, WA, 5 miles from Mount Rainier National Park's Nisqually entrance. " +
@@ -219,6 +223,7 @@ export default {
             url: 'https://docs.google.com/forms/d/1P4zrzBh5_M9ItTD8iGvubHM_zeDbUCXZ_BLdG_O9oxI',
             // Optional: tabs with the direct-booking terms. Each tab's content is a list of blocks: a string is
             // a paragraph, { strong: '...' } is a bold paragraph, and { list: [...] } is a bulleted list.
+            // {refundableDeposit} in any of the text is replaced with the deposit from data/pricing.json, like $800.
             tabs: [
                 {
                     id: 'payment',
@@ -269,7 +274,7 @@ export default {
                     id: 'deposit',
                     label: 'Deposit',
                     content: [
-                        { strong: '$800 refundable damage deposit' },
+                        { strong: '{refundableDeposit} refundable damage deposit' },
                         'The deposit is refunded after your stay, provided there is no damage to the property.'
                     ]
                 }

@@ -26,6 +26,10 @@ export default {
     // leaves out the availability calendar.
     calendarSecret: 'CALENDAR_FEEDS_SEATTLE_TULIP_HIDEAWAY',
 
+    // Shortest stay guests can pick on the availability calendar, in nights. Keep it in step with the minimum stay
+    // in the booking terms below.
+    minNights: 2,
+
     seo: {
         // Kept under ~60 characters so Google shows it in full.
         title: 'Seattle Tulip Hideaway | Garden Suite Near Lake Washington',
@@ -269,7 +273,7 @@ export default {
                     id: 'deposit',
                     label: 'Deposit',
                     content: [
-                        { strong: '$800 refundable damage deposit' },
+                        { strong: '{refundableDeposit} refundable damage deposit' },
                         'The deposit is refunded after your stay, provided there is no damage to the property.'
                     ]
                 }
