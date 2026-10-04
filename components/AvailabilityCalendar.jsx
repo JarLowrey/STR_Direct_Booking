@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { canCheckIn, checkOutRange, formatPrice, optionalFees, stayPrice } from '../lib/stays.js';
+import { addDays, canCheckIn, checkOutRange, formatPrice, optionalFees, stayPrice } from '../lib/stays.js';
 import Modal from './Modal.jsx';
 
 function calendarDateKey(date) {
@@ -127,6 +127,8 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
     const [checkIn, setCheckIn] = useState(null);
     const [checkOut, setCheckOut] = useState(null);
     const [bookingOpen, setBookingOpen] = useState(false);
+    // Why the last day clicked couldn't be picked, if it couldn't.
+    const [hint, setHint] = useState(null);
     const booked = useMemo(() => new Set(unavailableDates), [unavailableDates]);
 
     useEffect(() => {
@@ -152,19 +154,38 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
         return <p className="availability-status">Loading availability...</p>;
     }
 
+    const minimumStay = `${pluralNights(minNights)} minimum`;
+
     const isCheckOutDate = key => checkOutDates && key >= checkOutDates[0] && key <= checkOutDates[1];
 
+    // A booked night runs from one day's afternoon to the next morning, so a day is only fully taken when both its own
+    // night and the night before are booked. A day with just its own night booked is another guest's check-in day
+    // (taken from the afternoon; it can still be a check-out), and one with just the night before booked is their
+    // check-out day (free from the afternoon; it can still be a check-in).
+    const isFullyBooked = key => booked.has(key) && booked.has(addDays(key, -1));
+
     // Choosing a check-out date, only the dates it can be are open, plus check-in (to clear it) and earlier dates
-    // (to move check-in). Otherwise, any date that can start a stay of at least minNights is open.
+    // (to move check-in). Otherwise every day that isn't fully booked is open; one that can't start a stay explains
+    // why when clicked.
     const isSelectable = key => {
         if (checkOutDates) {
             return isCheckOutDate(key) || key === checkIn || (key < checkIn && canCheckIn(key, rules));
         }
-        return canCheckIn(key, rules);
+        return !isFullyBooked(key);
+    };
+
+    const whyNotCheckIn = key => {
+        if (booked.has(key)) {
+            return `${formatDate(key)} is another guest's check-in day, so it can only be your check-out. ` +
+                'Pick your check-in date first.';
+        }
+        const limit = addDays(key, minNights) > rules.lastDate ? 'the end of the calendar' : 'the next booking';
+        return `A stay starting ${formatDate(key)} can't meet the ${minNights}-night minimum before ${limit}.`;
     };
 
     const selectDate = date => {
         const key = calendarDateKey(date);
+        setHint(null);
         if (isCheckOutDate(key)) {
             setCheckOut(key);
         } else if (checkOutDates && key === checkIn) {
@@ -172,19 +193,26 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
         } else if (canCheckIn(key, rules)) {
             setCheckIn(key);
             setCheckOut(null);
+        } else {
+            setHint(whyNotCheckIn(key));
         }
     };
 
     const clearDates = () => {
         setCheckIn(null);
         setCheckOut(null);
+        setHint(null);
     };
 
     const tileClassName = ({ date, view }) => {
         if (view !== 'month') return null;
         const key = calendarDateKey(date);
+        const nightBooked = booked.has(key);
+        const nightBeforeBooked = booked.has(addDays(key, -1));
         const classes = [
-            booked.has(key) && 'unavailable-date',
+            nightBooked && nightBeforeBooked && 'booked-day',
+            nightBooked && !nightBeforeBooked && 'booked-from-afternoon',
+            !nightBooked && nightBeforeBooked && 'booked-until-morning',
             key === checkIn && 'stay-check-in',
             key === checkOut && 'stay-check-out',
             checkOut && key > checkIn && key < checkOut && 'stay-night'
@@ -192,7 +220,6 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
         return classes.length ? classes.join(' ') : null;
     };
 
-    const minimumStay = `${pluralNights(minNights)} minimum`;
     const stay = checkIn && checkOut && stayPrice(checkIn, checkOut, pricing?.prices ?? {}, pricing?.fees);
     const stayDates = stay && `${formatDate(checkIn)} to ${formatDate(checkOut)} · ${pluralNights(stay.nights.length)}`;
 
@@ -213,6 +240,7 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
                     view === 'month' && (date < today || !isSelectable(calendarDateKey(date)))}
             />
             <div className="stay-summary" aria-live="polite">
+                {hint && <p className="availability-status stay-hint">{hint}</p>}
                 {stay ? (
                     <>
                         <p className="stay-dates">{stayDates}</p>
@@ -234,8 +262,7 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
                     </p>
                 ) : (
                     <p className="availability-status">
-                        {`Pick check-in and check-out dates${pricing ? ' to see pricing' : ''} (${minimumStay}). ` +
-                            'Unavailable dates are greyed out.'}
+                        {`Pick check-in and check-out dates${pricing ? ' to see pricing' : ''}`}
                     </p>
                 )}
                 {checkIn && (

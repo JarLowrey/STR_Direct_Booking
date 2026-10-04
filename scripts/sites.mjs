@@ -2,7 +2,7 @@
 //
 // Each site is a folder sites/<id>/ with:
 //   site.config.js   the listing's text, links, Airbnb ID, and deploy target
-//   data/            reviews.json and combined_calendar.ics (kept current by the workflows)
+//   data/            reviews.json and combined_calendar.json (kept current by the workflows)
 //   public/          files served as-is: images, CNAME, llms.txt
 //
 // Next.js serves one public/ folder and the app imports one config, so before each build or dev
@@ -47,7 +47,7 @@ export function sitePaths(id) {
         dataDir: join(dir, 'data'),
         publicDir: join(dir, 'public'),
         reviews: join(dir, 'data', 'reviews.json'),
-        calendar: join(dir, 'data', 'combined_calendar.ics'),
+        calendar: join(dir, 'data', 'combined_calendar.json'),
         photos: join(dir, 'public', 'images', 'airbnb_images'),
         thumbnails: join(dir, 'public', 'images', 'airbnb_thumbnails')
     };

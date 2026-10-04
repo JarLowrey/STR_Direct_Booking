@@ -8,21 +8,22 @@ const event = (uid, start, end) =>
 
 test('combines calendars and removes bookings listed on both platforms', () => {
     const result = combineCalendars([
-        { label: 'Airbnb', text: calendar([event('a1', '20261010', '20261013'), event('a2', '20261101', '20261103')]) },
+        { label: 'Airbnb', text: calendar([event('a1', '20261101', '20261103'), event('a2', '20261010', '20261013')]) },
         { label: 'VRBO', text: calendar([event('v1', '20261010', '20261013'), event('v2', '20261201', '20261205')]) }
     ]);
 
     assert.equal(result.total, 4);
     assert.equal(result.duplicates, 1);
-    assert.equal(result.events, 3);
-    assert.match(result.ics, /^BEGIN:VCALENDAR\r\n/);
-    assert.match(result.ics, /END:VCALENDAR\r\n$/);
-    assert.equal((result.ics.match(/DTSTART;VALUE=DATE:20261010/g) || []).length, 1);
-    assert.match(result.ics, /DTSTART;VALUE=DATE:20261101/);
-    assert.match(result.ics, /DTSTART;VALUE=DATE:20261201/);
+    assert.deepEqual(result.bookings, [
+        { checkIn: '2026-10-10', checkOut: '2026-10-13' },
+        { checkIn: '2026-11-01', checkOut: '2026-11-03' },
+        { checkIn: '2026-12-01', checkOut: '2026-12-05' }
+    ]);
+    assert.deepEqual(JSON.parse(result.json), { bookings: result.bookings });
+    assert.match(result.json, /\n$/);
 });
 
-test('keeps only booking dates and status, never guest details', () => {
+test('keeps only booking dates, never guest details', () => {
     // Shaped like a real Airbnb event, including a DESCRIPTION folded onto a continuation line.
     const airbnbEvent = [
         'BEGIN:VEVENT',
@@ -36,18 +37,27 @@ test('keeps only booking dates and status, never guest details', () => {
         'END:VEVENT'
     ].join('\r\n');
 
-    const { ics } = combineCalendars([{ label: 'Airbnb', text: calendar([airbnbEvent]) }]);
+    const { json } = combineCalendars([{ label: 'Airbnb', text: calendar([airbnbEvent]) }]);
 
-    assert.doesNotMatch(ics, /HMABC12345|1234|Reservation|Phone|UID|SUMMARY|DESCRIPTION/);
-    assert.match(ics, /BEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20261010\r\nDTEND;VALUE=DATE:20261013\r\nSTATUS:CONFIRMED\r\nEND:VEVENT/);
+    assert.doesNotMatch(json, /HMABC12345|1234|Reservation|Phone|abc123|Reserved/);
+    assert.deepEqual(JSON.parse(json), { bookings: [{ checkIn: '2026-10-10', checkOut: '2026-10-13' }] });
 });
 
-test('skips events without dates', () => {
-    const undated = ['BEGIN:VEVENT', 'SUMMARY:Note', 'END:VEVENT'].join('\r\n');
-    const { ics, events } = combineCalendars([{ label: 'Airbnb', text: calendar([undated]) }]);
+test('unfolds continued iCal lines before reading dates', () => {
+    const folded = ['BEGIN:VEVENT', 'DTSTART;VALUE=DATE:20261101', 'DTEND;VALUE=DATE:2026110', ' 2', 'END:VEVENT'].join('\r\n');
+    const { bookings } = combineCalendars([{ label: 'Airbnb', text: calendar([folded]) }]);
 
-    assert.equal(events, 0);
-    assert.doesNotMatch(ics, /VEVENT/);
+    assert.deepEqual(bookings, [{ checkIn: '2026-11-01', checkOut: '2026-11-02' }]);
+});
+
+test('skips cancelled events and events without dates', () => {
+    const undated = ['BEGIN:VEVENT', 'SUMMARY:Note', 'END:VEVENT'].join('\r\n');
+    const cancelled = [
+        'BEGIN:VEVENT', 'DTSTART;VALUE=DATE:20261020', 'DTEND;VALUE=DATE:20261022', 'STATUS:CANCELLED', 'END:VEVENT'
+    ].join('\r\n');
+    const { bookings } = combineCalendars([{ label: 'Airbnb', text: calendar([undated, cancelled]) }]);
+
+    assert.deepEqual(bookings, []);
 });
 
 test('produces the same file when only the download time changes', () => {
@@ -58,9 +68,8 @@ test('produces the same file when only the download time changes', () => {
     const first = combineCalendars([{ label: 'Airbnb', text: withStamp('20260926T120000Z') }]);
     const second = combineCalendars([{ label: 'Airbnb', text: withStamp('20260926T140000Z') }]);
 
-    assert.equal(first.ics, second.ics);
-    assert.doesNotMatch(first.ics, /DTSTAMP/);
-    assert.match(first.ics, /DTSTART;VALUE=DATE:20261010/);
+    assert.equal(first.json, second.json);
+    assert.doesNotMatch(first.json, /2026092/);
 });
 
 test('refuses to write a calendar when a feed returns something else', () => {

@@ -64,7 +64,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sites/${{ matrix.site.id }}/data/combined_calendar.ics
+          git add sites/${{ matrix.site.id }}/data/combined_calendar.json
 
           if git diff --cached --quiet; then
             echo "No calendar changes"

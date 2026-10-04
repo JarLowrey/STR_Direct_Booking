@@ -64,7 +64,7 @@ and merging, structured data, and both Airbnb scrapers.
 
 ```text
 sites/<site>/site.config.js   Everything specific to one listing: text, house rules, links, Airbnb ID, deploy target
-sites/<site>/data/            reviews.json and combined_calendar.ics (updated by workflows), and pricing.json
+sites/<site>/data/            reviews.json and combined_calendar.json (updated by workflows), and pricing.json
 sites/<site>/public/          Files served as-is: hero and other images, favicon, listing photos, CNAME, llms.txt
 shared/public/                Files every site uses (such as the Instagram icon)
 app/, components/, lib/       The shared site code; nothing in it mentions a particular listing
@@ -103,7 +103,7 @@ the deploy workflow for that site (commits pushed by a workflow don't trigger ot
 also be started manually from the Actions tab.
 
 - `update-calendars.yml` runs every 2 hours. It downloads the site's Airbnb and VRBO calendar feeds, removes bookings
-  listed on both, and writes `sites/<site>/data/combined_calendar.ics`. It fails without writing anything if a feed
+  listed on both, and writes `sites/<site>/data/combined_calendar.json`. It fails without writing anything if a feed
   returns something other than a calendar.
 - `update-reviews.yml` runs monthly on the 1st. It collects the listing's Airbnb reviews and writes
   `sites/<site>/data/reviews.json`: the overall rating and count, and every review with its rating, all shown on the
