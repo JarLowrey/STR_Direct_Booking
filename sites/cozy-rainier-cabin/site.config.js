@@ -4,12 +4,11 @@
 // Text is taken from the Airbnb listing (https://www.airbnb.com/rooms/1744627445043617491).
 
 export default {
-    name: 'Cozy Rainier Cabin',
+    name: 'Rainier Creekside',
     // Shown in the footer copyright line.
-    company: 'Cozy Rainier Cabin',
-    // No custom domain yet, so the site lives at the repository's GitHub Pages address. To use a
-    // domain later, change this to https://your-domain.com/ and add a public/CNAME file with the domain.
-    url: 'https://jarlowrey.github.io/RainierTinyHome/',
+    company: 'Rainier Creekside',
+    // Keep in step with public/CNAME.
+    url: 'https://rainier-creekside.com/',
 
     deploy: {
         repository: 'JarLowrey/RainierTinyHome'
@@ -42,10 +41,10 @@ export default {
     },
 
     seo: {
-        title: 'Cozy Rainier Cabin | Creekside Cabin for Two in Ashford, WA',
+        title: 'Rainier Creekside | Creekside Cabin for Two in Ashford, WA',
         description: 'A creekside cabin for two in Ashford, WA, near Mount Rainier National Park, with a ' +
             'wood-burning fireplace, creekside fire pit, full kitchen, EV charger, and a lakeside park next door.',
-        shareImageAlt: 'Cozy Rainier Cabin, a creekside cabin for two in Ashford, Washington',
+        shareImageAlt: 'Rainier Creekside, a creekside cabin for two in Ashford, Washington',
         structuredDescription: 'Creekside cabin for two in Ashford, Washington, near Mount Rainier National Park. ' +
             'One bedroom with a queen bed, a wood-burning fireplace, a creekside fire pit, a full kitchen, and a ' +
             'park with lake access next door.',
@@ -79,7 +78,7 @@ export default {
             src: '/images/hero.jpg',
             // Airbnb only has this photo at 1024px wide; a larger original would look sharper on big screens.
             srcSet: '/images/hero.jpg 1024w',
-            alt: 'Cozy Rainier Cabin among the trees in Ashford, Washington'
+            alt: 'Rainier Creekside among the trees in Ashford, Washington'
         },
         share: '/images/hero.jpg',
         favicon: {
@@ -117,8 +116,9 @@ export default {
         items: [
             {
                 icon: '🌲',
-                title: 'Next to a Lakeside Park',
-                text: 'A creekside setting in Ashford with a park right next door offering lake access and trails.'
+                title: 'Prime Location',
+                text: '10 minutes to the Mount Rainier National Park entrance. Neighbors a creek, lake, playground, ' +
+                    'and parks.'
             },
             {
                 icon: '🔥',
@@ -200,7 +200,7 @@ export default {
             src: '/images/location.jpg',
             width: 1024,
             height: 682,
-            alt: 'Creekside setting at Cozy Rainier Cabin in Ashford, Washington'
+            alt: 'Creekside setting at Rainier Creekside in Ashford, Washington'
         },
         mapDestination: {
             name: 'Nisqually Entrance, Mount Rainier National Park',
@@ -281,7 +281,7 @@ export default {
         heading: 'Cabin Questions',
         items: [
             {
-                question: 'How many guests can stay at Cozy Rainier Cabin?',
+                question: 'How many guests can stay at Rainier Creekside?',
                 answer: 'The cabin sleeps 2 guests in one bedroom with a queen bed. The living room also has a couch.'
             },
             {
@@ -319,8 +319,8 @@ export default {
 
     notFound: {
         heading: "This trail doesn't lead anywhere",
-        text: "The page you're looking for doesn't exist. Head back to Cozy Rainier Cabin, a creekside cabin for " +
+        text: "The page you're looking for doesn't exist. Head back to Rainier Creekside, a creekside cabin for " +
             'two near Mount Rainier National Park.',
-        cta: 'Back to Cozy Rainier Cabin'
+        cta: 'Back to Rainier Creekside'
     }
 };

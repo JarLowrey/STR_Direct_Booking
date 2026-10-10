@@ -1,6 +1,9 @@
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { Cormorant_Garamond, Manrope } from 'next/font/google';
-import site from '../lib/current-site.js';
-import { absoluteUrl } from '../lib/site-urls.js';
+import site, { SITE_ID } from '../lib/current-site.js';
+import { absoluteUrl, sitePath } from '../lib/site-urls.js';
 import './globals.css';
 
 // Downloaded at build time and served from this site, so there's no render-blocking request to
@@ -20,6 +23,17 @@ const bodyFont = Manrope({
 });
 
 const { favicon } = site.images;
+
+// "/images/favicon/favicon.svg" -> "/images/favicon/favicon.svg?v=1a2b3c4d", from the file's contents.
+// Browsers keep favicons long after a hard refresh, so a changed icon needs a new URL to show up.
+function iconPath(path) {
+    try {
+        const hash = createHash('sha256').update(readFileSync(join(process.cwd(), 'sites', SITE_ID, 'public', path)));
+        return `${sitePath(path)}?v=${hash.digest('hex').slice(0, 8)}`;
+    } catch {
+        return sitePath(path);
+    }
+}
 // Absolute URLs, so they're right whether the site is at a domain's root or in a subfolder.
 const shareImage = absoluteUrl(site.images.share);
 
@@ -45,14 +59,14 @@ export const metadata = {
     },
     icons: {
         icon: [
-            { url: absoluteUrl(favicon.svg), type: 'image/svg+xml' },
-            favicon.png32 && { url: absoluteUrl(favicon.png32), sizes: '32x32', type: 'image/png' },
-            favicon.png16 && { url: absoluteUrl(favicon.png16), sizes: '16x16', type: 'image/png' }
+            { url: iconPath(favicon.svg), type: 'image/svg+xml' },
+            favicon.png32 && { url: iconPath(favicon.png32), sizes: '32x32', type: 'image/png' },
+            favicon.png16 && { url: iconPath(favicon.png16), sizes: '16x16', type: 'image/png' }
         ].filter(Boolean),
-        ...(favicon.ico && { shortcut: absoluteUrl(favicon.ico) }),
-        ...(favicon.appleTouch && { apple: { url: absoluteUrl(favicon.appleTouch), sizes: '180x180' } })
+        ...(favicon.ico && { shortcut: iconPath(favicon.ico) }),
+        ...(favicon.appleTouch && { apple: { url: iconPath(favicon.appleTouch), sizes: '180x180' } })
     },
-    ...(favicon.manifest && { manifest: absoluteUrl(favicon.manifest) })
+    ...(favicon.manifest && { manifest: iconPath(favicon.manifest) })
 };
 
 export const viewport = {

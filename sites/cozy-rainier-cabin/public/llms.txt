@@ -1,6 +1,6 @@
-# Cozy Rainier Cabin
+# Rainier Creekside
 
-> Cozy Rainier Cabin is a creekside cabin for two at 155 Nisqually Way, Ashford, WA 98304, near Mount Rainier National Park's Nisqually entrance. It has one bedroom with a queen bed and one bathroom, and is booked through Airbnb.
+> Rainier Creekside is a creekside cabin for two at 155 Nisqually Way, Ashford, WA 98304, near Mount Rainier National Park's Nisqually entrance. It has one bedroom with a queen bed and one bathroom, and is booked through Airbnb.
 
 ## The cabin
 
@@ -20,6 +20,6 @@
 
 ## Links
 
-- [Website](https://jarlowrey.github.io/RainierTinyHome/)
+- [Website](https://rainier-creekside.com/)
 - [Book on Airbnb](https://www.airbnb.com/rooms/1744627445043617491)
 - [Book direct (request form)](https://forms.gle/ka1DfjBZH5FbEpSq6)
