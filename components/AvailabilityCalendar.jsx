@@ -161,7 +161,8 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
                 setCheckOut(urlCheckOut);
             }
         },
-        { checkin: checkIn, checkout: checkOut }
+        { checkin: checkIn, checkout: checkOut },
+        'availability'
     );
 
     const maxDate = useMemo(() => today && lastCalendarDate(today), [today]);

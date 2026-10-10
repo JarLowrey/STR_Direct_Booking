@@ -117,7 +117,8 @@ export default function Gallery({ photos, siteName, basePath = '' }) {
             room,
             gallery: galleryPage > 0 ? galleryPage + 1 : null,
             photo: selectedPhoto && photoUrlId(selectedPhoto)
-        }
+        },
+        'gallery'
     );
 
     useEffect(() => {

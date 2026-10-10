@@ -30,7 +30,8 @@ export default function Reviews({ reviews }) {
                 setReviewPage(Math.min(page, pageCount - 1));
             }
         },
-        { reviews: reviewPage > 0 ? reviewPage + 1 : null }
+        { reviews: reviewPage > 0 ? reviewPage + 1 : null },
+        'reviews'
     );
 
     // Show "Read more" only on reviews whose text is cut off by the card's max height.
