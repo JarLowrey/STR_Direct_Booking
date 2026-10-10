@@ -4,7 +4,10 @@ import { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { addDays, canCheckIn, checkOutRange, formatPrice, minNightsFor, optionalFees, stayPrice } from '../lib/stays.js';
+import { useUrlParams } from '../lib/url-params.js';
 import Modal from './Modal.jsx';
+
+const DATE_KEY = /^\d{4}-\d{2}-\d{2}$/;
 
 function calendarDateKey(date) {
     return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString().slice(0, 10);
@@ -14,6 +17,11 @@ function startOfToday() {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
     return date;
+}
+
+// The calendar shows a year: today through 364 days from now.
+function lastCalendarDate(today) {
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 364);
 }
 
 function formatDate(key, options = { month: 'short', day: 'numeric', year: 'numeric' }) {
@@ -121,7 +129,8 @@ function StayPrice({ stay, currency, extraFees, deposit }) {
 // Availability from the combined Airbnb/VRBO calendar, where guests pick check-in and check-out dates to see the
 // stay's price, then open the booking options (bookNow, the Book Now section's content) in a pop-up. The booked dates
 // and prices are compiled in at build time (see lib/data.js); the calendar itself only renders in the browser because
-// it starts from today's date, which the build can't know.
+// it starts from today's date, which the build can't know. The picked dates are kept in the URL
+// (?checkin=2026-11-06&checkout=2026-11-09), so a link reopens them.
 export default function AvailabilityCalendar({ unavailableDates, minNights, maxGuests, pricing, bookNow }) {
     const [today, setToday] = useState(null);
     const [checkIn, setCheckIn] = useState(null);
@@ -135,11 +144,27 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
         setToday(startOfToday());
     }, []);
 
-    // The calendar shows a year: today through 364 days from now.
-    const maxDate = useMemo(
-        () => today && new Date(today.getFullYear(), today.getMonth(), today.getDate() + 364),
-        [today]
+    // Dates from a link are only picked if they could be clicked: a check-in that can start a stay today, and a
+    // check-out it can end on.
+    useUrlParams(
+        params => {
+            const urlCheckIn = params.get('checkin');
+            const urlCheckOut = params.get('checkout');
+            const todayDate = startOfToday();
+            const urlRules = { booked, minNights, lastDate: calendarDateKey(lastCalendarDate(todayDate)) };
+            if (!DATE_KEY.test(urlCheckIn) || urlCheckIn < calendarDateKey(todayDate) || !canCheckIn(urlCheckIn, urlRules)) {
+                return;
+            }
+            setCheckIn(urlCheckIn);
+            const [earliest, latest] = checkOutRange(urlCheckIn, urlRules);
+            if (DATE_KEY.test(urlCheckOut) && urlCheckOut >= earliest && urlCheckOut <= latest) {
+                setCheckOut(urlCheckOut);
+            }
+        },
+        { checkin: checkIn, checkout: checkOut }
     );
+
+    const maxDate = useMemo(() => today && lastCalendarDate(today), [today]);
     const rules = useMemo(
         () => maxDate && { booked, minNights, lastDate: calendarDateKey(maxDate) },
         [booked, minNights, maxDate]
@@ -226,6 +251,8 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
     return (
         <>
             <Calendar
+                // Opens on the check-in's month, for dates picked from a link.
+                defaultActiveStartDate={checkIn ? new Date(`${checkIn}T00:00:00`) : undefined}
                 minDate={today}
                 maxDate={maxDate}
                 defaultView="month"
