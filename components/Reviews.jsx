@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { pageIndexParam, useUrlParams } from '../lib/url-params.js';
 
 const PAGE_SIZE = 3;
 
@@ -11,7 +12,8 @@ function stars(rating) {
 }
 
 // Airbnb guest reviews, 3 per page, with "Read more" for reviews too long for their card.
-// Rendered to HTML at build time, so the first page is visible without JavaScript.
+// Rendered to HTML at build time, so the first page is visible without JavaScript. Past the first page, the page is
+// kept in the URL (?reviews=2).
 export default function Reviews({ reviews }) {
     const [reviewPage, setReviewPage] = useState(0);
     const [expandedReviews, setExpandedReviews] = useState(new Set());
@@ -20,6 +22,16 @@ export default function Reviews({ reviews }) {
 
     const pageCount = Math.ceil(reviews.length / PAGE_SIZE);
     const pageReviews = reviews.slice(reviewPage * PAGE_SIZE, (reviewPage + 1) * PAGE_SIZE);
+
+    useUrlParams(
+        params => {
+            const page = pageIndexParam(params, 'reviews');
+            if (page !== null && pageCount > 0) {
+                setReviewPage(Math.min(page, pageCount - 1));
+            }
+        },
+        { reviews: reviewPage > 0 ? reviewPage + 1 : null }
+    );
 
     // Show "Read more" only on reviews whose text is cut off by the card's max height.
     useEffect(() => {

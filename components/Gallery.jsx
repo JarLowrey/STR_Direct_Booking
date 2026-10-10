@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { pageIndexParam, useUrlParams } from '../lib/url-params.js';
 
 const PHOTO_FOLDER = '/images/airbnb_images';
 const THUMBNAIL_FOLDER = '/images/airbnb_thumbnails';
@@ -13,16 +14,20 @@ const PAGE_SIZES_BY_SCREEN = [['(max-width: 768px)', 2], ['(max-width: 1024px)',
 // otherwise three columns capped by the grid's 1600px max width.
 const GALLERY_TILE_SIZES = '(max-width: 768px) 90vw, (max-width: 1024px) 45vw, min(30vw, 490px)';
 
+function screenPageSize() {
+    return PAGE_SIZES_BY_SCREEN.find(([query]) => window.matchMedia(query).matches)?.[1] ?? DESKTOP_PAGE_SIZE;
+}
+
 // The page size for the current screen width, updated when the window is resized or rotated.
 function usePageSize() {
     const [pageSize, setPageSize] = useState(DESKTOP_PAGE_SIZE);
 
     useEffect(() => {
-        const queries = PAGE_SIZES_BY_SCREEN.map(([query, size]) => [window.matchMedia(query), size]);
-        const update = () => setPageSize(queries.find(([query]) => query.matches)?.[1] ?? DESKTOP_PAGE_SIZE);
+        const queries = PAGE_SIZES_BY_SCREEN.map(([query]) => window.matchMedia(query));
+        const update = () => setPageSize(screenPageSize());
         update();
-        queries.forEach(([query]) => query.addEventListener('change', update));
-        return () => queries.forEach(([query]) => query.removeEventListener('change', update));
+        queries.forEach(query => query.addEventListener('change', update));
+        return () => queries.forEach(query => query.removeEventListener('change', update));
     }, []);
 
     return pageSize;
@@ -44,6 +49,11 @@ function interleaveByRoom(photos) {
 
 function photoDescription(photo) {
     return String(photo.description || '').trim();
+}
+
+// The photo's ID in the URL (?photo=), which stays the same when photos are re-downloaded or reordered.
+function photoUrlId(photo) {
+    return String(photo.photoId ?? photo.file);
 }
 
 function photoAlt(photo, siteName) {
@@ -68,6 +78,7 @@ function thumbnailSources(photo, basePath) {
 
 // Photos taking turns between rooms (see interleaveByRoom), 9 per page on desktop (6 on tablets, 2 on phones), with room filters and
 // a full-size pop-up. Rendered to HTML at build time, so the first page is visible without JavaScript.
+// The room, page, and open photo are kept in the URL (?room=Kitchen&gallery=2&photo=123), so a link reopens them.
 // basePath is the site's subfolder ("" for a site at the root of its domain).
 export default function Gallery({ photos, siteName, basePath = '' }) {
     const [room, setRoom] = useState(null);
@@ -77,6 +88,37 @@ export default function Gallery({ photos, siteName, basePath = '' }) {
     const [selectedPhoto, setSelectedPhoto] = useState(null);
     const pageSize = usePageSize();
     const lightboxRef = useRef(null);
+
+    // Rooms in the order they first appear in the gallery.
+    const rooms = [...new Set(photos.map(photo => photo.room).filter(Boolean))];
+    // A single room's photos stay in Airbnb's order.
+    const filteredPhotos = room ? photos.filter(photo => photo.room === room) : interleaveByRoom(photos);
+    const pageCount = Math.ceil(filteredPhotos.length / pageSize);
+    const galleryPage = Math.min(Math.floor(firstIndex / pageSize), pageCount - 1);
+    const pagePhotos = filteredPhotos.slice(galleryPage * pageSize, (galleryPage + 1) * pageSize);
+
+    useUrlParams(
+        params => {
+            const urlRoom = params.get('room');
+            if (rooms.includes(urlRoom)) {
+                setRoom(urlRoom);
+            }
+            // The page as seen on this screen; past the last page shows the last.
+            const page = pageIndexParam(params, 'gallery');
+            if (page !== null) {
+                setFirstIndex(page * screenPageSize());
+            }
+            const urlPhoto = photos.find(photo => photoUrlId(photo) === params.get('photo'));
+            if (urlPhoto) {
+                setSelectedPhoto(urlPhoto);
+            }
+        },
+        {
+            room,
+            gallery: galleryPage > 0 ? galleryPage + 1 : null,
+            photo: selectedPhoto && photoUrlId(selectedPhoto)
+        }
+    );
 
     useEffect(() => {
         const lightbox = lightboxRef.current;
@@ -95,14 +137,6 @@ export default function Gallery({ photos, siteName, basePath = '' }) {
         return <p className="gallery-status">Photos are being refreshed. Please check back soon.</p>;
     }
 
-    // Rooms in the order they first appear in the gallery.
-    const rooms = [...new Set(photos.map(photo => photo.room).filter(Boolean))];
-    // A single room's photos stay in Airbnb's order.
-    const filteredPhotos = room ? photos.filter(photo => photo.room === room) : interleaveByRoom(photos);
-    const pageCount = Math.ceil(filteredPhotos.length / pageSize);
-    const galleryPage = Math.min(Math.floor(firstIndex / pageSize), pageCount - 1);
-    const pagePhotos = filteredPhotos.slice(galleryPage * pageSize, (galleryPage + 1) * pageSize);
-
     const selectRoom = nextRoom => {
         setRoom(nextRoom);
         setFirstIndex(0);
@@ -115,7 +149,7 @@ export default function Gallery({ photos, siteName, basePath = '' }) {
     const filterButton = (label, value) => (
         <button
             key={label}
-            className="gallery-filter"
+            className={value === null ? 'gallery-filter gallery-filter-all' : 'gallery-filter'}
             type="button"
             aria-pressed={room === value}
             onClick={() => selectRoom(value)}

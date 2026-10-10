@@ -366,6 +366,13 @@ nav.scrolled {
     color: var(--primary);
 }
 
+/* "All photos" stands apart from the room filters with a heavier green outline. */
+.gallery-filter-all {
+    border: 1.5px solid var(--forest);
+    color: var(--forest);
+    font-weight: 700;
+}
+
 .gallery-filter[aria-pressed="true"] {
     border-color: var(--forest);
     background: var(--forest);

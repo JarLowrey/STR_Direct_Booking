@@ -228,7 +228,6 @@ export default function AvailabilityCalendar({ unavailableDates, minNights, maxG
             <Calendar
                 minDate={today}
                 maxDate={maxDate}
-                showNeighboringMonth={false}
                 defaultView="month"
                 maxDetail="month"
                 minDetail="year"
