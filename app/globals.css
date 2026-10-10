@@ -150,7 +150,10 @@ nav.scrolled {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+    /* Darkest behind the text in the middle, so it stays readable on busy photos. */
+    background:
+        radial-gradient(ellipse 70% 60% at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 100%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.45) 100%);
 }
 
 .hero-content {
@@ -160,13 +163,14 @@ nav.scrolled {
     color: white;
     max-width: 900px;
     padding: 2rem;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
     font-size: 0.95rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeInUp 1s ease forwards 0.3s;
@@ -175,7 +179,7 @@ nav.scrolled {
 .hero h1 {
     font-family: var(--font-display), 'Cormorant Garamond', serif;
     font-size: 5.5rem;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.1;
     margin-bottom: 2rem;
     letter-spacing: -0.02em;
@@ -188,7 +192,7 @@ nav.scrolled {
     line-height: 1.8;
     max-width: 600px;
     margin: 0 auto 3rem;
-    font-weight: 300;
+    font-weight: 400;
     opacity: 0;
     animation: fadeInUp 1s ease forwards 0.7s;
 }
@@ -203,6 +207,7 @@ nav.scrolled {
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    text-shadow: none;
     transition: all 0.4s ease;
     opacity: 0;
     animation: fadeInUp 1s ease forwards 0.9s;
