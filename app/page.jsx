@@ -221,7 +221,7 @@ export default function HomePage() {
                     <h2 className="section-title">{site.gallery.title}</h2>
                 </div>
                 <div id="photo-gallery">
-                    <Gallery photos={photos} siteName={site.name} basePath={BASE_PATH} />
+                    <Gallery photos={photos} roomOrder={site.gallery.roomOrder} siteName={site.name} basePath={BASE_PATH} />
                 </div>
             </section>
 

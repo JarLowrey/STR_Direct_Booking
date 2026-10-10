@@ -148,7 +148,10 @@ export default {
     },
 
     gallery: {
-        title: 'Explore the Space'
+        title: 'Explore the Space',
+        // Rooms (as Airbnb names them) shown first in the gallery and its room filters, in this order.
+        // Other rooms follow in Airbnb's order.
+        roomOrder: ['Hot tub', 'Game room 1', 'Game room 2', 'Full kitchen', 'Dining area', 'Living room', 'Gym']
     },
 
     amenities: {

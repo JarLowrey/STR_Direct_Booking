@@ -33,9 +33,19 @@ function usePageSize() {
     return pageSize;
 }
 
+// Moves the rooms in roomOrder to the front, in that order. Other rooms, and each room's photos,
+// keep Airbnb's order.
+function sortByRoomOrder(photos, roomOrder) {
+    const rank = room => {
+        const index = roomOrder.indexOf(room);
+        return index === -1 ? roomOrder.length : index;
+    };
+    return [...photos].sort((a, b) => rank(a.room) - rank(b.room));
+}
+
 // Takes turns between rooms so the first pages show every room: each room's first photo (rooms in
-// the order Airbnb lists them), then each room's second photo, and so on. Rooms with fewer photos
-// drop out as they run out.
+// the order they appear in photos), then each room's second photo, and so on. Rooms with fewer
+// photos drop out as they run out.
 function interleaveByRoom(photos) {
     const photosByRoom = new Map();
     for (const photo of photos) {
@@ -79,8 +89,10 @@ function thumbnailSources(photo, basePath) {
 // Photos taking turns between rooms (see interleaveByRoom), 9 per page on desktop (6 on tablets, 2 on phones), with room filters and
 // a full-size pop-up. Rendered to HTML at build time, so the first page is visible without JavaScript.
 // The room, page, and open photo are kept in the URL (?room=Kitchen&gallery=2&photo=123), so a link reopens them.
+// roomOrder lists rooms to show first (see sortByRoomOrder).
 // basePath is the site's subfolder ("" for a site at the root of its domain).
-export default function Gallery({ photos, siteName, basePath = '' }) {
+export default function Gallery({ photos: airbnbPhotos, roomOrder = [], siteName, basePath = '' }) {
+    const photos = sortByRoomOrder(airbnbPhotos, roomOrder);
     const [room, setRoom] = useState(null);
     // The first photo shown, rather than a page number, so a change in page size (rotating a tablet,
     // resizing the window) keeps the photos being looked at on screen.
@@ -89,7 +101,7 @@ export default function Gallery({ photos, siteName, basePath = '' }) {
     const pageSize = usePageSize();
     const lightboxRef = useRef(null);
 
-    // Rooms in the order they first appear in the gallery.
+    // Rooms in the order they first appear in the sorted photos.
     const rooms = [...new Set(photos.map(photo => photo.room).filter(Boolean))];
     // A single room's photos stay in Airbnb's order.
     const filteredPhotos = room ? photos.filter(photo => photo.room === room) : interleaveByRoom(photos);
