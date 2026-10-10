@@ -509,6 +509,59 @@ nav.scrolled {
     outline-offset: 3px;
 }
 
+/* Previous / next photo in the same room, at the screen's left and right edges. */
+.photo-lightbox-nav {
+    position: fixed;
+    top: 50%;
+    z-index: 1;
+    width: 3rem;
+    height: 3rem;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 1.4rem;
+    line-height: 1;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.photo-lightbox-prev {
+    left: 1rem;
+}
+
+.photo-lightbox-next {
+    right: 1rem;
+}
+
+.photo-lightbox-nav:hover {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+.photo-lightbox-nav:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* On phones the arrows sit over the photo's edges, so give them a darker backing. */
+@media (max-width: 768px) {
+    .photo-lightbox-nav {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .photo-lightbox-prev {
+        left: 0.5rem;
+    }
+
+    .photo-lightbox-next {
+        right: 0.5rem;
+    }
+}
+
 .gallery-item:hover {
     transform: scale(1.02);
     z-index: 10;

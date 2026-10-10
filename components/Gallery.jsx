@@ -100,6 +100,8 @@ export default function Gallery({ photos: airbnbPhotos, roomOrder = [], siteName
     const [selectedPhoto, setSelectedPhoto] = useState(null);
     const pageSize = usePageSize();
     const lightboxRef = useRef(null);
+    // Where a touch on the pop-up started, to tell a swipe from a tap.
+    const swipeStartRef = useRef(null);
 
     // Rooms in the order they first appear in the sorted photos.
     const rooms = [...new Set(photos.map(photo => photo.room).filter(Boolean))];
@@ -172,6 +174,18 @@ export default function Gallery({ photos: airbnbPhotos, roomOrder = [], siteName
     );
 
     const selectedDescription = selectedPhoto ? photoDescription(selectedPhoto) : '';
+    // The pop-up's arrows move through the photos in the grid's order (all photos, or the chosen
+    // room), wrapping around at either end, and the grid turns to the page with the photo on it.
+    const lightboxPhotos = filteredPhotos.includes(selectedPhoto) ? filteredPhotos : [];
+    const lightboxIndex = lightboxPhotos.indexOf(selectedPhoto);
+    const moveSelectedPhoto = direction => {
+        const count = lightboxPhotos.length;
+        if (count > 1) {
+            const nextIndex = (lightboxIndex + direction + count) % count;
+            setSelectedPhoto(lightboxPhotos[nextIndex]);
+            setFirstIndex(nextIndex);
+        }
+    };
 
     return (
         <>
@@ -225,6 +239,23 @@ export default function Gallery({ photos: airbnbPhotos, roomOrder = [], siteName
                 aria-label={selectedPhoto ? `${selectedPhoto.room} photo` : 'Photo'}
                 // Escape closes the dialog natively; keep React state in sync.
                 onClose={() => setSelectedPhoto(null)}
+                onKeyDown={event => {
+                    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                        event.preventDefault();
+                        moveSelectedPhoto(event.key === 'ArrowLeft' ? -1 : 1);
+                    }
+                }}
+                // A sideways swipe on a touch screen moves to the previous or next photo.
+                onTouchStart={event => {
+                    swipeStartRef.current = event.touches[0].clientX;
+                }}
+                onTouchEnd={event => {
+                    const distance = event.changedTouches[0].clientX - (swipeStartRef.current ?? NaN);
+                    swipeStartRef.current = null;
+                    if (Math.abs(distance) > 50) {
+                        moveSelectedPhoto(distance > 0 ? -1 : 1);
+                    }
+                }}
                 // Clicking the dark area around the photo (the dialog or figure itself) closes it.
                 onClick={event => {
                     if (event.target === event.currentTarget || event.target.tagName === 'FIGURE') {
@@ -240,11 +271,36 @@ export default function Gallery({ photos: airbnbPhotos, roomOrder = [], siteName
                 >
                     ×
                 </button>
+                {lightboxPhotos.length > 1 && (
+                    <>
+                        <button
+                            className="photo-lightbox-nav photo-lightbox-prev"
+                            type="button"
+                            aria-label="Previous photo"
+                            title="Previous photo"
+                            onClick={() => moveSelectedPhoto(-1)}
+                        >
+                            ←
+                        </button>
+                        <button
+                            className="photo-lightbox-nav photo-lightbox-next"
+                            type="button"
+                            aria-label="Next photo"
+                            title="Next photo"
+                            onClick={() => moveSelectedPhoto(1)}
+                        >
+                            →
+                        </button>
+                    </>
+                )}
                 {selectedPhoto && (
                     <figure>
                         <img src={`${basePath}${PHOTO_FOLDER}/${selectedPhoto.file}`} alt={photoAlt(selectedPhoto, siteName)} />
                         <figcaption>
-                            <div className="photo-lightbox-room">{selectedPhoto.room}</div>
+                            <div className="photo-lightbox-room">
+                                {selectedPhoto.room}
+                                {lightboxPhotos.length > 1 && ` · ${lightboxIndex + 1} of ${lightboxPhotos.length}`}
+                            </div>
                             {selectedDescription && <p className="photo-lightbox-description">{selectedDescription}</p>}
                         </figcaption>
                     </figure>
