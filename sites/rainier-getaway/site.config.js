@@ -168,46 +168,46 @@ export default {
                 icon: '🛋️',
                 title: 'Living & Comfort',
                 items: [
-                    ['👥', 'Sleeps 12 across 4 bedrooms and 6 beds'],
-                    ['🛏️', '1 King, 3 Queen, and 2 folding Full/Double beds'],
-                    ['🛁', '3 modern bathrooms'],
-                    ['🔥', 'Wood stove and fireplace'],
-                    ['🌡️', 'Heating throughout; AC in living and dining rooms'],
-                    ['🧺', 'Washer, dryer, and high-speed WiFi']
+                    ['👥', ['Sleeps ', { strong: '12' }, ' across ', { strong: '4 bedrooms' }, ' and ', { strong: '6 beds' }]],
+                    ['🛏️', ['1 ', { strong: 'King' }, ', 3 ', { strong: 'Queen' }, ', and 2 folding ', { strong: 'Full/Double' }, ' beds']],
+                    ['🛁', [{ strong: '3 modern bathrooms' }]],
+                    ['🔥', [{ strong: 'Wood stove' }, ' and ', { strong: 'fireplace' }]],
+                    ['🌡️', ['Heating throughout; ', { strong: 'AC' }, ' in living and dining rooms']],
+                    ['🧺', ['Washer, dryer, and ', { strong: 'high-speed WiFi' }]]
                 ]
             },
             {
                 icon: '🍽️',
                 title: 'Kitchen & Dining',
                 items: [
-                    ['🍳', 'Gourmet kitchen with granite counters and professional appliances'],
-                    ['🍽️', 'Large dining table with seating for 8+'],
-                    ['🪑', 'Kitchen island with bar seating'],
-                    ['☕', 'Coffee makers, toaster oven, dishwasher and more'],
-                    ['🥄', 'Full cookware and dishware']
+                    ['🍳', [{ strong: 'Gourmet kitchen' }, ' with granite counters and professional appliances']],
+                    ['🍽️', ['Large dining table with seating for ', { strong: '8+' }]],
+                    ['🪑', ['Kitchen island with ', { strong: 'bar seating' }]],
+                    ['☕', ['Coffee makers, toaster oven, dishwasher, and more']],
+                    ['🥄', ['Full ', { strong: 'cookware' }, ' and dishware']]
                 ]
             },
             {
                 icon: '🎯',
                 title: 'Recreation & Wellness',
                 items: [
-                    ['🎱', 'Game Loft 1: Pool table, ping pong, air hockey, mini basketball, child-safe darts, seating, TV, and mini fridge'],
-                    ['🕹️', 'Game Loft 2: Foosball, arcade games, mini golf, and gaming table'],
-                    ['🏋️', 'Private gym with treadmill, rowing machine, free weights, and punching bag'],
-                    ['♨️', '6-person infrared sauna with radio'],
-                    ['📺', 'Multiple smart TVs']
+                    ['🎱', [{ strong: 'Game Loft 1' }, ': Pool table, ping pong, air hockey, mini basketball, child-safe darts, seating, TV, and mini fridge']],
+                    ['🕹️', [{ strong: 'Game Loft 2' }, ': Foosball, arcade games, mini golf, and gaming table']],
+                    ['🏋️', [{ strong: 'Private gym' }, ' with treadmill, rowing machine, free weights, and punching bag']],
+                    ['♨️', [{ strong: '6-person infrared sauna' }, ' with radio']],
+                    ['📺', ['Multiple ', { strong: 'smart TVs' }]]
                 ]
             },
             {
                 icon: '🌲',
                 title: 'Outdoor',
                 items: [
-                    ['♨️', 'Private hot tub with LED and string lighting'],
-                    ['🔥', 'Fire pit area with seating'],
-                    ['🏔️', 'Private mountain and forest views'],
-                    ['🧭', '5 miles to the Nisqually entrance'],
-                    ['🚗', 'Ample parking'],
-                    ['🐾', 'Pet-friendly; please inquire']
+                    ['♨️', [{ strong: 'Private hot tub' }, ' with LED and string lighting']],
+                    ['🔥', [{ strong: 'Fire pit' }, ' area with seating']],
+                    ['🏔️', [{ strong: 'Private mountain' }, ' and forest views']],
+                    ['🧭', [{ strong: '5 miles' }, ' to the Nisqually entrance']],
+                    ['🚗', ['Ample ', { strong: 'parking' }]],
+                    ['🐾', [{ strong: 'Pet-friendly' }, '; please inquire']]
                 ]
             }
         ]
@@ -262,7 +262,13 @@ export default {
                     content: [
                         'Damage deposit will always be 100% refunded if you cancel before check-in.',
                         'Trip payment refund depends on how far in advance of your check-in day you cancel:',
-                        { list: ['100% refund :: 31+ days', '50% refund :: 15-30 days', '0% refund :: 0-14 days'] }
+                        {
+                            list: [
+                                { strong: '100% refund', text: ' :: 31+ days' },
+                                { strong: '50% refund', text: ' :: 15-30 days' },
+                                { strong: '0% refund', text: ' :: 0-14 days' }
+                            ]
+                        }
                     ]
                 },
                 {
@@ -281,12 +287,12 @@ export default {
                     content: [
                         {
                             list: [
-                                'Two-night minimum stay, or three nights for Thursday check-ins',
-                                'Pets are allowed, with a maximum of three pets',
-                                'No smoking, vaping, or e-cigarettes inside; a $250 fine applies if this rule is ignored',
-                                'Quiet hours are from 10:00 PM to 8:00 AM',
-                                'Maximum occupancy is 12 guests',
-                                'Check-in is at 4:00 PM and check-out is at 11:00 AM'
+                                { strong: 'Two-night minimum stay', text: ', or three nights for Thursday check-ins' },
+                                { strong: 'Pets are allowed', text: ', with a maximum of three pets' },
+                                { strong: 'No smoking, vaping, or e-cigarettes inside', text: '; a $250 fine applies if this rule is ignored' },
+                                { strong: 'Quiet hours', text: ' are from 10:00 PM to 8:00 AM' },
+                                { strong: 'Maximum occupancy', text: ' is 12 guests' },
+                                { strong: 'Check-in', text: ' is at 4:00 PM and check-out is at 11:00 AM' }
                             ]
                         }
                     ]

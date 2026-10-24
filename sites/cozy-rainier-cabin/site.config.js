@@ -145,46 +145,46 @@ export default {
                 icon: '🛋️',
                 title: 'Comfort',
                 items: [
-                    ['🛏️', 'Bedroom with a queen bed, plus a couch in the living room'],
-                    ['🧺', 'Bed linens, extra pillows and blankets, and room-darkening shades'],
-                    ['🔥', 'Wood-burning fireplace'],
-                    ['🌡️', 'Heating and a ceiling fan'],
-                    ['📺', 'TV, books, and reading material'],
-                    ['📶', 'Wifi']
+                    ['🛏️', ['Bedroom with a ', { strong: 'queen bed' }, ', plus a ', { strong: 'couch' }, ' in the living room']],
+                    ['🧺', ['Bed linens, extra pillows and blankets, and ', { strong: 'room-darkening shades' }]],
+                    ['🔥', [{ strong: 'Wood-burning fireplace' }]],
+                    ['🌡️', ['Heating and a ', { strong: 'ceiling fan' }]],
+                    ['📺', ['TV, books, and ', { strong: 'reading material' }]],
+                    ['📶', [{ strong: 'WiFi' }]]
                 ]
             },
             {
                 icon: '🍳',
                 title: 'Kitchen',
                 items: [
-                    ['🍳', 'Stove, oven, and microwave'],
-                    ['🧊', 'Refrigerator and freezer'],
-                    ['☕', 'Coffee maker, coffee, and toaster'],
-                    ['🥘', 'Pots and pans, oil, salt, and pepper'],
-                    ['🍽️', 'Dishes and silverware']
+                    ['🍳', [{ strong: 'Stove' }, ', ', { strong: 'oven' }, ', and ', { strong: 'microwave' }]],
+                    ['🧊', [{ strong: 'Refrigerator' }, ' and ', { strong: 'freezer' }]],
+                    ['☕', ['Coffee maker, coffee, and ', { strong: 'toaster' }]],
+                    ['🥘', ['Pots and pans, oil, salt, and ', { strong: 'pepper' }]],
+                    ['🍽️', [{ strong: 'Dishes' }, ' and ', { strong: 'silverware' }]]
                 ]
             },
             {
                 icon: '🌲',
                 title: 'Outdoors',
                 items: [
-                    ['🏞️', 'Creekside setting with lake access nearby'],
-                    ['🔥', 'Fire pit and outdoor furniture'],
-                    ['🛝', 'Park next door with a playground, frisbee golf, and horseshoes'],
-                    ['🚪', 'Private entrance'],
-                    ['🦌', 'Deer frequently visit the property']
+                    ['🏞️', ['Creekside setting with ', { strong: 'lake access' }, ' nearby']],
+                    ['🔥', [{ strong: 'Fire pit' }, ' and outdoor furniture']],
+                    ['🛝', ['Park next door with a ', { strong: 'playground' }, ', frisbee golf, and horseshoes']],
+                    ['🚪', [{ strong: 'Private entrance' }]],
+                    ['🦌', ['Deer frequently visit the ', { strong: 'property' }]]
                 ]
             },
             {
                 icon: '🚗',
                 title: 'Practical',
                 items: [
-                    ['🅿️', 'Free parking on the property'],
-                    ['🔌', 'EV charger'],
-                    ['🐾', 'Pets allowed'],
-                    ['🗓️', 'Long-term stays of 28 nights or more allowed'],
-                    ['🚿', 'Shampoo, conditioner, body soap, and hot water'],
-                    ['🧯', 'Smoke and carbon monoxide alarms, fire extinguisher, and first aid kit']
+                    ['🅿️', ['Free ', { strong: 'parking' }, ' on the property']],
+                    ['🔌', [{ strong: 'EV charger' }]],
+                    ['🐾', [{ strong: 'Pets allowed' }]],
+                    ['🗓️', ['Long-term stays of ', { strong: '28 nights or more' }, ' allowed']],
+                    ['🚿', ['Shampoo, conditioner, body soap, and ', { strong: 'hot water' }]],
+                    ['🧯', ['Smoke and carbon monoxide alarms, fire extinguisher, and ', { strong: 'first aid kit' }]]
                 ]
             }
         ]

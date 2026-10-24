@@ -25,12 +25,53 @@ function fillPlaceholders(text, values) {
 // and { list } a bulleted list. Any of their text can use the placeholders above.
 function ContentBlocks({ blocks, values }) {
     const fill = text => fillPlaceholders(text, values);
+    const renderListItem = (item, index) => {
+        if (typeof item === 'string') {
+            return <li key={index}>{fill(item)}</li>;
+        }
+        if (item && typeof item === 'object') {
+            if (item.strong) {
+                return (
+                    <li key={index}>
+                        <strong>{fill(item.strong)}</strong>
+                        {item.text ? fill(item.text) : null}
+                    </li>
+                );
+            }
+            if (item.text) {
+                return <li key={index}>{fill(item.text)}</li>;
+            }
+        }
+        return null;
+    };
+
     return blocks.map((block, index) => {
         if (typeof block === 'string') return <p key={index}>{fill(block)}</p>;
         if (block.strong) return <p key={index}><strong>{fill(block.strong)}</strong></p>;
-        if (block.list) return <ul key={index}>{block.list.map(item => <li key={item}>{fill(item)}</li>)}</ul>;
+        if (block.list) return <ul key={index}>{block.list.map((item, itemIndex) => renderListItem(item, itemIndex))}</ul>;
         return null;
     });
+}
+
+function renderRichText(value) {
+    if (typeof value === 'string') {
+        return value;
+    }
+    if (Array.isArray(value)) {
+        return value.map((part, index) => {
+            if (typeof part === 'string') {
+                return <Fragment key={index}>{part}</Fragment>;
+            }
+            if (part && part.strong) {
+                return <strong key={index}>{part.strong}</strong>;
+            }
+            return null;
+        });
+    }
+    if (value && value.strong) {
+        return <strong>{value.strong}</strong>;
+    }
+    return value;
 }
 
 function formatRating(rating) {
@@ -254,7 +295,7 @@ export default function HomePage() {
                                 {category.items.map(([icon, text]) => (
                                     <li key={text}>
                                         <span className="amenity-item-icon" aria-hidden="true">{icon}</span>
-                                        <span>{text}</span>
+                                        <span>{renderRichText(text)}</span>
                                     </li>
                                 ))}
                             </ul>

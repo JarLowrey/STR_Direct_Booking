@@ -154,49 +154,49 @@ export default {
                 icon: '🛏️',
                 title: 'Living & Sleeping',
                 items: [
-                    ['👑', 'King bed with large windows and blackout shades'],
-                    ['🛏️', 'Queen fold-out bed and a double fold-out futon'],
-                    ['🛋️', 'Two living areas with a large modular couch'],
-                    ['📺', 'HDTV with Chromecast and cable'],
-                    ['🎲', 'Board games, books, and reading material'],
-                    ['🌡️', 'Radiant heating and portable fans (no air conditioning)']
+                    ['👑', [{ strong: 'King bed' }, ' with large windows and blackout shades']],
+                    ['🛏️', ['Queen fold-out bed and a double fold-out ', { strong: 'futon' }]],
+                    ['🛋️', ['Two living areas with a large modular ', { strong: 'couch' }]],
+                    ['📺', ['HDTV with ', { strong: 'Chromecast' }, ' and cable']],
+                    ['🎲', ['Board games, books, and ', { strong: 'reading material' }]],
+                    ['🌡️', ['Radiant heating and portable fans (no ', { strong: 'air conditioning' }, ')']]
                 ]
             },
             {
                 icon: '🍳',
                 title: 'Kitchen',
                 items: [
-                    ['🍳', 'Stove, oven, microwave, and dishwasher'],
-                    ['🧊', 'Full-size refrigerator and freezer'],
-                    ['☕', 'Drip coffee maker, coffee, kettle, and toaster'],
-                    ['🥤', 'Blender and rice maker'],
-                    ['🥘', 'Pots and pans, baking sheet, and cooking basics'],
-                    ['🍷', 'Dishes, silverware, wine glasses, and a dining table']
+                    ['🍳', [{ strong: 'Stove' }, ', ', { strong: 'oven' }, ', ', { strong: 'microwave' }, ', and ', { strong: 'dishwasher' }]],
+                    ['🧊', ['Full-size ', { strong: 'refrigerator' }, ' and ', { strong: 'freezer' }]],
+                    ['☕', ['Drip coffee maker, coffee, kettle, and ', { strong: 'toaster' }]],
+                    ['🥤', [{ strong: 'Blender' }, ' and ', { strong: 'rice maker' }]],
+                    ['🥘', ['Pots and pans, baking sheet, and ', { strong: 'cooking basics' }]],
+                    ['🍷', ['Dishes, silverware, wine glasses, and a ', { strong: 'dining table' }]]
                 ]
             },
             {
                 icon: '🌳',
                 title: 'Outdoors & Location',
                 items: [
-                    ['🌳', 'A 150-year-old tulip tree on the property'],
-                    ['🌊', 'About a 5-minute walk to Lake Washington'],
-                    ['🏖️', 'Mount Baker Beach, half a mile away, with a pier and summer lifeguards'],
-                    ['🛝', 'Mount Baker Park and its big playground, half a mile away'],
-                    ['🌿', 'Shared, fully fenced backyard'],
-                    ['🚪', 'Private entrance through the garden'],
-                    ['🚆', 'Mount Baker and Judkins Park light rail stations, each under a mile']
+                    ['🌳', ['A 150-year-old ', { strong: 'tulip tree' }, ' on the property']],
+                    ['🌊', ['About a ', { strong: '5-minute walk' }, ' to Lake Washington']],
+                    ['🏖️', ['Mount Baker Beach, half a mile away, with a ', { strong: 'pier' }, ' and summer lifeguards']],
+                    ['🛝', ['Mount Baker Park and its big ', { strong: 'playground' }, ', half a mile away']],
+                    ['🌿', ['Shared, fully fenced ', { strong: 'backyard' }]],
+                    ['🚪', ['Private entrance through the ', { strong: 'garden' }]],
+                    ['🚆', ['Mount Baker and Judkins Park light rail stations, each under a ', { strong: 'mile' }]]
                 ]
             },
             {
                 icon: '🧺',
                 title: 'Practical',
                 items: [
-                    ['🧺', 'Free in-unit washer and dryer, iron, and drying rack'],
-                    ['💻', 'Dedicated workspace with a monitor and ergonomic chair'],
-                    ['🍼', "Pack 'n play (on request), high chair, and children's dinnerware"],
-                    ['🔑', 'Self check-in with a smart lock'],
-                    ['🅿️', 'Free parking on the property and on the street'],
-                    ['🐾', 'Pets allowed']
+                    ['🧺', ['Free in-unit washer and dryer, ', { strong: 'iron' }, ', and drying rack']],
+                    ['💻', ['Dedicated workspace with a monitor and ergonomic ', { strong: 'chair' }]],
+                    ['🍼', ["Pack 'n play (on request), high chair, and children's ", { strong: 'dinnerware' }]],
+                    ['🔑', ['Self check-in with a ', { strong: 'smart lock' }]],
+                    ['🅿️', ['Free parking on the property and on the ', { strong: 'street' }]],
+                    ['🐾', [{ strong: 'Pets allowed' }]]
                 ]
             }
         ]
