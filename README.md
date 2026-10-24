@@ -109,7 +109,8 @@ also be started manually from the Actions tab.
   `sites/<site>/data/reviews.json`: the overall rating and count, and every review with its rating, all shown on the
   site. For a site with a `vrbo.propertyId` in its config, it also collects the Vrbo reviews into
   `sites/<site>/data/vrbo-reviews.json`. A Vrbo failure is reported but doesn't stop the Airbnb update, and the last
-  Vrbo reviews stay in place.
+  Vrbo reviews stay in place. If Vrbo returns HTTP 429, the scraper stops and reports its `Retry-After` hint, if
+  provided; changing the User-Agent does not bypass the limit.
 - `update-airbnb-images.yml` runs monthly on the 1st. It reads the photo-tour data Airbnb embeds in the listing page
   (plain HTTP first, falling back to headless Chromium if that's blocked) and downloads every photo in gallery order,
   waiting 0.5-1.25 seconds between downloads. It writes full-size photos and a `metadata.json` (order, room,
