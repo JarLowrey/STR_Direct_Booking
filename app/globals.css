@@ -1273,14 +1273,14 @@ html:has(.modal[open]) {
 
 .review-rating {
     color: var(--forest);
-    font-size: 0.85rem;
+    font-size: 1.02rem;
     letter-spacing: 0.12em;
     white-space: nowrap;
 }
 
 .review-date {
     color: var(--secondary);
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
@@ -1333,6 +1333,94 @@ html:has(.modal[open]) {
 
 .review-expand:hover {
     color: var(--accent);
+}
+
+.review-link {
+    align-self: flex-start;
+    margin-top: 1.5rem;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+    text-transform: uppercase;
+}
+
+.review-link:hover {
+    color: var(--accent);
+}
+
+.review-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1rem;
+}
+
+.review-actions > * {
+    margin-top: 0;
+    align-self: center;
+}
+
+.review-reply {
+    align-self: stretch;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(26, 26, 26, 0.04);
+    border-left: 3px solid var(--accent);
+}
+
+.review-reply summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    cursor: pointer;
+    list-style: none;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.review-reply summary::-webkit-details-marker {
+    display: none;
+}
+
+.review-reply summary::after {
+    content: '+';
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.review-reply[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.review-reply summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 0.25rem;
+}
+
+.review-reply summary time {
+    margin-left: auto;
+    color: var(--forest);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+}
+
+.review-reply p {
+    margin-top: 0.75rem;
+    color: var(--forest);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    white-space: pre-line;
 }
 
 .review-summary {

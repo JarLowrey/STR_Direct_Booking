@@ -23,6 +23,11 @@ export default {
         bookingUrl: 'https://www.airbnb.com/h/rainiergetaway'
     },
 
+    // Vrbo listing (the number in its URL). Its reviews are shown alongside the Airbnb ones. Leave out to skip them.
+    vrbo: {
+        propertyId: '5039645'
+    },
+
     // Name of the GitHub secret holding this listing's calendar feeds, as a JSON array like
     // [{ "label": "Airbnb", "url": "https://www.airbnb.com/calendar/ical/..." }, { "label": "VRBO", "url": "..." }].
     // The feed URLs contain private access tokens, so they're kept out of the repository.

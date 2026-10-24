@@ -48,6 +48,7 @@ export function sitePaths(id) {
         dataDir: join(dir, 'data'),
         publicDir: join(dir, 'public'),
         reviews: join(dir, 'data', 'reviews.json'),
+        vrboReviews: join(dir, 'data', 'vrbo-reviews.json'),
         calendar: join(dir, 'data', 'combined_calendar.json'),
         photos: join(dir, 'public', 'images', 'airbnb_images'),
         thumbnails: join(dir, 'public', 'images', 'airbnb_thumbnails')

@@ -1,141 +1,270 @@
 {
   "listingId": "1501508351751467254",
   "listingUrl": "https://www.airbnb.com/rooms/1501508351751467254?modal=REVIEWS",
-  "fetchedAt": "2026-10-01T21:41:34.605Z",
-  "rating": 5,
-  "count": 22,
+  "fetchedAt": "2026-10-24T17:37:11.204Z",
+  "rating": 4.92,
+  "count": 24,
   "reviews": [
+    {
+      "id": "1794326446560513746",
+      "rating": 3,
+      "date": "10/2026",
+      "text": "We enjoyed our stay but felt that a few homey amenities would really make a difference, especially considering the price: reading lamps, quality tp and kleenex, larger bath towels, woodstove prepared for use, smaller pots and pans and plates in kitchen, safety mats in tub/shower plus grab bars, lap blankets. The loosely placed concrete that constituted the walkway to the hot tub did not seem up to code.",
+      "hostResponse": {
+        "text": "Thank you for staying with us and for the thoughtful feedback. We’re glad you enjoyed your visit.\nFor future guests, here’s what’s provided: two lamps per bed in three of the four bedrooms, a lamp in the living room, and lamps at the bedroom work desks. Lap blankets are on the living room couch, with extras in the hallway closet. Bathroom have non-slip bath mats under the sink, and we stock 2-ply toilet paper. The wood stove is cleaned regularly, and we supply lighters, kindling paper, and complimentary firewood. We keep the wood outside to prevent bugs from getting into the house but are happy to put some inside with advanced notice if moving firewood is a concern for your party.\nGuest safety is a priority for us, so we’re taking another look at the hot tub walkway. We appreciate you bringing it to our attention.\nIf anything is ever missing during a stay, please message us. We respond quickly and are happy to help. Thanks again for staying with us!",
+        "date": "10/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1794326446560513746&review_page_entrypoint=show_more"
+    },
+    {
+      "id": "1789215611548416832",
+      "rating": 5,
+      "date": "10/2026",
+      "text": "Amazing house! The pictures do not do it justice at all. such an amazing space and very well kept, the owners really love and care for this place. Would 100% stay here again!",
+      "hostResponse": null,
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1789215611548416832&review_page_entrypoint=show_more"
+    },
     {
       "id": "1779153650490134105",
       "rating": 5,
       "date": "9/2026",
-      "text": "James is a wonderful host. He was quick to respond to any questions and made sure we were feeling like at home. The home was very clean, tidy, and provided a peaceful environment that welcomed all ages. There was plenty to do on site and the home was spread out to accommodate multiple people. The best thing about this place is that everything listed about the property on the booking site was 100% accurate and that it is a 2 min drive to the Big Creek Campground. 10/10 would book again and recommend to everyone."
+      "text": "James is a wonderful host. He was quick to respond to any questions and made sure we were feeling like at home. The home was very clean, tidy, and provided a peaceful environment that welcomed all ages. There was plenty to do on site and the home was spread out to accommodate multiple people. The best thing about this place is that everything listed about the property on the booking site was 100% accurate and that it is a 2 min drive to the Big Creek Campground. 10/10 would book again and recommend to everyone.",
+      "hostResponse": {
+        "text": "We aim to always provide an accurate listing. We're so glad you could spread out in the large space and enjoyed the clean and peaceful environment!",
+        "date": "9/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1779153650490134105&review_page_entrypoint=show_more"
     },
     {
       "id": "1774032750475027213",
       "rating": 5,
       "date": "9/2026",
-      "text": "We had a great stay in Ashford! James was very friendly and offered to help should we need. The place was clean and we had plenty to do for our party of 5 to relax and have a good time. We were greeted by a deer everyday 🦌 would definitely recommend as a place to stay for a large party, especially if you’re visiting Mt. Rainier!"
+      "text": "We had a great stay in Ashford! James was very friendly and offered to help should we need. The place was clean and we had plenty to do for our party of 5 to relax and have a good time. We were greeted by a deer everyday 🦌 would definitely recommend as a place to stay for a large party, especially if you’re visiting Mt. Rainier!",
+      "hostResponse": {
+        "text": "Great to hear that you enjoyed the local wildlife and had a great time! I'm happy to have helped make some good memories!",
+        "date": "9/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1774032750475027213&review_page_entrypoint=show_more"
     },
     {
       "id": "1769083143655159899",
       "rating": 5,
       "date": "9/2026",
-      "text": "We had an amazing stay at James’s place! It was super convenient to get to Mount Rainier and it was nice being able to come back and unwind/relax afterwards. There was a ton to do inside and we had a blast! We definitely recommend and would stay again in the future!"
+      "text": "We had an amazing stay at James’s place! It was super convenient to get to Mount Rainier and it was nice being able to come back and unwind/relax afterwards. There was a ton to do inside and we had a blast! We definitely recommend and would stay again in the future!",
+      "hostResponse": {
+        "text": "We're thrilled you had lots of fun in the home and found it convenient to explore Rainier. Thanks for visiting!",
+        "date": "9/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1769083143655159899&review_page_entrypoint=show_more"
     },
     {
       "id": "1770444571197314580",
       "rating": 5,
       "date": "9/2026",
-      "text": "House was perfect! Plenty of space to spread out and the game room, sauna, and hot tub were a huge hit!"
+      "text": "House was perfect! Plenty of space to spread out and the game room, sauna, and hot tub were a huge hit!",
+      "hostResponse": {
+        "text": "So glad you enjoyed the large home and that no one felt cramped. Come back to enjoy the hot tub and amenities any time!",
+        "date": "9/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1770444571197314580&review_page_entrypoint=show_more"
     },
     {
       "id": "1765346226811810256",
       "rating": 5,
       "date": "9/2026",
-      "text": "James’s place was perfect for our group of six, spacious, comfortable, and in a peaceful, quiet neighborhood very close to the Mount Rainier National Park entrance. The house has plenty of great amenities, including a hot tub, sauna, and games, although we spent so much time hiking that we didn’t get a chance to enjoy them! Highly recommended, especially for anyone visiting Mount Rainier to hike."
+      "text": "James’s place was perfect for our group of six, spacious, comfortable, and in a peaceful, quiet neighborhood very close to the Mount Rainier National Park entrance. The house has plenty of great amenities, including a hot tub, sauna, and games, although we spent so much time hiking that we didn’t get a chance to enjoy them! Highly recommended, especially for anyone visiting Mount Rainier to hike.",
+      "hostResponse": {
+        "text": "We're happy this home was well located to enable your hiking-heavy vacation! Thanks for booking with us, hopefully next time you'll have time to enjoy the games and other amenities 😁",
+        "date": "9/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1765346226811810256&review_page_entrypoint=show_more"
     },
     {
       "id": "1748109299257442811",
       "rating": 5,
       "date": "8/2026",
-      "text": "This house was a perfect spot for a family vacation. We were easily able to explore Ranier Park while also having a place for good downtime for toddlers. The hot tub was lovely after a day of hiking and the game room was great to entertain adults who can’t sit still 😂.\nJames was so responsive whenever we needed something. I’ve stayed at a lot of Airbnbs and haven’t had such a wonderful experience with the hosts. We would absolutely come back!!"
+      "text": "This house was a perfect spot for a family vacation. We were easily able to explore Ranier Park while also having a place for good downtime for toddlers. The hot tub was lovely after a day of hiking and the game room was great to entertain adults who can’t sit still 😂.\nJames was so responsive whenever we needed something. I’ve stayed at a lot of Airbnbs and haven’t had such a wonderful experience with the hosts. We would absolutely come back!!",
+      "hostResponse": {
+        "text": "Thank you for the incredibly kind words! So glad your group enjoyed the arcade, games, and hot tub. It was a joy hosting your family, and we'd love to welcome you back anytime.",
+        "date": "8/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1748109299257442811&review_page_entrypoint=show_more"
     },
     {
       "id": "1749599677080051988",
       "rating": 5,
       "date": "8/2026",
-      "text": "Great launching pad for Rainier activities. Lovely place with exposed wood and frontier-cabin vibe also stocked with fun activities."
+      "text": "Great launching pad for Rainier activities. Lovely place with exposed wood and frontier-cabin vibe also stocked with fun activities.",
+      "hostResponse": {
+        "text": "Thank you! We're thrilled you enjoyed the cabin vibe and the activities after exploring Mt. Rainier.",
+        "date": "8/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1749599677080051988&review_page_entrypoint=show_more"
     },
     {
       "id": "1742122285480667088",
       "rating": 5,
       "date": "7/2026",
-      "text": "James is a great host and the property location close to the park entrance really helps. The home is nicely stocked up with all things needed for a comfortable stay. Lot of indoor games and the hot tub makes it a great place for spending time with family. The deer made daily visit to the front and back yard without fail and we ended up spotting a bunny too in the front. Thanks for hosting us. Would like to visit again."
+      "text": "James is a great host and the property location close to the park entrance really helps. The home is nicely stocked up with all things needed for a comfortable stay. Lot of indoor games and the hot tub makes it a great place for spending time with family. The deer made daily visit to the front and back yard without fail and we ended up spotting a bunny too in the front. Thanks for hosting us. Would like to visit again.",
+      "hostResponse": {
+        "text": "Thanks for the fantastic review! So glad your family enjoyed all the games and activities. We love the daily wildlife visits too. We would be delighted to host you again.",
+        "date": "8/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1742122285480667088&review_page_entrypoint=show_more"
     },
     {
       "id": "1738617411181948923",
       "rating": 5,
       "date": "7/2026",
-      "text": "Great stay great location!"
+      "text": "Great stay great location!",
+      "hostResponse": {
+        "text": "We love the location too, glad you had a great time!",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1738617411181948923&review_page_entrypoint=show_more"
     },
     {
       "id": "1731338204821517021",
       "rating": 5,
       "date": "7/2026",
-      "text": "Thank you for having us."
+      "text": "Thank you for having us.",
+      "hostResponse": {
+        "text": "Thank you for being great guests, it was great hosting you!",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1731338204821517021&review_page_entrypoint=show_more"
     },
     {
       "id": "1727066285902664519",
       "rating": 5,
       "date": "7/2026",
-      "text": "Amazing place to stay close to the park entrance. Our kids loved all the amenities. Everything you could ask for to come back to after a day at Mount Rainier."
+      "text": "Amazing place to stay close to the park entrance. Our kids loved all the amenities. Everything you could ask for to come back to after a day at Mount Rainier.",
+      "hostResponse": {
+        "text": "Thank you, Jordan! So glad you loved the home and that your kids had a great time.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1727066285902664519&review_page_entrypoint=show_more"
     },
     {
       "id": "1733662168814876299",
       "rating": 5,
       "date": "7/2026",
-      "text": "Excellent place to stay"
+      "text": "Excellent place to stay",
+      "hostResponse": {
+        "text": "Thank you! We're thrilled you had an excellent stay.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1733662168814876299&review_page_entrypoint=show_more"
     },
     {
       "id": "1723503707454944677",
       "rating": 5,
       "date": "7/2026",
-      "text": "Great home and a warm host. James was proactive in making sure our stay was comfortable."
+      "text": "Great home and a warm host. James was proactive in making sure our stay was comfortable.",
+      "hostResponse": {
+        "text": "Thank you, Deepkumar! We appreciate you recognizing our proactive communication. Thanks for choosing our home, and are glad you had a great stay by the Park.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1723503707454944677&review_page_entrypoint=show_more"
     },
     {
       "id": "1718340696959929298",
       "rating": 5,
       "date": "6/2026",
-      "text": "Amazing location right outside of Mount Rainier National Park. Place was amazing and exactly as described with many amenities to enjoy. Would book again!"
+      "text": "Amazing location right outside of Mount Rainier National Park. Place was amazing and exactly as described with many amenities to enjoy. Would book again!",
+      "hostResponse": {
+        "text": "Thank you, Tom! Being just outside the Mount Rainier National Park entrance makes it easy to maximize time on the trails :)",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1718340696959929298&review_page_entrypoint=show_more"
     },
     {
       "id": "1713355307402507930",
       "rating": 5,
       "date": "6/2026",
-      "text": "Incredible home with great amenities; very well-stocked kitchen; comfortable bedrooms; Guest account on Roku TV was a nice touch. No complaints!"
+      "text": "Incredible home with great amenities; very well-stocked kitchen; comfortable bedrooms; Guest account on Roku TV was a nice touch. No complaints!",
+      "hostResponse": {
+        "text": "Thank you, Dhruv! We aim to provide all those thoughtful touches to make group stays seamless. Glad you had a comfortable stay.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1713355307402507930&review_page_entrypoint=show_more"
     },
     {
       "id": "1711841825285027538",
       "rating": 5,
       "date": "6/2026",
-      "text": "Great space; plenty of room; comfortable beds; close to Mt Rainier Park entrance. Loved having the deer visit the yard each evening and some mornings. Kitchen well equipped. Host very responsive."
+      "text": "Great space; plenty of room; comfortable beds; close to Mt Rainier Park entrance. Loved having the deer visit the yard each evening and some mornings. Kitchen well equipped. Host very responsive.",
+      "hostResponse": {
+        "text": "Thank you, Beth! Comfortable beds and a well-equipped kitchen are exactly what we aim to provide. The deer love to visit regularly. Hope to host you again!",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1711841825285027538&review_page_entrypoint=show_more"
     },
     {
       "id": "1706082106692324184",
       "rating": 5,
       "date": "6/2026",
-      "text": "We had a lovely time at James’ place. It was perfect for a large family. There were lots of games and amenities and located so close to Mt. Rainier. I would highly recommend this place!"
+      "text": "We had a lovely time at James’ place. It was perfect for a large family. There were lots of games and amenities and located so close to Mt. Rainier. I would highly recommend this place!",
+      "hostResponse": {
+        "text": "Thank you, Betsy! So glad your large family enjoyed the games and amenities. You're welcome back anytime.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1706082106692324184&review_page_entrypoint=show_more"
     },
     {
       "id": "1682809958155795672",
       "rating": 5,
       "date": "5/2026",
-      "text": "We had an absolutely wonderful time at James’s place in Ashford! We stayed here with family and a toddler, and it was the perfect setup for us. The home was incredibly spacious, well-furnished, and you can tell it was recently renovated—everything felt fresh and very clean.\nOne of the highlights of our stay was the local \"neighbors\"—we had deer visiting the property every now and then, which was a magical experience for the whole family. The location is also unbeatable if you are visiting Mt. Rainier National Park; the entrance is so close, making our daily trips very easy.\nJames was a fantastic host and had the house arranged so neatly for our arrival. We truly loved our stay here and can’t recommend it enough for families looking for a peaceful, high-quality getaway near the mountain. We’d love to come back!"
+      "text": "We had an absolutely wonderful time at James’s place in Ashford! We stayed here with family and a toddler, and it was the perfect setup for us. The home was incredibly spacious, well-furnished, and you can tell it was recently renovated—everything felt fresh and very clean.\nOne of the highlights of our stay was the local \"neighbors\"—we had deer visiting the property every now and then, which was a magical experience for the whole family. The location is also unbeatable if you are visiting Mt. Rainier National Park; the entrance is so close, making our daily trips very easy.\nJames was a fantastic host and had the house arranged so neatly for our arrival. We truly loved our stay here and can’t recommend it enough for families looking for a peaceful, high-quality getaway near the mountain. We’d love to come back!",
+      "hostResponse": {
+        "text": "Thank you, Radhika! Thanks for highlighting the spacious layout, recent renovations, and convenient location near Mount Rainier. We're always touched to see the local deer \"neighbors\" too! We hope to see you again!",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1682809958155795672&review_page_entrypoint=show_more"
     },
     {
       "id": "1591630279424064866",
       "rating": 5,
       "date": "1/2026",
-      "text": "The entire family enjoyed the house. It is perfect for big families and kids. Lots to do and room for everyone to sleep comfortably. We will definitely book again. Also James was extremely responsive when we had to make adjustments to our stay and extremely friendly. I would highly recommend this place for anyone with a big family or group."
+      "text": "The entire family enjoyed the house. It is perfect for big families and kids. Lots to do and room for everyone to sleep comfortably. We will definitely book again. Also James was extremely responsive when we had to make adjustments to our stay and extremely friendly. I would highly recommend this place for anyone with a big family or group.",
+      "hostResponse": {
+        "text": "Thank you, Amber! It's wonderful that the home gave your family plenty of space and activities for both kids and adults. Thanks for the recommendation, and we look forward to hosting you again.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1591630279424064866&review_page_entrypoint=show_more"
     },
     {
       "id": "1586559753039494733",
       "rating": 5,
       "date": "12/2025",
-      "text": "The place was great ! Super spacious and loved the play room! James was super nice he put a Christmas tree and decorated the house for the holiday!"
+      "text": "The place was great ! Super spacious and loved the play room! James was super nice he put a Christmas tree and decorated the house for the holiday!",
+      "hostResponse": {
+        "text": "Thank you, Laura! We're happy the playroom and holiday decorations helped make your Christmas stay memorable.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1586559753039494733&review_page_entrypoint=show_more"
     },
     {
       "id": "1576324852510565896",
       "rating": 5,
       "date": "12/2025",
-      "text": "The Airbnb was lovely, clean and the host was very responsive! We had a wonderful stay."
+      "text": "The Airbnb was lovely, clean and the host was very responsive! We had a wonderful stay.",
+      "hostResponse": {
+        "text": "Thank you, Magen! We appreciate you mentioning the cleanliness and responsive communication. Thanks for staying with us, and we hope to host you again.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1576324852510565896&review_page_entrypoint=show_more"
     },
     {
       "id": "1565438536998282323",
       "rating": 5,
       "date": "11/2025",
-      "text": "We enjoyed our stay here and would recommend to large groups looking for accommodations near Mt Rainier!"
+      "text": "We enjoyed our stay here and would recommend to large groups looking for accommodations near Mt Rainier!",
+      "hostResponse": {
+        "text": "Thank you, Kalpa! Thanks for recommending our home for large groups visiting Mount Rainier. We appreciate you staying with us.",
+        "date": "7/2026"
+      },
+      "url": "https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1565438536998282323&review_page_entrypoint=show_more"
     }
   ]
 }

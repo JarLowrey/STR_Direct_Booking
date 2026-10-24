@@ -37,20 +37,32 @@ function formatRating(rating) {
     return Number.isInteger(rating) ? rating.toFixed(1) : rating.toFixed(2);
 }
 
-// Visible overall Airbnb rating. Google requires any rating in structured data to be shown on the page.
+// Visible overall Airbnb and Vrbo ratings. Google requires any rating in structured data to be shown on the page.
 function ReviewSummary({ reviewData }) {
     const rating = Number(reviewData.rating);
     const count = Number(reviewData.count);
-    if (!Number.isFinite(rating) || !Number.isFinite(count) || count < 1) {
+    const vrboRating = Number(reviewData.vrbo?.rating);
+    const vrboCount = Number(reviewData.vrbo?.count);
+    const hasAirbnb = Number.isFinite(rating) && Number.isFinite(count) && count >= 1;
+    const hasVrbo = Number.isFinite(vrboRating) && Number.isFinite(vrboCount) && vrboCount >= 1;
+    if (!hasAirbnb && !hasVrbo) {
         return null;
     }
 
     return (
         <p className="review-summary">
             <span aria-hidden="true">★</span>{' '}
-            <a href={`https://www.airbnb.com/rooms/${site.airbnb.listingId}`} target="_blank" rel="noopener noreferrer">
-                {`Rated ${formatRating(rating)} out of 5 from ${count} Airbnb ${count === 1 ? 'review' : 'reviews'}`}
-            </a>
+            {hasAirbnb && (
+                <a href={`https://www.airbnb.com/rooms/${site.airbnb.listingId}`} target="_blank" rel="noopener noreferrer">
+                    {`Rated ${formatRating(rating)} out of 5 from ${count} Airbnb ${count === 1 ? 'review' : 'reviews'}`}
+                </a>
+            )}
+            {hasAirbnb && hasVrbo && ' · '}
+            {hasVrbo && (
+                <a href={reviewData.vrbo.listingUrl} target="_blank" rel="noopener noreferrer">
+                    {`Rated ${formatRating(vrboRating)} out of 5 from ${vrboCount} Vrbo ${vrboCount === 1 ? 'review' : 'reviews'}`}
+                </a>
+            )}
         </p>
     );
 }

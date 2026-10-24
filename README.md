@@ -10,7 +10,7 @@ Each site includes:
 
 - A photo gallery with room filters and full-size pop-ups
 - Amenities, location, FAQ, and booking terms
-- Airbnb guest reviews and the overall Airbnb rating
+- Airbnb and Vrbo guest reviews, with each platform's overall rating
 - An availability calendar built from the combined Airbnb and VRBO calendars, where guests pick check-in and
   check-out dates (at least the listing's minimum stay) to see the price from Airbnb's nightly rates and fees, then
   open the booking options in a pop-up
@@ -107,7 +107,9 @@ also be started manually from the Actions tab.
   returns something other than a calendar.
 - `update-reviews.yml` runs monthly on the 1st. It collects the listing's Airbnb reviews and writes
   `sites/<site>/data/reviews.json`: the overall rating and count, and every review with its rating, all shown on the
-  site.
+  site. For a site with a `vrbo.propertyId` in its config, it also collects the Vrbo reviews into
+  `sites/<site>/data/vrbo-reviews.json`. A Vrbo failure is reported but doesn't stop the Airbnb update, and the last
+  Vrbo reviews stay in place.
 - `update-airbnb-images.yml` runs monthly on the 1st. It reads the photo-tour data Airbnb embeds in the listing page
   (plain HTTP first, falling back to headless Chromium if that's blocked) and downloads every photo in gallery order,
   waiting 0.5-1.25 seconds between downloads. It writes full-size photos and a `metadata.json` (order, room,

@@ -14,6 +14,14 @@ export function reviewsUrl(listingId) {
     return 'https://www.airbnb.com/rooms/' + listingId + '?modal=REVIEWS';
 }
 
+// The page that opens one review on the listing. Null when the review has no numeric ID to link to.
+export function reviewUrl(listingId, reviewId) {
+    if (!/^\d+$/.test(String(reviewId))) {
+        return null;
+    }
+    return `https://www.airbnb.com/rooms/${listingId}/reviews?scroll_to_review=${reviewId}&review_page_entrypoint=show_more`;
+}
+
 const reviewTextKeys = ['comments', 'comment', 'text', 'reviewText', 'localizedReviewText'];
 const dateKeys = ['localizedDate', 'date', 'createdAt'];
 const monthNumbers = new Map([
@@ -161,6 +169,9 @@ function normalizeReview(review, now = new Date()) {
     const rating = Number(review.rating ?? review.ratingValue);
     const text = cleanReviewText(firstString(review, reviewTextKeys));
     const date = normalizeReviewDate(firstString(review, dateKeys), now);
+    // Airbnb's "response" is the host's reply, a string or null. Its date comes as "1 week ago" or "September 2026".
+    const replyText = cleanReviewText(review.response);
+    const replyDate = normalizeReviewDate(review.localizedRespondedDate, now);
 
     if (!Number.isFinite(rating) || !text) {
         return null;
@@ -170,7 +181,8 @@ function normalizeReview(review, now = new Date()) {
         id: String(review.id ?? review.reviewId ?? `${date ?? 'unknown'}:${text}`),
         rating,
         date,
-        text
+        text,
+        hostResponse: replyText ? { text: replyText, date: replyDate } : null
     };
 }
 
@@ -193,7 +205,7 @@ export function collectReviews(value, reviews = []) {
     return reviews;
 }
 
-function uniqueReviews(reviews) {
+export function uniqueReviews(reviews) {
     return [...new Map(reviews.map(review => [review.id, review])).values()];
 }
 
@@ -300,7 +312,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         fetchedAt: new Date().toISOString(),
         rating,
         count,
-        reviews
+        reviews: reviews.map(review => ({ ...review, url: reviewUrl(listingId, review.id) }))
     }, null, 2)}\n`, 'utf8');
 
     console.log(`${siteId}: rated ${rating} from ${count} reviews; wrote ${reviews.length} reviews`);

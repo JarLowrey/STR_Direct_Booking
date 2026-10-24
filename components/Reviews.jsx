@@ -11,7 +11,7 @@ function stars(rating) {
     return '★'.repeat(filled) + '☆'.repeat(5 - filled);
 }
 
-// Airbnb guest reviews, 3 per page, with "Read more" for reviews too long for their card.
+// Airbnb and Vrbo guest reviews, 3 per page, with "Read more" for reviews too long for their card.
 // Rendered to HTML at build time, so the first page is visible without JavaScript. Past the first page, the page is
 // kept in the URL (?reviews=2).
 export default function Reviews({ reviews }) {
@@ -124,17 +124,35 @@ export default function Reviews({ reviews }) {
                             >
                                 {`“${String(review.text || '')}”`}
                             </p>
-                            {overflowingReviews.has(review.id) && (
-                                <button
-                                    className="review-expand"
-                                    type="button"
-                                    aria-expanded={isExpanded}
-                                    onClick={() => toggleReview(review.id)}
-                                >
-                                    {isExpanded ? 'Show less' : 'Read more'}
-                                </button>
+                            <div className="review-actions">
+                                {review.url && (
+                                    <a className="review-link" href={review.url} target="_blank" rel="noopener noreferrer">
+                                        {review.source === 'vrbo' ? 'View Vrbo review' : 'View Airbnb review'}
+                                    </a>
+                                )}
+                                {overflowingReviews.has(review.id) && (
+                                    <button
+                                        className="review-expand"
+                                        type="button"
+                                        aria-expanded={isExpanded}
+                                        onClick={() => toggleReview(review.id)}
+                                    >
+                                        {isExpanded ? 'Show less' : 'Read more'}
+                                    </button>
+                                )}
+                            </div>
+                            {review.hostResponse && (
+                                <details className="review-reply">
+                                    <summary>
+                                        <span>Host response</span>
+                                        {review.hostResponse.date && <time>{review.hostResponse.date}</time>}
+                                    </summary>
+                                    <p>{review.hostResponse.text}</p>
+                                </details>
                             )}
-                            <p className="review-label">Airbnb guest review</p>
+                            {!review.url && (
+                                <p className="review-label">{review.source === 'vrbo' ? 'Vrbo guest review' : 'Airbnb guest review'}</p>
+                            )}
                         </article>
                     );
                 })}

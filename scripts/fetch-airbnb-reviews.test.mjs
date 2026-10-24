@@ -1,8 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanReviewText, collectReviews, normalizeReviewDate, summarizeReviews } from './fetch-airbnb-reviews.mjs';
+import { cleanReviewText, collectReviews, normalizeReviewDate, reviewUrl, summarizeReviews } from './fetch-airbnb-reviews.mjs';
 
 const referenceDate = new Date('2026-01-05T12:00:00Z');
+
+test('links to a single Airbnb review by its numeric ID', () => {
+    assert.equal(
+        reviewUrl('1501508351751467254', '1794326446560513746'),
+        'https://www.airbnb.com/rooms/1501508351751467254/reviews?scroll_to_review=1794326446560513746&review_page_entrypoint=show_more'
+    );
+    assert.equal(reviewUrl('1501508351751467254', '1501508351751467254:Great stay'), null);
+});
 
 test('normalizes Airbnb relative review dates to month and year', () => {
     assert.equal(normalizeReviewDate('Today', referenceDate), '1/2026');
@@ -54,14 +62,37 @@ test('collects valid reviews without exposing reviewer or author data', () => {
             id: 'review-1',
             rating: 5,
             date: '8/2026',
-            text: 'Wonderful stay'
+            text: 'Wonderful stay',
+            hostResponse: null
         },
         {
             id: 'invalid-review',
             rating: 4,
             date: '8/2026',
-            text: 'Also valid, but filtered later by rating'
+            text: 'Also valid, but filtered later by rating',
+            hostResponse: null
         }
+    ]);
+});
+
+test('keeps the host response with its own date, and leaves it out when there is none', () => {
+    const reviews = collectReviews({
+        reviews: [
+            {
+                id: 'review-2',
+                rating: 5,
+                localizedDate: 'August 2026',
+                comments: 'Lovely',
+                response: 'Thank you!<br/>Come back soon.',
+                localizedRespondedDate: 'September 2026'
+            },
+            { id: 'review-3', rating: 5, localizedDate: 'August 2026', comments: 'Nice', response: null }
+        ]
+    });
+
+    assert.deepEqual(reviews.map(review => review.hostResponse), [
+        { text: 'Thank you!\nCome back soon.', date: '9/2026' },
+        null
     ]);
 });
 test('rates the listing and keeps every review, whatever its rating, in Airbnb order', () => {
