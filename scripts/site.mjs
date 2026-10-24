@@ -25,7 +25,7 @@ try {
         await prepareSite(siteId);
         console.log(`Site: ${siteId}`);
         const nextCli = createRequire(import.meta.url).resolve('next/dist/bin/next');
-        await run(process.execPath, [nextCli, command]);
+        await run(process.execPath, [nextCli, command, ...(command === 'build' ? ['--webpack'] : [])]);
     } else {
         console.error('Usage: node scripts/site.mjs <dev | build | preview> [site]');
         process.exit(1);
