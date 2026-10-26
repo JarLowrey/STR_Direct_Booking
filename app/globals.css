@@ -1725,7 +1725,11 @@ footer {
     }
 
     .stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stat {
+        padding: 2rem 1rem;
     }
 
     .features-grid,
